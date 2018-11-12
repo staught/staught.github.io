@@ -6,28 +6,18 @@
     <description>Recent content in Posts on Staught&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Nov 2018 09:49:50 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Nov 2018 21:24:56 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>My Second Post</title>
-      <link>https://staught.github.io/post/second-post/</link>
-      <pubDate>Mon, 12 Nov 2018 09:49:50 +0800</pubDate>
+      <title>Go语法杂记</title>
+      <link>https://staught.github.io/post/2018-11-12-go%E8%AF%AD%E6%B3%95%E6%9D%82%E8%AE%B0/</link>
+      <pubDate>Mon, 12 Nov 2018 21:24:56 +0800</pubDate>
       
-      <guid>https://staught.github.io/post/second-post/</guid>
-      <description>Head1 hhhhhhhhhh
-Head2 hhhhhhh</description>
-    </item>
-    
-    <item>
-      <title>My First Post</title>
-      <link>https://staught.github.io/post/first-post/</link>
-      <pubDate>Mon, 12 Nov 2018 09:45:21 +0800</pubDate>
-      
-      <guid>https://staught.github.io/post/first-post/</guid>
-      <description>package main import ( &amp;#34;fmt&amp;#34; ) func main() { fmt.Println(&amp;#34;Hello, Hugo.&amp;#34;) }</description>
+      <guid>https://staught.github.io/post/2018-11-12-go%E8%AF%AD%E6%B3%95%E6%9D%82%E8%AE%B0/</guid>
+      <description>a b c</description>
     </item>
     
   </channel>
