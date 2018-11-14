@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac技巧 on staught</title>
+    <link>https://staught.github.io/series/mac%E6%8A%80%E5%B7%A7/</link>
+    <description>Recent content in Mac技巧 on staught</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Wed, 14 Nov 2018 14:02:49 +0800</lastBuildDate>
+    
+	<atom:link href="https://staught.github.io/series/mac%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MacOS使用技巧</title>
+      <link>https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</link>
+      <pubDate>Wed, 14 Nov 2018 14:02:49 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
+      <description>先说明下Mac的按键与符号对应关系： 符号 按键 ⌘ command ⌥ option ⌃ control ⇧ shift ␣ space 把鼠标移动到一个英文单词上，按下⌃⌘D即control+command+D，就会显示该单词的翻译结果。 获取文件的MD5与SHA1值： Terminal输入$ md5 filepath，就会输出文件对应的MD5值； Terminal输入$ shasum filepath，就会输出文件对应的SHA1值，默认检测SHA1值，通过指定参数-a可以修改为224、256、</description>
+    </item>
+    
+  </channel>
+</rss>

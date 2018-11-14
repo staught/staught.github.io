@@ -1,321 +1,723 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-	<meta name="generator" content="Hugo 0.51" /><head>
-    <meta name="google-site-verification" content="9vIieCe-Qpd78QOmBl63rGtIVbhY6sYyuxX3j8XWBA4" />
-    <meta name="baidu-site-verification" content="LRrmH41lz7" />
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <meta name="description" content="">
-    
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="https://staught.github.io/img/favicon.ico">
+<html lang="zn-Hans">
+  <head>
+	<meta name="generator" content="Hugo 0.51" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Staught">
+  <meta name="description" content="[Be myself. Love the wonderful world. Do the right things and be a better man.]">
+  
+  <meta property="og:title" content="staught" />
+<meta property="og:description" content="[Be myself. Love the wonderful world. Do the right things and be a better man.]" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://staught.github.io/" />
+<meta property="og:updated_time" content="2018-11-14T14:02:49&#43;08:00"/>
 
-    
-    <title>Staught&#39;s Blog</title>
 
-    <link rel="canonical" href="https://staught.github.io/">
+  <title>
+  
+      staught
+  
+  </title>
 
-    <link rel="stylesheet" href="https://staught.github.io/css/iDisqus.min.css"/>
-	
-    
-    <link rel="stylesheet" href="https://staught.github.io/css/bootstrap.min.css">
+  <link rel="canonical" href="https://staught.github.io/">
 
-    
-    <link rel="stylesheet" href="https://staught.github.io/css/hux-blog.min.css">
+  
+  
 
-    
-    <link rel="stylesheet" href="https://staught.github.io/css/syntax.css">
+  
+  <link href="https://staught.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
 
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://staught.github.io/css/font.css" rel="stylesheet"> 
     
-    <link rel="stylesheet" href="https://staught.github.io/css/zanshang.css">
+  
+  <link href="https://staught.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://staught.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/main.css" rel="stylesheet">
 
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://staught.github.io/img/golang.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
     
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://staught.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
     
-    
-    <script src="https://staught.github.io/js/jquery.min.js"></script>
-    
-    
-    <script src="https://staught.github.io/js/bootstrap.min.js"></script>
-    
-    
-    <script src="https://staught.github.io/js/hux-blog.min.js"></script>
+    <link rel="stylesheet" href="https://staught.github.io/css/vendors/highlight/github-gist.css">
+  
+
 </head>
-</head>
 
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="https://staught.github.io//">Staught&#39;s Blog</a>
-        </div>
-
-        
-        
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="https://staught.github.io//">Home</a>
-                    </li>
-                    
-                    <li>
-                        <a href="https://staught.github.io/categories/golang">Golang</a>
-                    </li>
-                    
-
-                    
-                </ul>
-            </div>
-        </div>
-        
-    </div>
-    
-</nav>
-<script>
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
     
     
-    
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
 
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        
-            $navbar.className = " ";
-            
-            setTimeout(function(){
-                
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
+     
+   
 
 
-
-<header class="intro-header" style="background-image: url('https://staught.github.io/img/bg-mojave-night.jpg')">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Staught&#39;s Blog </h1>
-                    
-		    <span class="subheading"></span>
-                </div>
-            </div>
-        </div>
+
+      
+      <a class="navbar-brand" href="https://staught.github.io">
+        
+        
+        
+        <strong> Staught</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item  active ">
+            <a class="nav-link" href="https://staught.github.io">Home <span class="sr-only">(current)</span></a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
     </div>
-</header>
+  </nav>
+  
+ 
+   
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" >  
+
+  
+  <ol class="carousel-indicators">
+
+    
+      
+        <li data-target="#site-header" data-slide-to="0" class="active"></li>
+      
+    
+      
+        <li data-target="#site-header" data-slide-to="1"></li>
+      
+    
+  </ol>
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides/yosemite1.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides/yosemite2.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mb-5 pb-3">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://staught.github.io">
+          
+            <img class="pull-right avatar avatar-lg " src="https://staught.github.io/img/avatar.png" alt="" >
+          
+        </a>
+      </div>
+      
+
+      <div class="col-12 col-sm-7 text-left pl-5">
+        
+        <a href="https://staught.github.io">
+          <h1 class="display-4 mb-2 mt-2 h1">
+            <strong>Staught</strong>
+          </h1>
+        </a>
+        
+        <p class="mb-0 p" style="font-size: 1.250rem; font-weight: 200;">
+            Be myself.
+        </p>
+        
+        <p class="mb-0 p" style="font-size: 1.250rem; font-weight: 200;">
+            Love the wonderful world.
+        </p>
+        
+        <p class="mb-0 p" style="font-size: 1.250rem; font-weight: 200;">
+            Do the right things and be a better man.
+        </p>
+        
+        
+
+        
+        <div class="mt-2" style="font-size: 2rem; color: white;">
+            
+            
+
+            
+
+            
+
+            
+
+            
+    
+            
+    
+        
+            
+    
+            
+
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+  
+
+  
+  <a class="carousel-control-prev" href="#site-header" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#site-header" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  
+
+</div>
+  
+
+  
+  
+  
+
+
+
+    
+  
+  <main class="post-main-wrapper px-5">
+    <div class="row">
+      
+      <div class="col-md-3">
+        
+        
+        
+
+  
+
+  
+
+
+
+
+
+  <hr>
+  
+    <div class="post-meta">
+      <div class="mb-2">
+        <a href="https://staught.github.io/categories/">
+          <span class="font-weight-bold text-uppercase post-meta">
+            <i class="fas fa-folder-open pr-1" aria-hidden="true"></i> 
+            Categories
+          </span>
+        </a>
+      </div>
+
+      <div class="li-x post-meta" style="margin-left: -8px;">
+        
+          
+          
+            
+            <li class="py-1">
+              <a href="https://staught.github.io/categories/golang">
+                <span>Golang (1)</span>
+              </a>
+            </li>           
+          
+            
+              <li class="middot"></li>
+            
+            <li class="py-1">
+              <a href="https://staught.github.io/categories/mac">
+                <span>Mac (1)</span>
+              </a>
+            </li>           
+          
+        
+      </div>
+    </div>
+
+    
+  
+
+
+        
+        
+
+  
+
+  
+
+
+
+
+
+  <hr>
+  
+    <div class="post-meta">
+      <div class="mb-2">
+        <a href="https://staught.github.io/tags/">
+          <span class="font-weight-bold text-uppercase post-meta">
+            <i class="fas fa-tags pr-1" aria-hidden="true"></i> 
+            Featured Tags
+          </span>
+        </a>
+      </div>
+
+      <div class="li-x post-meta tags-md" style="margin-left: -8px;">
+        
+        
+        
+            <li><a href="https://staught.github.io/tags/golang" role="button"><span>golang (1)</span></a></li>
+          
+        
+            <li><a href="https://staught.github.io/tags/mac" role="button"><span>mac (1)</span></a></li>
+          
+        
+            <li><a href="https://staught.github.io/tags/syntax" role="button"><span>syntax (1)</span></a></li>
+          
+        
+      </div>
+    </div>
+
+    
+  
+
+
+        
+  
+
+  
+
+
+
+
+
+
+
+  <hr>
+  
+    <div class="post-meta">
+      <div class="mb-2">
+        <a href="https://staught.github.io/series/">
+          <span class="font-weight-bold text-uppercase post-meta">
+            <i class="fas fa-bookmark pr-1" aria-hidden="true"></i> 
+            Recommend Series
+          </span>
+        </a>
+      </div>
+     
+      <div class="post-meta" >
+        
+          
+          
+
+            
+            
+            
+               
+              
+              
+                
+<div class="card card-cascade wider mb-4 mt-2">
+    <a href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF">
+  
+  <div class="view view-cascade overlay">
+    <img class="card-img-top" src="https://staught.github.io/images/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF.jpg" >
+    
+      <div class="mask rgba-white-slight waves-effect waves-light"></div>
+    
+  </div>
+
+  
+  <div class="card-body card-body-cascade text-center">
+   
+
+    
+    <h4 class="card-title"><strong>Go学习之路 (1)</strong></h4>
+    
+
+    
+    <p class="card-text"> </p>
+    
+
+
+  </div>
+</a>
+
+</div>
+
+
+              
+            
+          
+          
+
+            
+            
+            
+               
+              
+              
+                
+<div class="card card-cascade wider mb-4 mt-2">
+    <a href="https://staught.github.io/series/mac%E6%8A%80%E5%B7%A7">
+  
+  <div class="view view-cascade overlay">
+    <img class="card-img-top" src="https://staught.github.io/images/series/macbook.png" >
+    
+      <div class="mask rgba-white-slight waves-effect waves-light"></div>
+    
+  </div>
+
+  
+  <div class="card-body card-body-cascade text-center">
+   
+
+    
+    <h4 class="card-title"><strong>Mac技巧 (1)</strong></h4>
+    
+
+    
+    <p class="card-text"> </p>
+    
+
+
+  </div>
+</a>
+
+</div>
+
+
+              
+            
+          
+          
+
+        
+      </div>
+    
+      
+    </div>
+  
+
+  
+
+      </div>
+      
+
+      
+      
+      <div class="col-md-9 mt-3">  
+        
+        
+        
+          
+          <div>
+              
+                  <div class="post-wrapper white-bg post-card">
+  
+  <a href="https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">
+    <div class="post-header text-center">
+      <div class="px-4 post-heading">MacOS使用技巧</div>
+      <ul class="post-meta li-x mt-1">
+        
+          <li>Nov 14, 2018</li>
+        
+    
+        
+          <li class="middot"></li>
+          <li>One minute read</li>
+        
+      </ul>
+    </div>
+    
+
+    
+      记录MacOS的一些高效使用技巧
+    
+  </a>
+
+  
+  
+  <div class="post-meta li-x mt-2 div-x">
+    <div>
+      
+        
+          <li><a href="https://staught.github.io/categories/mac"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> Mac </a></li>
+        
+      
+      
+        
+          <li><a href="https://staught.github.io/series/mac%E6%8A%80%E5%B7%A7"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>Mac技巧</a></li>
+        
+      
+    </div>
+   
+    <div>
+      
+        
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://staught.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://staught.github.io/tags/mac" role="button">mac </a></li>
+      
+    
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+</div>
+
+              
+                  <div class="post-wrapper white-bg post-card">
+  
+  <a href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0/">
+    <div class="post-header text-center">
+      <div class="px-4 post-heading">Go语言拾记</div>
+      <ul class="post-meta li-x mt-1">
+        
+          <li>Nov 14, 2018</li>
+        
+    
+        
+          <li class="middot"></li>
+          <li>One minute read</li>
+        
+      </ul>
+    </div>
+    
+
+    
+      对Go语言中一些语法要点做个备忘记录
+    
+  </a>
+
+  
+  
+  <div class="post-meta li-x mt-2 div-x">
+    <div>
+      
+        
+          <li><a href="https://staught.github.io/categories/golang"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> Golang </a></li>
+        
+      
+      
+        
+          <li><a href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>Go学习之路</a></li>
+        
+      
+    </div>
+   
+    <div>
+      
+        
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://staught.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://staught.github.io/tags/golang" role="button">golang </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
+      
+    
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+</div>
+
+              
+              
+          </div>
+        
+
+      </div>
+      
+
+    </div>
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+  
+
+
+  
+  <div class="copyright py-4">
+    
+    <span>  2018 - 2018 &copy; Staught | Theme <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by <a href='https://github.com/orianna-zzo' target="_blank">Orianna</a>  </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/main.js"></script>
 
 
 
   
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
-
-<div class="post-preview">
-    <a href="https://staught.github.io/post/2018-11-12-go%E8%AF%AD%E6%B3%95%E6%9D%82%E8%AE%B0/">
-        <h2 class="post-title">
-            Go语法杂记
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Go语法一些需要注意的点
-        
-        </div>
-    </a>
-    <p class="post-meta">
-        
-        Posted on Monday, November 12, 2018
-    </p>
-</div>
-<hr>
-
-
-            
+  <script src="https://staught.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
 
 
 
-       	</div>
-        
 
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-    
+ 
+  <script src="https://staught.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://staught.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
 
-    
-    <section class="visible-md visible-lg">
-        <hr><h5><a href="">ABOUT ME</a></h5>
-        <div class="short-about">
-            
-            <img src="https://staught.github.io/img/avatar.png" />
-            
-            
-                <p>Just a golang fan</p>
-            
-           
-           <ul class="list-inline"> 
-               
-               
-               
-               
-               
-               
-               
-               
-                </ul>
-            </div>
-    </section>
-   
-   
-   
-    
-   <hr>
-   <h5>BOOKMARKS</h5>
-   <ul class="list-inline">
-   
-           <li><a target="_blank" href="https://studygolang.com/">Go语言中文网</a></li>
-       
-           <li><a target="_blank" href="https://sspai.com/">少数派</a></li>
-       
-   </ul>
-</div>
-
-	</div>
-</div>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
 
 
 
 
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                   
-                    
-                    
-                    
-                    
-                    
-
-                    
-
-		    
-                    
-                    
-                    
-                </ul>
-		<p class="copyright text-muted">
-                    Copyright &copy; Staught&#39;s Blog , 2018
-                    <br>
-                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> by <a href="https://zhaohuabing.com">Huabing</a>
-                    
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
 
 
 
-
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
+<script type="text/javascript">
+  
+  new WOW().init();
 </script>
 
 
 
 
-
-
-<script>
-    
-    if($('#tag_cloud').length !== 0){
-        async("/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-
-<script>
-    async("https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-       bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else{
-      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-
-
-
-
-
-
-</body>
+  </body>
 </html>
