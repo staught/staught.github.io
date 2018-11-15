@@ -284,7 +284,7 @@
 
     
       <li class="middot"></li>
-      <li>One minute read</li>
+      <li>2 minutes read</li>
     
   </ul>
   
@@ -298,15 +298,11 @@
 <h1 id="变量">变量</h1>
 
 <ul>
-<li><p>声明单个变量，e.g. <code>var age int</code>，变量未被赋值，Go会自动将其初始化为该变量类型的零值。</p></li>
-
-<li><p>声明变量并初始化：e.g. <code>var age int = 29</code>。</p></li>
-
-<li><p>Go能够根据初始值自动判断变量的类型：e.g. <code>var age = 29</code>。</p></li>
-
-<li><p>声明多个变量：e.g. <code>var width, height int</code>、<code>var width, height int = 100, 50</code>。</p></li>
-
-<li><p>在一个语句中声明不同类型的变量：</p></li>
+<li>声明单个变量，e.g. <code>var age int</code>，变量未被赋值，Go会自动将其初始化为该变量类型的零值。</li>
+<li>声明变量并初始化：e.g. <code>var age int = 29</code>。</li>
+<li>Go能够根据初始值自动判断变量的类型：e.g. <code>var age = 29</code>。</li>
+<li>声明多个变量：e.g. <code>var width, height int</code>、<code>var width, height int = 100, 50</code>。</li>
+<li>在一个语句中声明不同类型的变量：</li>
 </ul>
 
 <pre><code class="language-go">  package main
@@ -325,14 +321,53 @@
 </code></pre>
 
 <ul>
-<li><p>简短声明：e.g. <code>name, age := &quot;staught&quot;, 29</code>，需要注意：</p>
+<li>简短声明：e.g. <code>name, age := &quot;staught&quot;, 29</code>，需要注意：
 
 <ul>
-<li><p>简短声明要求<code>:=</code>操作符左边的所有变量都有初始值；</p></li>
-
-<li><p>简短声明要求<code>:=</code>操作符左边至少有一个变量是尚未声明的。</p></li>
+<li>简短声明要求<code>:=</code>操作符左边的所有变量都有初始值；</li>
+<li>简短声明要求<code>:=</code>操作符左边至少有一个变量是尚未声明的。</li>
 </ul></li>
 </ul>
+
+<h1 id="类型">类型</h1>
+
+<ul>
+<li>Go支持的基本类型
+
+<ul>
+<li>bool</li>
+<li>int8, int16, int32, int64, int</li>
+<li>uint8, uint16, uint32, uint64, uint</li>
+<li>float32, float64</li>
+<li>complex64, complex128</li>
+<li>byte</li>
+<li>rune</li>
+<li>string</li>
+</ul></li>
+<li>int根据不同的底层平台，表示32或64位整型。除非对整型的大小有特定的需求，否则我们通常应该使用int表示整型。</li>
+<li>uint根据不同的底层平台，表示32或64位无符号整型。</li>
+<li>float64是浮点数的默认类型，比如<code>a := 5.67</code>，那么a的类型默认是float64。</li>
+<li>byte是uint8的别名。</li>
+<li>rune是int32的别名。</li>
+<li>在Golang中，字符串是字节的集合。</li>
+<li>Go有着非常严格的强类型特征，它没有自动类型提升或类型转换。把v转换为T类型的语法是：<code>T(v)</code>。</li>
+</ul>
+
+<h1 id="常量">常量</h1>
+
+<ul>
+<li>只需记住：常量可以赋值给“合适的”类型，而不需要类型转换，举个例子：</li>
+</ul>
+
+<pre><code class="language-go">  // 以下代码，f1的赋值正常，但f2的编译不通过
+  const a = 0
+  var b = 0 // int 
+  
+  var f1 float64 = a 
+  var f2 float64 = b // cannot use b (type int) as type float64 in assignment
+  
+  fmt.Println(f1, f2)
+</code></pre>
 
           </div>
 
@@ -422,6 +457,50 @@
 										<li class="nav-item">
 						 					<a class="nav-link" href="#%e5%8f%98%e9%87%8f">
 												 变量
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b">
+												 类型
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%b8%b8%e9%87%8f">
+												 常量
 											</a>
 										</li>
 						 

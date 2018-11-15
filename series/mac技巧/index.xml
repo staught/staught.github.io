@@ -17,7 +17,7 @@
       <pubDate>Wed, 14 Nov 2018 14:02:49 +0800</pubDate>
       
       <guid>https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</guid>
-      <description>先说明下Mac的按键与符号对应关系： 符号 按键 ⌘ command ⌥ option ⌃ control ⇧ shift ␣ space 把鼠标移动到一个英文单词上，按下⌃⌘D即control+command+D，就会显示该单词的翻译结果。 获取文件的MD5与SHA1值： Terminal输入$ md5 filepath，就会输出文件对应的MD5值； Terminal输入$ shasum filepath，就会输出文件对应的SHA1值，默认检测SHA1值，通过指定参数-a可以修改为224、256、</description>
+      <description>把鼠标移动到一个英文单词上，按下control+command+D，就会显示该单词的翻译结果。 获取文件的MD5与SHA1值： Terminal输入$ md5 filepath，就会输出文件对应的MD5值； Terminal输入$ shasum filepath，就会输出文件对应的SHA1值，默认检测SHA1值，通过指定参数-a可以修改为224、256、384或512。 按下shift+command+5，就会显示截屏选项。 选</description>
     </item>
     
   </channel>
