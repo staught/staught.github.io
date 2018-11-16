@@ -21,11 +21,11 @@
     </item>
     
     <item>
-      <title>Go语言拾记</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0/</link>
+      <title>Go语言拾记-01</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-01/</link>
       <pubDate>Wed, 14 Nov 2018 12:15:39 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-01/</guid>
       <description>变量 声明单个变量，e.g. var age int，变量未被赋值，Go会自动将其初始化为该变量类型的零值。 声明变量并初始化：e.g. var age int = 29。 Go能够根据初始值自动判断变量的类型：e.g. var age = 29。 声明多个变量：e.g. var width, height int、var width, height int = 100, 50。 在一个语句中声明不同类型的变量： package main import &amp;quot;fmt&amp;quot; func main() { var ( name = &amp;quot;staught&amp;quot; age = 29 height int ) // Output: My name: staught, age: 29, height: 0 fmt.Printf(&amp;quot;My name: %s, age: %d, height: %d\n&amp;quot;, name, age, height) } 简短声明：e.g. name, age := &amp;quot;staught&amp;quot;, 29，需要注意： 简</description>
     </item>
     
