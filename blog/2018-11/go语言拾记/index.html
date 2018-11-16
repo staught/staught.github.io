@@ -13,7 +13,7 @@
 <meta property="og:description" content="变量 声明单个变量，e.g. var age int，变量未被赋值，Go会自动将其初始化为该变量类型的零值。 声明变量并初始化：e.g. var age int = 29。 Go能够根据初始值自动判断变量的类型：e.g. var age = 29。 声明多个变量：e.g. var width, height int、var width, height int = 100, 50。 在一个语句中声明不同类型的变量： package main import &quot;fmt&quot; func main() { var ( name = &quot;staught&quot; age = 29 height int ) // Output: My name: staught, age: 29, height: 0 fmt.Printf(&quot;My name: %s, age: %d, height: %d\n&quot;, name, age, height) } 简短声明：e.g. name, age := &quot;staught&quot;, 29，需要注意： 简" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0/" /><meta property="article:published_time" content="2018-11-14T12:15:39&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-14T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-11-16T00:00:00&#43;00:00"/>
 
 
 
@@ -284,7 +284,7 @@
 
     
       <li class="middot"></li>
-      <li>3 minutes read</li>
+      <li>4 minutes read</li>
     
   </ul>
   
@@ -396,6 +396,38 @@
 <ul>
 <li><code>_</code>在Go语言中被用作空白符，可以用来表示任何类型的任何值。它是用来跳过不需要的计算结果的，例如函数<code>func rect(length, width float64) (area, perimeter float64)</code>，假设我们只需要计算面积，而不关心周长，那么只需通过空白符将周长的返回值丢弃即可：<code>area, _ := rect(10.8, 5.6)</code>。</li>
 </ul>
+
+<h1 id="包">包</h1>
+
+<ul>
+<li><code>package packagename</code>这行代码指定了某一源文件属于一个包，它应该放在每一个源文件的第一行。</li>
+<li>属于某一个包的源文件都应该放置于一个单独命名的文件夹里，按照Go的惯例，应该用包名命名该文件夹。</li>
+<li>导入自定义包的语法：<code>import path</code>，必须指定自定义包相对于工作区src文件夹的相对路径。</li>
+<li>在Go中，任何以大写字母开头的变量或者函数都是被导出的名字，其它包只能访问被导出的函数和变量。</li>
+<li>所有包都可以包含一个<code>init</code>函数，init函数不应该有任何返回值类型和参数，在我们的代码中也不能显示地调用它。init函数形式如下：</li>
+</ul>
+
+<pre><code class="language-go">  func init() {
+      // init函数可用于执行初始化任务，也可用于在开始执行之前验证程序的正确性
+  }
+</code></pre>
+
+<ul>
+<li>包的初始化顺序：
+
+<ul>
+<li>首先初始化包级别的变量；</li>
+<li>紧接着调用init函数，包可以用多个init函数（在一个文件或分布于多个文件中），它们按照编译器解析它们的顺序进行调用。</li>
+</ul></li>
+<li>如果一个包导入了另一个包，会先初始化被导入的包。</li>
+<li>尽管一个包可能会被导入多次，但是它只会被初始化一次。</li>
+<li>导入了包，却不在代码中使用它，这在Go中是非法的。有时候我们导入一个包，只是为了确保它进行了初始化，而无需使用包中的任何函数或变量。这种情况可以使用空白标识符，如下所示：</li>
+</ul>
+
+<pre><code class="language-go">  import (
+      _ &quot;geometry/rectangle&quot;
+  )
+</code></pre>
 
           </div>
 
@@ -551,6 +583,28 @@
 										<li class="nav-item">
 						 					<a class="nav-link" href="#%e5%87%bd%e6%95%b0">
 												 函数
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8c%85">
+												 包
 											</a>
 										</li>
 						 
