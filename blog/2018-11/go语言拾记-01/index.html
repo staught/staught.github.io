@@ -429,6 +429,39 @@
   )
 </code></pre>
 
+<h1 id="if-else语句">if-else语句</h1>
+
+<ul>
+<li>if语句的语法如下所示，在Go语言里的<code>{}</code>是必要的，即使在<code>{}</code>之间只有一条语句：</li>
+</ul>
+
+<pre><code class="language-go">  if condition {
+      // do something
+  }
+</code></pre>
+
+<ul>
+<li>if语句还有可选的<code>else if</code>和<code>else</code>部分：</li>
+</ul>
+
+<pre><code class="language-go">  if condition {
+  } else if condition {
+  } else {
+  }
+</code></pre>
+
+<ul>
+<li><code>if</code>还有另外一种形式，它包含一个<code>statement</code>可选语句部分，该组件在条件判断之前运行，它的语法是：</li>
+</ul>
+
+<pre><code class="language-go">  if statement; condition {
+  }
+</code></pre>
+
+<ul>
+<li><code>else</code>语句应该在<code>if</code>语句的大括号<code>}</code>之后的同一行中，否则编译不会通过。</li>
+</ul>
+
           </div>
 
           
@@ -605,6 +638,28 @@
 										<li class="nav-item">
 						 					<a class="nav-link" href="#%e5%8c%85">
 												 包
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#if-else%e8%af%ad%e5%8f%a5">
+												 if-else语句
 											</a>
 										</li>
 						 
