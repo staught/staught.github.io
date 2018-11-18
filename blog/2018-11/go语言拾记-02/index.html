@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Staught">
+  <meta name="description" content="数组 数组是同一类型元素的集合，Go语言中数组不允许混合不同类型的元素，例如包含字符串和整数的数组（除非是interface{}类型的数组，那么就可以包含任意类型）。 数组的声明 一个数组的表现形式为[n]T。n表示数组中元素的数量，T代表每个元素的类型。注意：元素的数量n也是该类型的一部分，因此[5]int和[25]int是不同的类型。数组声明后不能再调整大小。 声明数组的几种方式： 方式1：var a [3">
+  
+  <meta property="og:title" content="Go语言拾记-02" />
+<meta property="og:description" content="数组 数组是同一类型元素的集合，Go语言中数组不允许混合不同类型的元素，例如包含字符串和整数的数组（除非是interface{}类型的数组，那么就可以包含任意类型）。 数组的声明 一个数组的表现形式为[n]T。n表示数组中元素的数量，T代表每个元素的类型。注意：元素的数量n也是该类型的一部分，因此[5]int和[25]int是不同的类型。数组声明后不能再调整大小。 声明数组的几种方式： 方式1：var a [3" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-02/" /><meta property="article:published_time" content="2018-11-18T21:51:13&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-18T00:00:00&#43;00:00"/>
+
+
+
+  <title>
+  
+       Go语言拾记-02 | staught 
+  
+  </title>
+
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-02/">
+
+  
+  
+
+  
+  <link href="https://staught.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://staught.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://staught.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://staught.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://staught.github.io/img/golang.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://staught.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://staught.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://staught.github.io">
+        
+        
+        
+        <strong> Staught</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://staught.github.io">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides/yosemite1.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides//yosemite2.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://staught.github.io">
+          
+            <img class="pull-right avatar avatar-md" src="https://staught.github.io/img/avatar.png" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://staught.github.io">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>staught</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+            
+
+            
+
+            
+
+            
+
+            
+    
+            
+    
+        
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://staught.github.io/categories/golang"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> Golang </a></li>
+      
+    
+    
+      
+        <li><a href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>Go学习之路</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">Go语言拾记-02</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Nov 18, 2018</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>3 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            
+
+<h1 id="数组">数组</h1>
+
+<p>数组是同一类型元素的集合，Go语言中数组不允许混合不同类型的元素，例如包含字符串和整数的数组（除非是interface{}类型的数组，那么就可以包含任意类型）。</p>
+
+<h3 id="数组的声明">数组的声明</h3>
+
+<p>一个数组的表现形式为<code>[n]T</code>。n表示数组中元素的数量，T代表每个元素的类型。注意：元素的数量<code>n</code>也是该类型的一部分，因此<code>[5]int</code>和<code>[25]int</code>是不同的类型。数组声明后不能再调整大小。</p>
+
+<p>声明数组的几种方式：</p>
+
+<ul>
+<li>方式1：<code>var a [3]int</code>，声明了一个长度为3的整型数组，数组中的所有元素都被自动赋值为数组类型的零值；</li>
+<li>方式2：<code>a := [3]int{12, 34, 56}</code>，这里使用了简略声明，在简略声明中，不需要将数组中所有的元素赋值，例如<code>a := [3]int{12}</code>，这里声明了一个长度为3的数组，但只提供了一个值12，剩下的2个元素自动赋值为0；</li>
+<li>方式3：<code>a := [...]int{12, 34, 56}</code>，这里忽略声明数组的长度，并用<code>...</code>代替，编译器会自动计算长度。</li>
+</ul>
+
+<h3 id="数组是值类型">数组是值类型</h3>
+
+<p>Go中的数组是值类型而不是引用类型。这意味着：</p>
+
+<ul>
+<li>当数组赋值给一个新变量时，该变量会得到原始数组的一个副本，如果对新变量进行更改，则不会影响原始数组；</li>
+<li>同样，当数组作为参数传递给函数时，它们是按值传递，而原始数组保持不变。</li>
+</ul>
+
+<h3 id="数组的遍历">数组的遍历</h3>
+
+<p>假设有这样一个数组：<code>a := [...]float64{67.7, 89.9, 21, 78}</code>，传统的遍历方法为：</p>
+
+<pre><code class="language-go">for i := 0; i &lt; len(a); i++ {
+    fmt.Printf(&quot;%d the element of a is %.2f\n&quot;, i, a[i])
+}
+</code></pre>
+
+<p>Go提供了一种更好、更简洁的方法：使用<code>range</code>迭代数组，range返回索引和该索引处的值，如果只需要索引或值，可以通过空白标识符<code>_</code>来忽略其中一个。</p>
+
+<pre><code class="language-go">for i, v := range a {
+    fmt.Printf(&quot;%d the element of a is %.2f\n&quot;, i, v)
+}
+</code></pre>
+
+<hr />
+
+<h1 id="切片-slice">切片(Slice)</h1>
+
+<p>切片是由数组建立的一种方便、灵活且功能强大的包装。切片本身不拥有任何数据，它们只是对现有数组的引用。带有T类型元素的切片由<code>[]T</code>表示。</p>
+
+<h3 id="切片的创建">切片的创建</h3>
+
+<p>创建Slice的几种方式：</p>
+
+<ul>
+<li>使用语法<code>a[start:end]</code>创建一个从<code>a</code>数组索引<code>start</code>开始到<code>end-1</code>结束的切片；</li>
+<li><code>s := []int{6, 7, 8}</code>创建一个有3个整型元素的数组，并返回一个存储在s中的切片引用；</li>
+<li>使用make创建一个切片：<code>func make([]T, len, cap) []T</code>。其中容量<code>cap</code>选项是可选参数，默认值为切片长度。make函数创建一个数组，并返回引用该数组的切片。</li>
+</ul>
+
+<h3 id="切片的修改">切片的修改</h3>
+
+<p>切片自己不拥有任何数据。它只是底层数组的一种表示。对切片所做的任何修改都会反应在底层数组中。当多个切片共用相同的底层数组时，每个切片所做的更改将反映在数组中。</p>
+
+<h3 id="切片的长度和容量">切片的长度和容量</h3>
+
+<p>切片的长度是切片中的元素数，切片的容量是从创建切片索引开始的底层数组中元素数。</p>
+
+<pre><code class="language-go">func main() {
+    ary := [...]int{11, 22, 33, 44, 55, 66, 77}
+    slice := ary[1:3]
+    // Output: length of slice 2 capacity 6
+    fmt.Printf(&quot;length of slice %d capacity %d\n&quot;, len(slice), cap(slice))
+}
+</code></pre>
+
+<h3 id="追加切片元素">追加切片元素</h3>
+
+<p>使用<code>append</code>函数可以将新元素追加到切片上，append函数的定义是<code>func append(s []T, x ...T) []T</code>。切片类型的零值为<code>nil</code>。一个<code>nil</code>切片的长度和容量为0。可以使用append函数将值追加到nil切片：</p>
+
+<pre><code class="language-go">var names []string
+names = append(names, &quot;John&quot;, &quot;Vinay&quot;, &quot;Michael&quot;)
+</code></pre>
+
+<p>也可以使用<code>...</code>运算符将一个切片添加到另一个切片：</p>
+
+<pre><code class="language-go">a := []int{1, 2, 3, 4}
+b := []int{5, 6, 7}
+s := append(a, b...)
+</code></pre>
+
+<h3 id="切片的函数传递">切片的函数传递</h3>
+
+<p>可以认为，切片在内部由一个结构体类型表示，包含长度、容量和指向数组第零个元素的指针。当切片传递给函数时，即使它通过值传递，指针变量也将引用相同的底层数组。因此，当切片作为参数传递给函数时，函数内所做的更改也会在函数外可见。</p>
+
+<h3 id="内存优化">内存优化</h3>
+
+<p>切片持有对底层数组的引用。只要切片在内存中，数组就不能被垃圾回收。在内存管理方面，这是需要注意的。
+假设有一个非常大的数组，但我们只想处理它的一小部分，一种好的方式是创建一个新的slice，然后使用copy函数来生成一个待处理切片的副本，这样原始数组就可以被垃圾回收了。</p>
+
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://staught.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://staught.github.io/tags/golang" role="button">golang </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>MacOS使用技巧</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%95%b0%e7%bb%84">
+												 数组
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%95%b0%e7%bb%84%e7%9a%84%e5%a3%b0%e6%98%8e">
+												 数组的声明
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%95%b0%e7%bb%84%e6%98%af%e5%80%bc%e7%b1%bb%e5%9e%8b">
+												 数组是值类型
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%95%b0%e7%bb%84%e7%9a%84%e9%81%8d%e5%8e%86">
+												 数组的遍历
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%88%87%e7%89%87-slice">
+												 切片(Slice)
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%88%87%e7%89%87%e7%9a%84%e5%88%9b%e5%bb%ba">
+												 切片的创建
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%88%87%e7%89%87%e7%9a%84%e4%bf%ae%e6%94%b9">
+												 切片的修改
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%88%87%e7%89%87%e7%9a%84%e9%95%bf%e5%ba%a6%e5%92%8c%e5%ae%b9%e9%87%8f">
+												 切片的长度和容量
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e8%bf%bd%e5%8a%a0%e5%88%87%e7%89%87%e5%85%83%e7%b4%a0">
+												 追加切片元素
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%88%87%e7%89%87%e7%9a%84%e5%87%bd%e6%95%b0%e4%bc%a0%e9%80%92">
+												 切片的函数传递
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%86%85%e5%ad%98%e4%bc%98%e5%8c%96">
+												 内存优化
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+  
+
+
+  
+  <div class="copyright py-4">
+    
+    <span>  2018 - 2018 &copy; Staught | Theme <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by <a href='https://github.com/orianna-zzo' target="_blank">Orianna</a>  </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://staught.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://staught.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://staught.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>
