@@ -13,7 +13,7 @@
 <meta property="og:description" content="可变参数函数 函数的最后一个参数被记作...T，这时函数可以接受任意个T类型参数作为最后一个参数。注意：只有函数的最后一个参数才允许是可变的。 可变参数函数的工作原理是把可变参数转换为一个新的切片。 不给可变参数传入任何参数，这也是合法的，在这种情况下是一个长度和容量为0的nil切片。 Go有一个语法糖，在切片后加上...后缀，可以直接将切片传入可变参数函数。注意：如果这样做，切片将直接传入函数，不再创建" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-03/" /><meta property="article:published_time" content="2018-11-19T12:17:08&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-19T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-11-20T00:00:00&#43;00:00"/>
 
 
 
@@ -284,7 +284,7 @@
 
     
       <li class="middot"></li>
-      <li>2 minutes read</li>
+      <li>3 minutes read</li>
     
   </ul>
   
@@ -334,6 +334,40 @@
 <li>map之间不能使用<code>==</code>操作符判断，<code>==</code>只能用来检查map是否为nil。所以判断两个map是否相等的方法是遍历比较两个map中的每个元素。</li>
 </ul>
 
+<h1 id="字符串">字符串</h1>
+
+<ul>
+<li>Go语言中的字符串是一个字节切片。</li>
+<li>Go语言中的字符串是兼容Unicode编码的，并且使用UTF-8进行编码。</li>
+<li>rune是Go语言的内建类型，它也是int32的别称。在Go语言中，rune表示一个代码点。代码点无论占用多少个字节，都可以用一个rune来表示。简单地说，rune代表一个字符，所以可以通过将string类型强制转换为rune slice来进行字符的遍历输出。</li>
+<li>Go提供了一种更简单的方法来遍历字符串中的字符，e.g.</li>
+</ul>
+
+<pre><code class="language-go">  func main() {
+      s := &quot;你好世界！Hello&quot;
+      for i, r := range s {
+          fmt.Printf(&quot;[%d-%c]&quot;, i, r)
+      }
+      // Output: [0-你][3-好][6-世][9-界][12-！][15-H][16-e][17-l][18-l][19-o]
+  }
+</code></pre>
+
+<ul>
+<li>utf8 package中的<code>func RuneCountInString(s string) (n int)</code>方法用来获取字符串的长度。这个方法传入一个字符串参数然后返回字符串中的rune数量。</li>
+<li>Go中的字符串是不可变的，一旦一个字符串被创建，那么它将无法被修改。为了修改字符串，可以把字符串转化为一个rune slice，然后这个slice可以进行任何想要的改变，然后再转化为一个字符串。</li>
+</ul>
+
+<h1 id="指针">指针</h1>
+
+<ul>
+<li>指针是一种存储变量内存地址的变量。</li>
+<li>指针变量的类型为<code>*T</code>，该指针指向一个T类型的变量。</li>
+<li>指针的零值是<code>nil</code>。</li>
+<li>指针的解引用可以获取指针所指向的变量的值。将<code>a</code>解引用的语法是<code>*a</code>。</li>
+<li>不要向函数传递数组的指针，而应该使用切片。</li>
+<li>Go语言中不支持指针运算。</li>
+</ul>
+
           </div>
 
           
@@ -375,6 +409,13 @@
             </div>
             
             <div class="col-md-6 text-right" >
+              
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>Go语言拾记-04</span>
+                  </div>
+                </a>
               
             </div>
           </div>
@@ -444,6 +485,50 @@
 										<li class="nav-item">
 						 					<a class="nav-link" href="#map">
 												 Map
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%ad%97%e7%ac%a6%e4%b8%b2">
+												 字符串
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8c%87%e9%92%88">
+												 指针
 											</a>
 										</li>
 						 

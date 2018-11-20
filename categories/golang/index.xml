@@ -6,10 +6,19 @@
     <description>Recent content in Golang on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Mon, 19 Nov 2018 12:17:08 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Nov 2018 20:17:14 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go语言拾记-04</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/</link>
+      <pubDate>Tue, 20 Nov 2018 20:17:14 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/</guid>
+      <description>结构体 结构体的声明 命名结构体，如下创建了名为Employee的新类型，而它可用于创建Employee类型的结构体变量。 type Employee struct { firstName, lastName string age, salary int } 匿名结构体，即声明结构体时可以不用声明一个新类型。 var employee struct { firstName, lastName string age int } 创建命名的结构体 type Employee struct { firstName, lastName string age, salary int } func main() { emp1 := Employee{ firstName: &amp;quot;Sam&amp;quot;, age: 25, salary: 500, lastName: &amp;quot;Anderson&amp;quot;, } emp2 := Employee{&amp;quot;Thomas&amp;quot;, &amp;quot;Paul&amp;quot;, 29, 800} } 上述代码，首先创建了一个命名的结构体Employee。然后通过指定每个字段名的值，定义了结构体变量emp1，</description>
+    </item>
     
     <item>
       <title>Go语言拾记-03</title>
