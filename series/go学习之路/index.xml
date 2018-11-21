@@ -6,44 +6,53 @@
     <description>Recent content in Go学习之路 on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Tue, 20 Nov 2018 20:17:14 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 21 Nov 2018 12:35:35 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Go语言拾记-04</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/</link>
+      <title>Go语言拾记05-方法</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Wed, 21 Nov 2018 12:35:35 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/</guid>
+      <description>方法 什么是方法 方法其实就是一个函数，在func这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。 创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。 func (t Type) methodName(parameter list) { } 为什么已经有函数了还需要方法？ Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途</description>
+    </item>
+    
+    <item>
+      <title>Go语言拾记04-结构体</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B004-%E7%BB%93%E6%9E%84%E4%BD%93/</link>
       <pubDate>Tue, 20 Nov 2018 20:17:14 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B004-%E7%BB%93%E6%9E%84%E4%BD%93/</guid>
       <description>结构体 结构体的声明 命名结构体，如下创建了名为Employee的新类型，而它可用于创建Employee类型的结构体变量。 type Employee struct { firstName, lastName string age, salary int } 匿名结构体，即声明结构体时可以不用声明一个新类型。 var employee struct { firstName, lastName string age int } 创建命名的结构体 type Employee struct { firstName, lastName string age, salary int } func main() { emp1 := Employee{ firstName: &amp;quot;Sam&amp;quot;, age: 25, salary: 500, lastName: &amp;quot;Anderson&amp;quot;, } emp2 := Employee{&amp;quot;Thomas&amp;quot;, &amp;quot;Paul&amp;quot;, 29, 800} } 上述代码，首先创建了一个命名的结构体Employee。然后通过指定每个字段名的值，定义了结构体变量emp1，</description>
     </item>
     
     <item>
-      <title>Go语言拾记-03</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-03/</link>
+      <title>Go语言拾记03-可变参数函数|map|字符串|指针</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B003-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0map%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88/</link>
       <pubDate>Mon, 19 Nov 2018 12:17:08 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-03/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B003-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0map%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88/</guid>
       <description>可变参数函数 函数的最后一个参数被记作...T，这时函数可以接受任意个T类型参数作为最后一个参数。注意：只有函数的最后一个参数才允许是可变的。 可变参数函数的工作原理是把可变参数转换为一个新的切片。 不给可变参数传入任何参数，这也是合法的，在这种情况下是一个长度和容量为0的nil切片。 Go有一个语法糖，在切片后加上...后缀，可以直接将切片传入可变参数函数。注意：如果这样做，切片将直接传入函数，不再创建</description>
     </item>
     
     <item>
-      <title>Go语言拾记-02</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-02/</link>
+      <title>Go语言拾记02-数组|Slice</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B002-%E6%95%B0%E7%BB%84slice/</link>
       <pubDate>Sun, 18 Nov 2018 21:51:13 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-02/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B002-%E6%95%B0%E7%BB%84slice/</guid>
       <description>数组 数组是同一类型元素的集合，Go语言中数组不允许混合不同类型的元素，例如包含字符串和整数的数组（除非是interface{}类型的数组，那么就可以包含任意类型）。 数组的声明 一个数组的表现形式为[n]T。n表示数组中元素的数量，T代表每个元素的类型。注意：元素的数量n也是该类型的一部分，因此[5]int和[25]int是不同的类型。数组声明后不能再调整大小。 声明数组的几种方式： 方式1：var a [3</description>
     </item>
     
     <item>
-      <title>Go语言拾记-01</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-01/</link>
+      <title>Go语言拾记01-变量|类型|常量|函数|包|if-else语句|循环|switch语句</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B001-%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%B8%B8%E9%87%8F%E5%87%BD%E6%95%B0%E5%8C%85if-else%E8%AF%AD%E5%8F%A5%E5%BE%AA%E7%8E%AFswitch%E8%AF%AD%E5%8F%A5/</link>
       <pubDate>Wed, 14 Nov 2018 12:15:39 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-01/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B001-%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%B8%B8%E9%87%8F%E5%87%BD%E6%95%B0%E5%8C%85if-else%E8%AF%AD%E5%8F%A5%E5%BE%AA%E7%8E%AFswitch%E8%AF%AD%E5%8F%A5/</guid>
       <description>变量 声明单个变量，e.g. var age int，变量未被赋值，Go会自动将其初始化为该变量类型的零值。 声明变量并初始化：e.g. var age int = 29。 Go能够根据初始值自动判断变量的类型：e.g. var age = 29。 声明多个变量：e.g. var width, height int、var width, height int = 100, 50。 在一个语句中声明不同类型的变量： package main import &amp;quot;fmt&amp;quot; func main() { var ( name = &amp;quot;staught&amp;quot; age = 29 height int ) // Output: My name: staught, age: 29, height: 0 fmt.Printf(&amp;quot;My name: %s, age: %d, height: %d\n&amp;quot;, name, age, height) } 简短声明：e.g. name, age := &amp;quot;staught&amp;quot;, 29，需要注意： 简</description>
     </item>
     

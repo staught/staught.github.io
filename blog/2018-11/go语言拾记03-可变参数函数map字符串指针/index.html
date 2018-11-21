@@ -9,21 +9,21 @@
   <meta name="author" content="Staught">
   <meta name="description" content="可变参数函数 函数的最后一个参数被记作...T，这时函数可以接受任意个T类型参数作为最后一个参数。注意：只有函数的最后一个参数才允许是可变的。 可变参数函数的工作原理是把可变参数转换为一个新的切片。 不给可变参数传入任何参数，这也是合法的，在这种情况下是一个长度和容量为0的nil切片。 Go有一个语法糖，在切片后加上...后缀，可以直接将切片传入可变参数函数。注意：如果这样做，切片将直接传入函数，不再创建">
   
-  <meta property="og:title" content="Go语言拾记-03" />
+  <meta property="og:title" content="Go语言拾记03-可变参数函数|map|字符串|指针" />
 <meta property="og:description" content="可变参数函数 函数的最后一个参数被记作...T，这时函数可以接受任意个T类型参数作为最后一个参数。注意：只有函数的最后一个参数才允许是可变的。 可变参数函数的工作原理是把可变参数转换为一个新的切片。 不给可变参数传入任何参数，这也是合法的，在这种情况下是一个长度和容量为0的nil切片。 Go有一个语法糖，在切片后加上...后缀，可以直接将切片传入可变参数函数。注意：如果这样做，切片将直接传入函数，不再创建" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-03/" /><meta property="article:published_time" content="2018-11-19T12:17:08&#43;08:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B003-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0map%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88/" /><meta property="article:published_time" content="2018-11-19T12:17:08&#43;08:00"/>
 <meta property="article:modified_time" content="2018-11-20T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记-03 | staught 
+       Go语言拾记03-可变参数函数|map|字符串|指针 | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-03/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B003-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%87%BD%E6%95%B0map%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8C%87%E9%92%88/">
 
   
   
@@ -275,7 +275,7 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记-03</div>
+  <div class="px-4 post-heading">Go语言拾记03-可变参数函数|map|字符串|指针</div>
 
   <ul class="post-meta li-x mt-1">
     
@@ -368,6 +368,15 @@
 <li>Go语言中不支持指针运算。</li>
 </ul>
 
+<p><em>reference:</em></p>
+
+<blockquote>
+<p><a href="https://studygolang.com/articles/12173">https://studygolang.com/articles/12173</a><br />
+<a href="https://studygolang.com/articles/12251">https://studygolang.com/articles/12251</a><br />
+<a href="https://studygolang.com/articles/12261">https://studygolang.com/articles/12261</a><br />
+<a href="https://studygolang.com/articles/12262">https://studygolang.com/articles/12262</a></p>
+</blockquote>
+
           </div>
 
           
@@ -399,10 +408,10 @@
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-02/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B002-%E6%95%B0%E7%BB%84slice/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记-02</span>
+                    <span>Go语言拾记02-数组|Slice</span>
                   </div>
                 </a>
               
@@ -410,10 +419,10 @@
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B0-04/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B004-%E7%BB%93%E6%9E%84%E4%BD%93/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记-04</span>
+                    <span>Go语言拾记04-结构体</span>
                   </div>
                 </a>
               
