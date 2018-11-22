@@ -6,10 +6,19 @@
     <description>Recent content on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Wed, 21 Nov 2018 12:35:35 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 22 Nov 2018 21:55:23 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go语言拾记06-接口</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/</link>
+      <pubDate>Thu, 22 Nov 2018 21:55:23 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/</guid>
+      <description>什么是接口 在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。 接口的声明与实现 如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。 package main import &amp;quot;fmt&amp;quot; type VowelsFinder interface { FindVowels() []rune } type MyString string func (ms MyString) FindVowels() []rune { var vowels []rune for _, c := range ms { if c == &#39;a&#39; || c == &#39;e&#39; || c == &#39;i&#39; || c == &#39;o&#39; || c == &#39;u&#39; { vowels = append(vowels, c) } } return vowels } func main()</description>
+    </item>
     
     <item>
       <title>Go语言拾记05-方法</title>

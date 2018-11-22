@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zn-Hans">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
+  <meta name="author" content="Staught">
+  <meta name="description" content="什么是接口 在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。 接口的声明与实现 如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。 package main import &quot;fmt&quot; type VowelsFinder interface { FindVowels() []rune } type MyString string func (ms MyString) FindVowels() []rune { var vowels []rune for _, c := range ms { if c == &#39;a&#39; || c == &#39;e&#39; || c == &#39;i&#39; || c == &#39;o&#39; || c == &#39;u&#39; { vowels = append(vowels, c) } } return vowels } func main()">
+  
+  <meta property="og:title" content="Go语言拾记06-接口" />
+<meta property="og:description" content="什么是接口 在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。 接口的声明与实现 如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。 package main import &quot;fmt&quot; type VowelsFinder interface { FindVowels() []rune } type MyString string func (ms MyString) FindVowels() []rune { var vowels []rune for _, c := range ms { if c == &#39;a&#39; || c == &#39;e&#39; || c == &#39;i&#39; || c == &#39;o&#39; || c == &#39;u&#39; { vowels = append(vowels, c) } } return vowels } func main()" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/" /><meta property="article:published_time" content="2018-11-22T21:55:23&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-22T00:00:00&#43;00:00"/>
+
+
+
+  <title>
+  
+       Go语言拾记06-接口 | staught 
+  
+  </title>
+
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/">
+
+  
+  
+
+  
+  <link href="https://staught.github.io/css/vendors-extensions/fontawesome/all.min.css" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:300,400,500,600">
+  <link href="https://staught.github.io/css/font.css" rel="stylesheet"> 
+    
+  
+  <link href="https://staught.github.io/css/vendors/bootstrap4/bootstrap.min.css" rel="stylesheet">
+  <link href="https://staught.github.io/css/vendors-extensions/mdb/mdb.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/vendors/mdb/style.min.css" rel="stylesheet"> 
+  <link href="https://staught.github.io/css/main.css" rel="stylesheet">
+
+
+  
+  <link rel="shortcut icon"
+  
+      href="https://staught.github.io/img/golang.png"
+  
+  >
+
+
+  
+  
+
+  <style type="text/css">
+      @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
+
+
+  
+    
+    <link rel="stylesheet" href="https://staught.github.io/js/vendors/katex/katex.min.css">
+  
+  
+
+  
+    
+    <link rel="stylesheet" href="https://staught.github.io/css/vendors/highlight/github-gist.css">
+  
+
+</head>
+
+  <body class="bg-light" data-spy="scroll" data-target="#page-scrollspy" data-offset="90">
+  
+    
+    
+
+    
+      
+
+
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
+    <div class="container">
+
+      
+      <a class="navbar-brand" href="https://staught.github.io">
+        
+        
+        
+        <strong> Staught</strong>
+      </a>
+
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        
+        <ul class="navbar-nav mr-auto ">
+          <li class="nav-item ">
+            <a class="nav-link" href="https://staught.github.io">Home</a>
+          </li>
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/blog/" >Blog  </a>
+            </li>
+          
+             
+            <li class="nav-item ">
+              <a class="nav-link" href="https://staught.github.io/about/" >About  </a>
+            </li>
+          
+          
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  
+ 
+      
+ 
+
+
+
+
+
+
+<div id="site-header" class="carousel slide carousel-fade" data-ride="carousel" style="height: 18rem;" >  
+
+  
+  
+  
+
+  
+  <div class="carousel-inner" role="listbox">
+    
+      
+
+        
+        <div class="carousel-item active">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides/yosemite1.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+              
+              
+              
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+      
+
+        
+        <div class="carousel-item">
+          <div class="view" style="background-image: url('https://staught.github.io/img/header-slides//yosemite2.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+            
+            <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+            
+
+            </div>
+            
+
+          </div>
+        </div>
+        
+      
+    
+
+  
+  </div>
+  
+
+  
+  <div class="carousel-content text-center white-text wow fadeIn">
+    <div class="row mx-0 headfont mt-3 pt-4">
+      
+      <div class="col-12 col-sm-5 align-middle">
+        <a href="https://staught.github.io">
+          
+            <img class="pull-right avatar avatar-md" src="https://staught.github.io/img/avatar.png" alt="" >
+          
+        </a>
+      </div>
+      
+      <div class="col-12 col-sm-7 text-left pl-2">
+        <a href="https://staught.github.io">
+          <h1 class="mb-2 h1" style="font-weight: 300;" >
+            <strong>staught</strong>
+          </h1>
+        </a>
+        
+
+             
+        <div class="mt-2" style="font-size: 1rem; color: white;">
+            
+            
+
+            
+
+            
+
+            
+
+            
+    
+            
+    
+        
+            
+    
+            
+
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  
+  
+  
+
+</div>
+  
+    
+
+    
+  
+  <main class="post-main-wrapper">
+    
+    
+    <div class="row">
+
+      
+
+      
+      <div class="col-md-10">
+      
+
+        
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
+    
+      
+        <li><a href="https://staught.github.io/categories/golang"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> Golang </a></li>
+      
+    
+    
+      
+        <li><a href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>Go学习之路</a></li>
+      
+    
+  </ul>
+
+  <div class="px-4 post-heading">Go语言拾记06-接口</div>
+
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Nov 22, 2018</li>
+    
+
+    
+      <li class="middot"></li>
+      <li>5 minutes read</li>
+    
+  </ul>
+  
+
+</div>
+
+
+          <div class="post-content markdown">
+            
+
+<h3 id="什么是接口">什么是接口</h3>
+
+<p>在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。</p>
+
+<h3 id="接口的声明与实现">接口的声明与实现</h3>
+
+<p>如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type VowelsFinder interface {
+    FindVowels() []rune
+}
+
+type MyString string
+
+func (ms MyString) FindVowels() []rune {
+    var vowels []rune
+    for _, c := range ms {
+        if c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' {
+            vowels = append(vowels, c)
+        }
+    }
+    return vowels
+}
+
+func main() {
+    name := MyString(&quot;Sam Anderson&quot;)
+    var v VowelsFinder
+    v = name
+    fmt.Printf(&quot;Vowels are %c\n&quot;, v.FindVowels()) // Vowels are [a e o]
+}
+</code></pre>
+
+<h3 id="接口的实际用途">接口的实际用途</h3>
+
+<p>通过一个例子来说明接口的实际应用场景：根据公司员工的个人薪资，计算公司的总支出。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type SalaryCalculator interface {
+    CalculateSalary() int
+}
+
+// 长期员工
+type Permanent struct {
+    empId    int
+    basicpay int
+    pf       int
+}
+
+// 合同员工
+type Contract struct {
+    empId    int
+    basicpay int
+}
+
+func (p Permanent) CalculateSalary() int {
+    return p.basicpay + p.pf
+}
+
+func (c Contract) CalculateSalary() int {
+    return c.basicpay
+}
+
+// 这里体现了接口的妙用，totalExpense 可以扩展新的员工类型，假设公司增加了一种新的员工类型
+// Freelancer，它有着不同的薪资结构。Freelancer 只需传递到 totalExpense 的切片参数中，
+// 无需 totalExpense 方法本身进行修改。只要 Freelancer 也实现了 SalaryCalculator 接口，
+// totalExpense 就能够实现其功能。
+func totalExpense(s []SalaryCalculator) {
+    expense := 0
+    for _, v := range s {
+        expense = expense + v.CalculateSalary()
+    }
+    fmt.Printf(&quot;Total expense per month $%d\n&quot;, expense)
+}
+
+func main() {
+    pemp1 := Permanent{1, 5000, 20}
+    pemp2 := Permanent{2, 6000, 30}
+    cemp1 := Contract{3, 3000}
+    employees := []SalaryCalculator{pemp1, pemp2, cemp1}
+    totalExpense(employees) // Total expense per month $14050
+}
+</code></pre>
+
+<h3 id="接口的内部表示">接口的内部表示</h3>
+
+<p>我们可以把接口看作内部的一个元组<code>(type, value)</code>。<code>type</code>是接口底层的具体类型，而<code>value</code>是具体类型的值。举个例子：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type Tester interface {
+    Test()
+}
+
+type MyFloat float64
+
+func (m MyFloat) Test() {
+    fmt.Println(m)
+}
+
+func describe(t Tester) {
+    fmt.Printf(&quot;Interface type %T value %v\n&quot;, t, t)
+}
+
+func main() {
+    var t Tester
+    f := MyFloat(89.7)
+    t = f
+    describe(t) // Interface type main.MyFloat value 89.7
+    t.Test() // 89.7
+}
+</code></pre>
+
+<h3 id="空接口">空接口</h3>
+
+<p>没有包含方法的接口称为空接口。空接口表示为<code>interface{}</code>。由于空接口没有方法，因此所有类型都实现了空接口。</p>
+
+<h3 id="类型断言">类型断言</h3>
+
+<p>类型断言用于提取接口的底层值。在语法<code>i.(T)</code>中，接口<code>i</code>的具体类型是<code>T</code>，该语法用于获得接口的底层值。举个例子：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func assert(i interface{}) {
+    s := i.(int)
+    fmt.Println(s)
+}
+
+func main() {
+    var s interface{} = 56 // s 的具体类型是 int
+    assert(s) // 56
+}
+</code></pre>
+
+<p>在上面的例子中，如果具体类型不是int，assert函数将会报错，所以合理的做法应该是：<code>v, ok := i.(T)</code>，这样，如果<code>i</code>的具体类型是<code>T</code>，那么<code>v</code>赋值为<code>i</code>的底层值，而<code>ok</code>赋值为<code>true</code>；如果<code>i</code>的具体类型不是<code>T</code>，那么<code>ok</code>赋值为<code>false</code>，<code>v</code>赋值为<code>T</code>类型的零值。</p>
+
+<h3 id="类型选择-type-switch">类型选择（Type Switch）</h3>
+
+<p>类型选择用于将接口的具体类型与很多case语句所指定的类型进行比较。它与一般的switch语句类似，唯一的区别在于<strong>类型选择指定的是类型，而一般的switch指定的是值</strong>。</p>
+
+<p>类型选择的语法类似于类型断言。类型断言的语法是<code>i.(T)</code>，而对于类型选择，类型<code>T</code>由关键字<code>type</code>代替，举个例子：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func findType(i interface{}) {
+    switch i.(type) {
+    case string:
+        fmt.Printf(&quot;I'm a string and my value is %s\n&quot;, i.(string))
+    case int:
+        fmt.Printf(&quot;I'm an int and my value is %d\n&quot;, i.(int))
+    default:
+        fmt.Printf(&quot;Unknown type\n&quot;)
+    }
+}
+
+func main() {
+    findType(&quot;Naveen&quot;) // I'm a string and my value is Naveen
+    findType(77)       // I'm an int and my value is 77
+    findType(89.89)    // Unknown type
+}
+</code></pre>
+
+<p>还可以将一个类型和接口相比较。如果一个类型实现了接口，那么该类型与其实现的接口就可以互相比较，看下面例子：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type Describer interface {
+    Describe()
+}
+
+type Person struct {
+    name string
+    age  int
+}
+
+func (p Person) Describe() {
+    fmt.Printf(&quot;%s is %d years old\n&quot;, p.name, p.age)
+}
+
+func findType(i interface{}) {
+    switch v := i.(type) {
+    case Describer:
+        v.Describe()
+    default:
+        fmt.Printf(&quot;Unknown type\n&quot;)
+    }
+}
+
+func main() {
+    findType(&quot;Naveen&quot;) // Unknown type
+
+    p := Person{
+        name: &quot;Naveen R&quot;,
+        age:  25,
+    }
+    findType(p) // Naveen R is 25 years old
+}
+</code></pre>
+
+<h3 id="实现接口-指针接收者与值接收者">实现接口：指针接收者与值接收者</h3>
+
+<p>我们可以使用值接收者或者指针接收者来实现接口，但在使用指针接收者实现接口时，有一些细节需要注意，如下代码：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type Describer interface {
+    Describe()
+}
+
+type Person struct {
+    name string
+    age  int
+}
+
+func (p Person) Describe() { // 使用值接收者实现了 Describer 接口
+    fmt.Printf(&quot;%s is %d years old\n&quot;, p.name, p.age)
+}
+
+type Address struct {
+    state   string
+    country string
+}
+
+func (a *Address) Describe() { // 使用指针接收者实现了 Describer 接口
+    fmt.Printf(&quot;State %s Country %s\n&quot;, a.state, a.country)
+}
+
+func main() {
+    var d1 Describer
+    p1 := Person{&quot;Sam&quot;, 25}
+    d1 = p1
+    d1.Describe() // Sam is 25 years old
+    p2 := Person{&quot;James&quot;, 32}
+    d1 = &amp;p2
+    d1.Describe() // James is 32 years old
+
+    var d2 Describer
+    a := Address{&quot;Washington&quot;, &quot;USA&quot;}
+    
+    // 如果取消下面 d2 = a 这行注释会导致编译报错：因为编译器无法自动获取 a 的地址
+    // cannot use a (type Address) as type Describer in assignment: Address 
+    // does not implement Describer (Describe method has pointer receiver)
+    // d2 = a
+
+    d2 = &amp;a
+    d2.Describe()
+}
+</code></pre>
+
+<p>总结：对于使用指针接收者的<strong>方法</strong>，用一个指针或者一个可取得地址的值来调用都是合法的。而对于<strong>接口</strong>不同，使用值接收者实现接口的对象，可以把它的值或者指向它的指针赋值给接口变量；而使用指针接收者实现接口的对象，则必须把它的指针赋值给接口变量。</p>
+
+<h3 id="实现多个接口">实现多个接口</h3>
+
+<p>假设我们声明了两个接口：<code>SalaryCalculator</code>和<code>LeaveCalculator</code>，而结构体<code>Employee</code>同时实现了<code>SalaryCalculator</code>和<code>LeaveCalculator</code>接口的方法，那么<code>Employee</code>就实现了<code>SalaryCalculator</code>和<code>LeaveCalculator</code>两个接口。而结构体<code>Employee</code>变量可以赋值给<code>SalaryCalculator</code>类型的接口变量，也可以赋值给<code>LeaveCalculator</code>类型的接口变量。</p>
+
+<h3 id="接口的嵌套">接口的嵌套</h3>
+
+<p>Go语言没有提供继承机制，但可以通过嵌套其它的接口来创建一个新接口。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type SalaryCalculator interface {
+    DisplaySalary()
+}
+
+type LeaveCalculator interface {
+    CalculateLeavesLeft() int
+}
+
+type EmployeeOperations interface {
+    SalaryCalculator
+    LeaveCalculator
+}
+
+type Employee struct {
+    firstName   string
+    lastName    string
+    basicPay    int
+    pf          int
+    totalLeaves int
+    leavesTaken int
+}
+
+func (e Employee) DisplaySalary() {
+    fmt.Printf(&quot;%s %s has salary $%d\n&quot;, e.firstName, e.lastName, e.basicPay+e.pf)
+}
+
+func (e Employee) CalculateLeavesLeft() int {
+    return e.totalLeaves - e.leavesTaken
+}
+
+func main() {
+    e := Employee{
+        firstName:   &quot;Naveen&quot;,
+        lastName:    &quot;Ramanathan&quot;,
+        basicPay:    5000,
+        pf:          200,
+        totalLeaves: 30,
+        leavesTaken: 5,
+    }
+    var empOp EmployeeOperations = e
+    empOp.DisplaySalary() // Naveen Ramanathan has salary $5200
+    fmt.Printf(&quot;Leaves left = %d\n&quot;, empOp.CalculateLeavesLeft()) // Leaves left = 25
+}
+</code></pre>
+
+<h3 id="接口的零值">接口的零值</h3>
+
+<p>接口的零值是<code>nil</code>。对于值为<code>nil</code>的接口，其底层值和具体类型都为<code>nil</code>，当试图调用它的方法时，程序会产生panic异常。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type Describer interface {
+    Describe()
+}
+
+func main() {
+    var d Describer
+    if d == nil {
+        // Output: d is nil and has type &lt;nil&gt; value &lt;nil&gt;
+        fmt.Printf(&quot;d is nil and has type %T value %v\n&quot;, d, d)
+    }
+}
+</code></pre>
+
+<p><em>reference:</em></p>
+
+<blockquote>
+<p><a href="https://studygolang.com/articles/12325">https://studygolang.com/articles/12325</a></p>
+</blockquote>
+
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
+            
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://staught.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
+    
+      <li><a href="https://staught.github.io/tags/golang" role="button">golang </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
+      
+    
+  </div>
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>Go语言拾记05-方法</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+		
+		
+		
+	
+
+		
+		<div class="col-md-2 pl-0">
+
+			
+			<div id="page-scrollspy" class="toc-nav">
+				
+				<ul class="nav nav-pills ml-0">
+					
+					<li class="nav-item pb-3 text-center">
+						<span class="font-weight-bold mb-2">- CATALOG - </span>
+					</li>
+
+					
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%8e%a5%e5%8f%a3">
+												 什么是接口
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8e%a5%e5%8f%a3%e7%9a%84%e5%a3%b0%e6%98%8e%e4%b8%8e%e5%ae%9e%e7%8e%b0">
+												 接口的声明与实现
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8e%a5%e5%8f%a3%e7%9a%84%e5%ae%9e%e9%99%85%e7%94%a8%e9%80%94">
+												 接口的实际用途
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8e%a5%e5%8f%a3%e7%9a%84%e5%86%85%e9%83%a8%e8%a1%a8%e7%a4%ba">
+												 接口的内部表示
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%a9%ba%e6%8e%a5%e5%8f%a3">
+												 空接口
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e6%96%ad%e8%a8%80">
+												 类型断言
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%b1%bb%e5%9e%8b%e9%80%89%e6%8b%a9-type-switch">
+												 类型选择（Type Switch）
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%ae%9e%e7%8e%b0%e6%8e%a5%e5%8f%a3-%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e8%80%85%e4%b8%8e%e5%80%bc%e6%8e%a5%e6%94%b6%e8%80%85">
+												 实现接口：指针接收者与值接收者
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%ae%9e%e7%8e%b0%e5%a4%9a%e4%b8%aa%e6%8e%a5%e5%8f%a3">
+												 实现多个接口
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8e%a5%e5%8f%a3%e7%9a%84%e5%b5%8c%e5%a5%97">
+												 接口的嵌套
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%8e%a5%e5%8f%a3%e7%9a%84%e9%9b%b6%e5%80%bc">
+												 接口的零值
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+
+				</ul>
+			</div>
+			
+
+		</div>
+		
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
+
+    
+    
+
+<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+  
+
+
+  
+  <div class="copyright py-4">
+    
+    <span>  2018 - 2018 &copy; Staught | Theme <a href='https://github.com/orianna-zzo/AllinOne' target="_blank">AllinOne</a> by <a href='https://github.com/orianna-zzo' target="_blank">Orianna</a>  </span>
+  </div>
+  
+
+</footer>
+
+
+    
+
+
+
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/jquery/jquery.smooth-scroll.min.js"></script>
+
+
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/popper.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors/holder.min.js"></script>
+<script type="text/javascript" src="https://staught.github.io/js/vendors-extensions/bootstrap4/bootstrap.js" ></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/vendors/mdb/mdb.min.js"></script>
+
+<script type="text/javascript" src="https://staught.github.io/js/main.js"></script>
+
+
+
+  
+  <script src="https://staught.github.io/js/vendors/highlight.pack.js"> </script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+ 
+  <script src="https://staught.github.io/js/vendors/katex/katex.min.js"> </script>
+  <script src="https://staught.github.io/js/vendors/katex/contrib/auto-render.min.js"></script>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          renderMathInElement(document.body);
+      });
+  </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  
+  new WOW().init();
+</script>
+
+
+
+
+  </body>
+</html>
