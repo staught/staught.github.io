@@ -6,7 +6,7 @@
     <description>Recent content in Tags on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Thu, 22 Nov 2018 21:55:23 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 23 Nov 2018 11:03:17 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,27 @@
     <item>
       <title>Golang</title>
       <link>https://staught.github.io/tags/golang/</link>
-      <pubDate>Thu, 22 Nov 2018 21:55:23 +0800</pubDate>
+      <pubDate>Fri, 23 Nov 2018 11:03:17 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Goroutine</title>
+      <link>https://staught.github.io/tags/goroutine/</link>
+      <pubDate>Fri, 23 Nov 2018 11:03:17 +0800</pubDate>
+      
+      <guid>https://staught.github.io/tags/goroutine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Interface</title>
+      <link>https://staught.github.io/tags/interface/</link>
+      <pubDate>Thu, 22 Nov 2018 21:55:23 +0800</pubDate>
+      
+      <guid>https://staught.github.io/tags/interface/</guid>
       <description></description>
     </item>
     
@@ -32,7 +50,7 @@
     <item>
       <title>Syntax</title>
       <link>https://staught.github.io/tags/syntax/</link>
-      <pubDate>Thu, 22 Nov 2018 21:55:23 +0800</pubDate>
+      <pubDate>Fri, 23 Nov 2018 11:03:17 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/syntax/</guid>
       <description></description>
