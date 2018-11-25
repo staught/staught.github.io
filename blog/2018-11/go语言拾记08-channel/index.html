@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="并发 Go是并发式语言，而不是并行式语言。 并发是什么？ 并发是指立即处理多个任务的能力。举个例子：假如一个人在跑步，他的鞋带突然松了。于是他停下来，系一下鞋带，接下来继续跑。这就可理解为并发，这个人能够一下搞定跑步和系鞋带两件事，即立即处理多个任务。 并行是什么？ 并行是指同时处理多个任务。举个例子：假如一个人在跑步时，还在用iPod听着音乐。在这里，他是在跑步的同时听音乐，也就是同时处理多个任务，这称之">
+  <meta name="description" content="什么是信道？ 信道是Go协程之间通信的管道，通过使用信道，数据可以从一端发送，在另一端接收。 信道的声明 所有信道都关联了一个类型，信道只能运输关联类型的数据。 chan T表示T类型的信道。 信道的零值为nil，信道的零值没有什么用，如map和slice，用make来定义信道。 定义信道的简洁有效的方法：ch := make(chan int)。 通过信道进行发送和接收 通过信道进行发送和接收数据的语法（通过信道旁的箭头方向来判断是读还是写）">
   
-  <meta property="og:title" content="Go语言拾记07-并发" />
-<meta property="og:description" content="并发 Go是并发式语言，而不是并行式语言。 并发是什么？ 并发是指立即处理多个任务的能力。举个例子：假如一个人在跑步，他的鞋带突然松了。于是他停下来，系一下鞋带，接下来继续跑。这就可理解为并发，这个人能够一下搞定跑步和系鞋带两件事，即立即处理多个任务。 并行是什么？ 并行是指同时处理多个任务。举个例子：假如一个人在跑步时，还在用iPod听着音乐。在这里，他是在跑步的同时听音乐，也就是同时处理多个任务，这称之" />
+  <meta property="og:title" content="Go语言拾记08-Channel" />
+<meta property="og:description" content="什么是信道？ 信道是Go协程之间通信的管道，通过使用信道，数据可以从一端发送，在另一端接收。 信道的声明 所有信道都关联了一个类型，信道只能运输关联类型的数据。 chan T表示T类型的信道。 信道的零值为nil，信道的零值没有什么用，如map和slice，用make来定义信道。 定义信道的简洁有效的方法：ch := make(chan int)。 通过信道进行发送和接收 通过信道进行发送和接收数据的语法（通过信道旁的箭头方向来判断是读还是写）" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/" /><meta property="article:published_time" content="2018-11-23T11:03:17&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-23T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/" /><meta property="article:published_time" content="2018-11-25T22:26:31&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-25T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记07-并发 | staught 
+       Go语言拾记08-Channel | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/">
 
   
   
@@ -275,16 +275,16 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记07-并发</div>
+  <div class="px-4 post-heading">Go语言拾记08-Channel</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Nov 23, 2018</li>
+      <li>Nov 25, 2018</li>
     
 
     
       <li class="middot"></li>
-      <li>3 minutes read</li>
+      <li>4 minutes read</li>
     
   </ul>
   
@@ -295,63 +295,218 @@
           <div class="post-content markdown">
             
 
-<h1 id="并发">并发</h1>
+<h3 id="什么是信道">什么是信道？</h3>
 
-<p>Go是<strong>并发式语言</strong>，而不是并行式语言。</p>
+<p>信道是Go协程之间通信的管道，通过使用信道，数据可以从一端发送，在另一端接收。</p>
 
-<h3 id="并发是什么">并发是什么？</h3>
-
-<p><strong>并发</strong>是指<strong>立即</strong>处理多个任务的能力。举个例子：假如一个人在跑步，他的鞋带突然松了。于是他停下来，系一下鞋带，接下来继续跑。这就可理解为并发，这个人能够一下搞定跑步和系鞋带两件事，即立即处理多个任务。</p>
-
-<h3 id="并行是什么">并行是什么？</h3>
-
-<p><strong>并行</strong>是指<strong>同时</strong>处理多个任务。举个例子：假如一个人在跑步时，还在用iPod听着音乐。在这里，他是在跑步的同时听音乐，也就是同时处理多个任务，这称之为并行。</p>
-
-<h3 id="从技术上看并发和并行">从技术上看并发和并行</h3>
-
-<p>假如我们正在编写一个web浏览器。这个web浏览器有各种组件，其中两个分别是web页面的渲染区和从网上下载文件的下载器。假设我们已经构建好了浏览器代码，各个组件也都可以相互独立地运行。</p>
-
-<p>当浏览器在单核处理器中运行时，处理器会在浏览器的两个组件间进行上下文切换。它可能在一段时间内下载，转而又对用户请求的web页面进行渲染。这就是并发。并发的进程从不同的时间点开始，分别交替运行。在这里，就是在不同的时间点开始进行下载和渲染，并相互交替运行的。</p>
-
-<p>如果该浏览器在一个多核处理器上运行，此时下载文件的组件和渲染HTML的组件可能会在不同的核上同时运行。这称之为并行。</p>
-
-<p>注意：<strong>并行不一定会加快运行速度</strong>，因为并行运行的组件之间可能需要相互通信。在浏览器的例子里，当文件下载完成后，应当对用户进行提醒，比如弹出一个窗口。于是，在负责下载的组件和负责渲染用户界面的组件之间，就产生了通信。在并发系统上，这种通信开销很小。但在多核的并行系统上，组件间的通信开销就很高了。所以，并行不一定会加快运行速度！</p>
-
-<h3 id="go对并发的支持">Go对并发的支持</h3>
-
-<p>Go语言原声支持并发。Go使用<strong>Go协程</strong>（goroutine）和<strong>信道</strong>（channel）来处理并发。</p>
-
-<hr />
-
-<h1 id="go协程">Go协程</h1>
-
-<p>Go协程是与其它函数或方法一起并发运行的函数或方法。Go协程可以看作是轻量级线程。与线程相比，创建一个Go协程的成本很小。</p>
-
-<h3 id="go协程相比于线程的优势">Go协程相比于线程的优势</h3>
+<h3 id="信道的声明">信道的声明</h3>
 
 <ul>
-<li>相比线程而言，Go协程的成本极低。堆栈大小只有若干KB，并且可以根据应用的需求进行增减。而线程必须指定堆栈的大小，其堆栈是固定不变的。</li>
-<li>Go协程会复用（Multiplex）数量更少的OS线程。即使程序有数以千计的Go协程，也可能只有一个线程。如果该线程中的某一Go协程发生了阻塞（比如说等待用户输入），那么系统会再创建一个OS线程，并把其余Go协程都移动到这个新的OS线程。所有这一切都在运行时进行。</li>
-<li>Go协程使用Channel来进行通信。Channel用于防止多个协程访问共享内存时发生竞态条件（Race Condition）。Channel可以看作是Go协程之间通信的管道。</li>
+<li>所有信道都关联了一个类型，信道只能运输关联类型的数据。</li>
+<li><code>chan T</code>表示<code>T</code>类型的信道。</li>
+<li>信道的零值为<code>nil</code>，信道的零值没有什么用，如map和slice，用<code>make</code>来定义信道。</li>
+<li>定义信道的简洁有效的方法：<code>ch := make(chan int)</code>。</li>
 </ul>
 
-<h3 id="启动一个go协程">启动一个Go协程</h3>
+<h3 id="通过信道进行发送和接收">通过信道进行发送和接收</h3>
 
-<p>调用函数或者方法时，在前面加上关键字<code>go</code>，就可以让一个新的Go协程并发地运行。</p>
+<p>通过信道进行发送和接收数据的语法（通过信道旁的箭头方向来判断是读还是写）：</p>
 
-<p>但需要理解两个Go协程的主要性质：</p>
+<pre><code class="language-go">a &lt;- data   // 写入信道a
+data := &lt;-a // 读取信道a
+</code></pre>
+
+<h3 id="发送与接收默认是阻塞的">发送与接收默认是阻塞的</h3>
 
 <ul>
-<li>启动一个新的协程时，协程的调用会立即返回。与函数不同，程序控制不会去等待Go协程执行完毕。在调用Go协程之后，程序控制会立即返回到代码的下一行，忽略该协程的任何返回值。</li>
-<li>如果希望运行其它Go协程，Go主协程必须继续运行着。如果Go主协程终止，则程序终止。于是其它Go协程也不会继续运行。</li>
+<li>当把数据发送到信道时，程序控制会在发送数据的语句处发生阻塞，直到有其它goroutine从信道读取数据，才会解除阻塞。</li>
+<li>同理，当读取信道的数据时，如果没有其它的goroutine把数据写入到这个信道，那么读取过程就会一直阻塞着。</li>
 </ul>
 
-<p><em>reference:</em></p>
+<p><strong>Note</strong>：信道的这种特性能够帮助goroutine之间进行高效的通信，不需要用到其它编程语言常见的显式锁或条件变量。</p>
 
-<blockquote>
-<p><a href="https://studygolang.com/articles/12341">https://studygolang.com/articles/12341</a><br />
-<a href="https://studygolang.com/articles/12342">https://studygolang.com/articles/12342</a></p>
-</blockquote>
+<h3 id="信道的代码示例">信道的代码示例</h3>
+
+<p>示例程序会计算一个数中每一位的平方和与立方和，然后把平方和与立方和相加并打印结果。例如，如果输入是123，该程序会作如下计算：</p>
+
+<pre><code>squares = (1*1) + (2*2) + (3*3)
+cubes = (1*1*1) + (2*2*2) + (3*3*3)
+output = squares + cubes = 50
+</code></pre>
+
+<p>我们可以这样构建程序：在一个单独的goroutine里计算平方和，在另一个goroutine里计算立方和，最后在主协程里把它们的结果相加。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func calcSquares(number int, squareop chan int) {
+    sum := 0
+    for number != 0 {
+        digit := number % 10
+        sum += digit * digit
+        number /= 10
+    }
+    squareop &lt;- sum
+}
+
+func calcCubes(number int, cubeop chan int) {
+    sum := 0
+    for number != 0 {
+        digit := number % 10
+        sum += digit * digit * digit
+        number /= 10
+    }
+    cubeop &lt;- sum
+}
+
+func main() {
+    number := 589
+    sqrch := make(chan int)
+    cubech := make(chan int)
+    go calcSquares(number, sqrch)
+    go calcCubes(number, cubech)
+    squares, cubes := &lt;-sqrch, &lt;-cubech
+    fmt.Println(&quot;Final output:&quot;, squares+cubes) // Final output: 1536
+}
+</code></pre>
+
+<h3 id="死锁">死锁</h3>
+
+<p>使用信道需要考虑的一个重点是死锁。</p>
+
+<ul>
+<li>当goroutine给一个信道发送数据时，照理说会有其它的goroutine来接收数据，如果没有的话，程序就会在运行时触发panic，形成死锁。</li>
+<li>同理，当有goroutine等着从一个信道接收数据时，我们期望其它的goroutine会向该信道写入数据，要不然程序就会触发panic。</li>
+</ul>
+
+<h3 id="单向信道">单向信道</h3>
+
+<p>在双向信道中，既能发送数据，又能接收数据。其实也可以创建单向信道，这种信道只能发送或者接收数据。</p>
+
+<p>那么单向信道的意义何在呢？</p>
+
+<p>先要了解<strong>信道转换</strong>：把一个双向信道转换成唯送信道或者唯收信道都是行得通的，但是反过来就不行。所以说，真正使用过程中，一般我们需要在外部申请一个双向信道，然后传递给函数后，转换为单向信道，这主要是方便函数内部做访问控制。举个例子方便理解：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+// 我们的函数只需要发送数据，通过参数里指定唯送信道，
+// 表达明确，也避免函数内部通过信道去接收数据的操作
+func sendData(sendch chan&lt;- int) {
+    sendch &lt;- 10
+}
+
+func main() {
+    cha1 := make(chan int)
+    go sendData(cha1)
+    fmt.Println(&lt;-cha1) // 10
+}
+</code></pre>
+
+<h3 id="关闭信道和使用for-range遍历信道">关闭信道和使用for range遍历信道</h3>
+
+<p>数据发送方可以关闭信道，通知接收方这个信道不再有数据发送过来。当从信道接收数据时，接收方可以多用一个变量来检查信道是否已经关闭：<code>v, ok := &lt;-ch</code>。上述语句，如果成功接收信道里的数据，那么<code>ok</code>等于true，而如果<code>ok</code>等于false，说明我们试图读取一个关闭的信道。从关闭的信道读取到的值会是该信道类型的零值。</p>
+
+<p>通过一个例子来理解关闭信道的意义：</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func producer(ch chan int) {
+    for i := 0; i &lt; 10; i++ {
+        ch &lt;- i
+    }
+    close(ch)
+}
+
+func main() {
+    ch := make(chan int)
+    go producer(ch)
+    for {
+        v, ok := &lt;-ch
+        if ok == false {
+            break
+        }
+        // 0-true 1-true 2-true 3-true 4-true 5-true 6-true 7-true 8-true 9-true
+        fmt.Printf(&quot;%v-%v &quot;, v, ok)
+    }
+}
+</code></pre>
+
+<p>Go还给我们提供了一种更方便的方式：<strong>for range循环用于在一个信道关闭之前，从信道接收数据</strong>。</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func producer(ch chan int) {
+    for i := 0; i &lt; 10; i++ {
+        ch &lt;- i
+    }
+    close(ch)
+}
+
+func main() {
+    ch := make(chan int)
+    go producer(ch)
+    
+    // for range 循环从信道 ch 接收数据，直到该信道关闭，一旦关闭了 ch，
+    // 循环会自动结束。这里需要注意一点，假设 producer 里关闭了信道，但是
+    // 这里还没读取完毕，会继续读取直到信道里的数据都取出然后自动退出循环。
+    for v := range ch {
+        fmt.Printf(&quot;%v &quot;, v) // 0 1 2 3 4 5 6 7 8 9
+    }
+}
+</code></pre>
+
+<p>使用for range来改进前面的平方和例子，使程序看起来更加高并发，更地道的Go！</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func digit(number int, dchnl chan int) {
+    for number != 0 {
+        digit := number % 10
+        dchnl &lt;- digit
+        number /= 10
+    }
+    close(dchnl)
+}
+
+func calcSquares(number int, squareop chan int) {
+    sum := 0
+    dch := make(chan int)
+    go digit(number, dch)
+    for digit := range dch {
+        sum += digit * digit
+    }
+    squareop &lt;- sum
+}
+
+func calcCubes(number int, cubeop chan int) {
+    sum := 0
+    dch := make(chan int)
+    go digit(number, dch)
+    for digit := range dch {
+        sum += digit * digit * digit
+    }
+    cubeop &lt;- sum
+}
+
+func main() {
+    number := 589
+    sqrch := make(chan int)
+    cubech := make(chan int)
+    go calcSquares(number, sqrch)
+    go calcCubes(number, cubech)
+    squares, cubes := &lt;-sqrch, &lt;-cubech
+    fmt.Println(&quot;Final output:&quot;, squares+cubes) // Final output: 1536
+}
+</code></pre>
 
           </div>
 
@@ -374,6 +529,9 @@
       <li><a href="https://staught.github.io/tags/goroutine" role="button">goroutine </a></li>
       
     
+      <li><a href="https://staught.github.io/tags/channel" role="button">channel </a></li>
+      
+    
   </div>
 </div>
               </div>
@@ -387,23 +545,16 @@
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记06-接口</span>
+                    <span>Go语言拾记07-并发</span>
                   </div>
                 </a>
               
             </div>
             
             <div class="col-md-6 text-right" >
-              
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/ class="post-meta">Next
-                  <div class="pt-2 pb-5 flex-reverse">
-                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记08-Channel</span>
-                  </div>
-                </a>
               
             </div>
           </div>
@@ -446,43 +597,17 @@
 								
 									<ul class="nav">
 								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%b9%b6%e5%8f%91">
-												 并发
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
 									<ul class="nav">
 								
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%b9%b6%e5%8f%91%e6%98%af%e4%bb%80%e4%b9%88">
-												 并发是什么？
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e4%bf%a1%e9%81%93">
+												 什么是信道？
 											</a>
 										</li>
 						 
 								
-								
-									</ul>
 								
 									</ul>
 								
@@ -500,19 +625,15 @@
 								
 									<ul class="nav">
 								
-									<ul class="nav">
-								
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%b9%b6%e8%a1%8c%e6%98%af%e4%bb%80%e4%b9%88">
-												 并行是什么？
+						 					<a class="nav-link" href="#%e4%bf%a1%e9%81%93%e7%9a%84%e5%a3%b0%e6%98%8e">
+												 信道的声明
 											</a>
 										</li>
 						 
 								
-								
-									</ul>
 								
 									</ul>
 								
@@ -530,19 +651,15 @@
 								
 									<ul class="nav">
 								
-									<ul class="nav">
-								
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%8e%e6%8a%80%e6%9c%af%e4%b8%8a%e7%9c%8b%e5%b9%b6%e5%8f%91%e5%92%8c%e5%b9%b6%e8%a1%8c">
-												 从技术上看并发和并行
+						 					<a class="nav-link" href="#%e9%80%9a%e8%bf%87%e4%bf%a1%e9%81%93%e8%bf%9b%e8%a1%8c%e5%8f%91%e9%80%81%e5%92%8c%e6%8e%a5%e6%94%b6">
+												 通过信道进行发送和接收
 											</a>
 										</li>
 						 
 								
-								
-									</ul>
 								
 									</ul>
 								
@@ -560,71 +677,15 @@
 								
 									<ul class="nav">
 								
-									<ul class="nav">
-								
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#go%e5%af%b9%e5%b9%b6%e5%8f%91%e7%9a%84%e6%94%af%e6%8c%81">
-												 Go对并发的支持
+						 					<a class="nav-link" href="#%e5%8f%91%e9%80%81%e4%b8%8e%e6%8e%a5%e6%94%b6%e9%bb%98%e8%ae%a4%e6%98%af%e9%98%bb%e5%a1%9e%e7%9a%84">
+												 发送与接收默认是阻塞的
 											</a>
 										</li>
 						 
 								
-								
-									</ul>
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#go%e5%8d%8f%e7%a8%8b">
-												 Go协程
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#go%e5%8d%8f%e7%a8%8b%e7%9b%b8%e6%af%94%e4%ba%8e%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%bc%98%e5%8a%bf">
-												 Go协程相比于线程的优势
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
 								
 									</ul>
 								
@@ -642,19 +703,93 @@
 								
 									<ul class="nav">
 								
-									<ul class="nav">
-								
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%90%af%e5%8a%a8%e4%b8%80%e4%b8%aago%e5%8d%8f%e7%a8%8b">
-												 启动一个Go协程
+						 					<a class="nav-link" href="#%e4%bf%a1%e9%81%93%e7%9a%84%e4%bb%a3%e7%a0%81%e7%a4%ba%e4%be%8b">
+												 信道的代码示例
 											</a>
 										</li>
 						 
 								
 								
 									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e6%ad%bb%e9%94%81">
+												 死锁
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%8d%95%e5%90%91%e4%bf%a1%e9%81%93">
+												 单向信道
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%85%b3%e9%97%ad%e4%bf%a1%e9%81%93%e5%92%8c%e4%bd%bf%e7%94%a8for-range%e9%81%8d%e5%8e%86%e4%bf%a1%e9%81%93">
+												 关闭信道和使用for range遍历信道
+											</a>
+										</li>
+						 
+								
 								
 									</ul>
 								
