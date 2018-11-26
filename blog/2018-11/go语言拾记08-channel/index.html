@@ -13,7 +13,7 @@
 <meta property="og:description" content="什么是信道？ 信道是Go协程之间通信的管道，通过使用信道，数据可以从一端发送，在另一端接收。 信道的声明 所有信道都关联了一个类型，信道只能运输关联类型的数据。 chan T表示T类型的信道。 信道的零值为nil，信道的零值没有什么用，如map和slice，用make来定义信道。 定义信道的简洁有效的方法：ch := make(chan int)。 通过信道进行发送和接收 通过信道进行发送和接收数据的语法（通过信道旁的箭头方向来判断是读还是写）" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/" /><meta property="article:published_time" content="2018-11-25T22:26:31&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-25T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-11-26T00:00:00&#43;00:00"/>
 
 
 
@@ -284,7 +284,7 @@
 
     
       <li class="middot"></li>
-      <li>4 minutes read</li>
+      <li>6 minutes read</li>
     
   </ul>
   
@@ -386,14 +386,14 @@ func main() {
 
 <p>那么单向信道的意义何在呢？</p>
 
-<p>先要了解<strong>信道转换</strong>：把一个双向信道转换成唯送信道或者唯收信道都是行得通的，但是反过来就不行。所以说，真正使用过程中，一般我们需要在外部申请一个双向信道，然后传递给函数后，转换为单向信道，这主要是方便函数内部做访问控制。举个例子方便理解：</p>
+<p>先要了解<strong>信道转换</strong>：把一个双向信道转换成唯送信道(<code>chan&lt;-</code>)或者唯收信道(<code>&lt;-chan</code>)都是行得通的，但是反过来就不行。所以说，真正使用过程中，一般我们需要在外部申请一个双向信道，然后传递给函数后，转换为单向信道，这主要是方便函数内部做访问控制。举个例子方便理解：</p>
 
 <pre><code class="language-go">package main
 
 import &quot;fmt&quot;
 
 // 我们的函数只需要发送数据，通过参数里指定唯送信道，
-// 表达明确，也避免函数内部通过信道去接收数据的操作
+// 表达明确，也避免函数内部通过信道去接收数据的操作。
 func sendData(sendch chan&lt;- int) {
     sendch &lt;- 10
 }
@@ -462,7 +462,7 @@ func main() {
 }
 </code></pre>
 
-<p>使用for range来改进前面的平方和例子，使程序看起来更加高并发，更地道的Go！</p>
+<p>使用for range来改进前面的平方和例子，编写更加高并发，更地道的Go！</p>
 
 <pre><code class="language-go">package main
 
@@ -507,6 +507,137 @@ func main() {
     fmt.Println(&quot;Final output:&quot;, squares+cubes) // Final output: 1536
 }
 </code></pre>
+
+<h3 id="缓冲信道">缓冲信道</h3>
+
+<p>无缓冲信道的发送和接收过程是阻塞的。我们还可以创建一个有缓冲的信道。只有在缓冲已满的情况，才会阻塞向缓冲信道发送数据。同样，只有在缓冲为空的时候，才会阻塞从缓冲信道接收数据。</p>
+
+<p>通过向<code>make</code>函数再传递一个表示容量的参数（指定缓冲的大小）<code>ch := make(chan type, capacity)</code>，可以创建缓冲信道。</p>
+
+<p>要让一个信道有缓冲，上面语法中的<code>capacity</code>应该大于0。无缓冲信道的容量默认为0。</p>
+
+<h3 id="长度-容量">长度、容量</h3>
+
+<ul>
+<li>缓冲信道的容量是指信道可以存储的值的数量。</li>
+<li>缓冲信道的长度是指信道中当前排队的元素个数。</li>
+</ul>
+
+<h3 id="waitgroup">WaitGroup</h3>
+
+<p><code>WaitGroup</code>用于等待一批Go协程执行结束。程序控制会一直阻塞，直到这些协程全部执行完毕。</p>
+
+<p><code>WaitGroup</code>使用计数器来工作，通过<code>Add()</code>添加计数，通过<code>Done()</code>减小计数，<code>Wait()</code>方法会阻塞调用它的Go协程，直到计数器变为0后才会停止阻塞。</p>
+
+<p>另外需要注意，作为参数时，需要将<code>WaitGroup</code>的指针传递给函数。</p>
+
+<h3 id="工作池的实现">工作池的实现</h3>
+
+<p>缓冲信道的重要应用之一就是实现工作池。一般而言，工作池就是一组等待任务分配的线程。一旦完成了所分配的任务，这些线程可继续等待任务的分配。</p>
+
+<p>下面是一个用缓冲信道实现工作池的例子，工作池的任务是计算所输入数字的每一位的和，例如，输入234，结果就是9（2+3+4），向工作池输入的是一系列伪随机数。</p>
+
+<pre><code class="language-go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;math/rand&quot;
+    &quot;sync&quot;
+    &quot;time&quot;
+)
+
+// 表示作业
+type Job struct {
+    id       int // 作业ID
+    randomno int // 待计算的数
+}
+
+// 表示结果
+type Result struct {
+    job         Job // 对应的作业
+    sumofdigits int // 计算的结果
+}
+
+var jobs = make(chan Job, 10)       // 接收作业的缓冲信道
+var results = make(chan Result, 10) // 写入结果的缓冲信道
+
+// 计算整数的每一位之和，返回结果。
+func digits(number int) int {
+    sum := 0
+    no := number
+    for no != 0 {
+        digit := no % 10
+        sum += digit
+        no /= 10
+    }
+    time.Sleep(2 * time.Second)
+    return sum
+}
+
+// 工作协程：监听缓冲信道jobs里更新的作业，一旦完成了计算任务，
+// 其结果会写入缓冲信道results。
+func worker(wg *sync.WaitGroup) {
+    for job := range jobs {
+        output := Result{job, digits(job.randomno)}
+        results &lt;- output
+    }
+    wg.Done()
+}
+
+// 创建Go协程的工作池，参数是需要创建的工作协程的数量。创建了指定数量
+// 的工作协程后，调用wg.Wait()，等待所有goroutine执行完毕。所有协程
+// 完成执行后，关闭results信道。因为所有协程都已执行完毕，于是不再需要
+// 向results信道写入数据了。
+func createWorkerPool(noOfWorkers int) {
+    var wg sync.WaitGroup
+    for i := 0; i &lt; noOfWorkers; i++ {
+        wg.Add(1)
+        go worker(&amp;wg)
+    }
+    wg.Wait()
+    close(results)
+}
+
+// 分配作业，当写入所有job后，关闭jobs信道。
+func allocate(noOfJobs int) {
+    for i := 0; i &lt; noOfJobs; i++ {
+        randomno := rand.Intn(999)
+        job := Job{i, randomno}
+        jobs &lt;- job
+    }
+    close(jobs)
+}
+
+// results信道读取结果，当读取了所有结果，done写入true。
+func result(done chan bool) {
+    for result := range results {
+        fmt.Printf(&quot;Job id %d, input random no %d , sum of digits %d\n&quot;,
+            result.job.id, result.job.randomno, result.sumofdigits)
+    }
+    done &lt;- true
+}
+
+func main() {
+    startTime := time.Now()
+    noOfJobs := 100
+    go allocate(noOfJobs) // 添加作业
+    done := make(chan bool)
+    go result(done)
+    noOfWorkers := 10 // 可以通过增加工作者的数量来节省时间
+    createWorkerPool(noOfWorkers) // 创建工作池
+    &lt;-done
+    endTime := time.Now()
+    diff := endTime.Sub(startTime)
+    fmt.Println(&quot;total time taken &quot;, diff.Seconds(), &quot;seconds&quot;)
+}
+</code></pre>
+
+<p><em>reference:</em></p>
+
+<blockquote>
+<p><a href="https://studygolang.com/articles/12402">https://studygolang.com/articles/12402</a><br />
+<a href="https://studygolang.com/articles/12512">https://studygolang.com/articles/12512</a></p>
+</blockquote>
 
           </div>
 
@@ -786,6 +917,110 @@ func main() {
 										<li class="nav-item">
 						 					<a class="nav-link" href="#%e5%85%b3%e9%97%ad%e4%bf%a1%e9%81%93%e5%92%8c%e4%bd%bf%e7%94%a8for-range%e9%81%8d%e5%8e%86%e4%bf%a1%e9%81%93">
 												 关闭信道和使用for range遍历信道
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e7%bc%93%e5%86%b2%e4%bf%a1%e9%81%93">
+												 缓冲信道
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e9%95%bf%e5%ba%a6-%e5%ae%b9%e9%87%8f">
+												 长度、容量
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#waitgroup">
+												 WaitGroup
+											</a>
+										</li>
+						 
+								
+								
+									</ul>
+								
+									</ul>
+								
+							
+						
+				 
+						
+						
+							
+								
+								
+									<ul class="nav">
+								
+									<ul class="nav">
+								
+								
+
+										<li class="nav-item">
+						 					<a class="nav-link" href="#%e5%b7%a5%e4%bd%9c%e6%b1%a0%e7%9a%84%e5%ae%9e%e7%8e%b0">
+												 工作池的实现
 											</a>
 										</li>
 						 
