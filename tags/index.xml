@@ -6,7 +6,7 @@
     <description>Recent content in Tags on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Sun, 25 Nov 2018 22:26:31 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Nov 2018 20:49:27 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Channel</title>
       <link>https://staught.github.io/tags/channel/</link>
-      <pubDate>Sun, 25 Nov 2018 22:26:31 +0800</pubDate>
+      <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/channel/</guid>
       <description></description>
@@ -23,7 +23,7 @@
     <item>
       <title>Golang</title>
       <link>https://staught.github.io/tags/golang/</link>
-      <pubDate>Sun, 25 Nov 2018 22:26:31 +0800</pubDate>
+      <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/golang/</guid>
       <description></description>
@@ -32,7 +32,7 @@
     <item>
       <title>Goroutine</title>
       <link>https://staught.github.io/tags/goroutine/</link>
-      <pubDate>Sun, 25 Nov 2018 22:26:31 +0800</pubDate>
+      <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/goroutine/</guid>
       <description></description>
@@ -57,9 +57,18 @@
     </item>
     
     <item>
+      <title>Select</title>
+      <link>https://staught.github.io/tags/select/</link>
+      <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
+      
+      <guid>https://staught.github.io/tags/select/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Syntax</title>
       <link>https://staught.github.io/tags/syntax/</link>
-      <pubDate>Sun, 25 Nov 2018 22:26:31 +0800</pubDate>
+      <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/syntax/</guid>
       <description></description>
