@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="什么是select？ select语句用于在多个发送/接收信道操作中进行选择。select语句会一直阻塞，直到发送/接收操作准备就绪。如果有多个信道操作准备完毕，select会随机地选取其中之一执行。该语法与switch类似，不同的是，这里的每个case语句都是信道操作。 select的应用 假设我们有一个关键性应用，需要尽快地把输出返回给用户。这个应用的数据复制并且存储在世界各地的服务器上。假设函数s">
+  <meta name="description" content="临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程">
   
-  <meta property="og:title" content="Go语言拾记09-select" />
-<meta property="og:description" content="什么是select？ select语句用于在多个发送/接收信道操作中进行选择。select语句会一直阻塞，直到发送/接收操作准备就绪。如果有多个信道操作准备完毕，select会随机地选取其中之一执行。该语法与switch类似，不同的是，这里的每个case语句都是信道操作。 select的应用 假设我们有一个关键性应用，需要尽快地把输出返回给用户。这个应用的数据复制并且存储在世界各地的服务器上。假设函数s" />
+  <meta property="og:title" content="Go语言拾记10-Mutex" />
+<meta property="og:description" content="临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B009-select/" /><meta property="article:published_time" content="2018-11-26T20:49:27&#43;08:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/" /><meta property="article:published_time" content="2018-11-27T21:37:32&#43;08:00"/>
 <meta property="article:modified_time" content="2018-11-27T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记09-select | staught 
+       Go语言拾记10-Mutex | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B009-select/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/">
 
   
   
@@ -275,11 +275,11 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记09-select</div>
+  <div class="px-4 post-heading">Go语言拾记10-Mutex</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Nov 26, 2018</li>
+      <li>Nov 27, 2018</li>
     
 
     
@@ -295,90 +295,126 @@
           <div class="post-content markdown">
             
 
-<h3 id="什么是select">什么是select？</h3>
+<h3 id="临界区">临界区</h3>
 
-<p><code>select</code>语句用于在多个<strong>发送/接收信道</strong>操作中进行选择。<code>select</code>语句会一直阻塞，直到发送/接收操作准备就绪。如果有多个信道操作准备完毕，<code>select</code>会随机地选取其中之一执行。该语法与<code>switch</code>类似，不同的是，这里的每个<code>case</code>语句都是信道操作。</p>
+<p>当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。</p>
 
-<h3 id="select的应用">select的应用</h3>
+<h3 id="mutex">Mutex</h3>
 
-<p>假设我们有一个关键性应用，需要尽快地把输出返回给用户。这个应用的数据复制并且存储在世界各地的服务器上。假设函数<code>server1</code>和<code>server2</code>与这样不同区域的两台服务器进行通信。每台服务器的负载和网络延时决定了它的响应时间。我们向两台服务器发送请求，并使用<code>select</code>语句等待相应的信道发出响应。<code>select</code>会选择首先响应的服务器，而忽略其它的响应。使用这种方法，我们可以向多个服务器发送请求，并给用户返回最快的响应！</p>
+<p>Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：<code>Lock</code>和<code>Unlock</code>。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程已经持有了锁，当其它协程试图获得该锁时，这些协程会被阻塞，直到Mutex解除锁定为止。</p>
 
-<h3 id="默认情况">默认情况</h3>
+<pre><code class="language-go">mutex.Lock()
+{
+    // 放置会出现竞态条件代码
+    x = x + 1
+}
+mutex.Unlock()
+</code></pre>
 
-<p>在没有case准备就绪时，可以执行<code>select</code>语句中的默认情况，这通常用于防止<code>select</code>语句一直阻塞。</p>
+<h3 id="含有竞态条件的程序">含有竞态条件的程序</h3>
 
 <pre><code class="language-go">package main
 
 import (
     &quot;fmt&quot;
-    &quot;time&quot;
+    &quot;sync&quot;
 )
 
-func process(ch chan string) {
-    time.Sleep(10500 * time.Millisecond)
-    ch &lt;- &quot;process successful&quot;
+var x = 0
+
+func increment(wg *sync.WaitGroup) {
+    x = x + 1 // 当多个并发的协程试图访问x的值，就会发生竞态条件
+    wg.Done()
 }
 
 func main() {
-    ch := make(chan string)
-    go process(ch) // 并发地调用该函数
-    for {
-        time.Sleep(1000 * time.Millisecond)
-        select {
-        case v := &lt;-ch:
-            fmt.Println(&quot;received value:&quot;, v)
-            return
-        default:
-            fmt.Println(&quot;no value received&quot;)
-        }
+    w := sync.WaitGroup{}
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w)
     }
-    // output:
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // no value received
-    // received value: process successful
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<h3 id="死锁与默认情况">死锁与默认情况</h3>
+<h3 id="使用mutex">使用Mutex</h3>
+
+<p>这里使用Mutex修复上述竞态条件问题：</p>
 
 <pre><code class="language-go">package main
 
+import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
+
+var x = 0
+
+// 注意这里必须传递Mutex的地址
+func increment(wg *sync.WaitGroup, m *sync.Mutex) {
+    m.Lock()
+    x = x + 1 // 任何时刻都只允许一个协程执行这段代码
+    m.Unlock()
+    wg.Done()
+}
+
 func main() {
-    ch := make(chan string)
-    select {
-    case &lt;-ch: // 由于没有Go协程向该信道写入数据，select语句会一直阻塞，导致死锁
-    // 可以在这里添加default，就不会发生死锁
+    w := sync.WaitGroup{}
+    m := sync.Mutex{}
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w, &amp;m)
     }
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<h3 id="随机选取">随机选取</h3>
+<h3 id="使用信道处理竞态条件">使用信道处理竞态条件</h3>
 
-<p>当<code>select</code>中有多个case准备就绪时，将会随机选取其中之一去执行。</p>
-
-<h3 id="空select">空select</h3>
+<p>这里使用Channel修复上述竞态条件问题：</p>
 
 <pre><code class="language-go">package main
 
+import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
+
+var x = 0
+
+func increment(wg *sync.WaitGroup, ch chan bool) {
+    ch &lt;- true
+    // 由于缓冲信道的容量为1，所以任何其它协程试图写入该信道时，
+    // 都会发生阻塞，直到x增加后，信道的值才会被读取，完成解锁。
+    x = x + 1
+    &lt;-ch
+    wg.Done()
+}
+
 func main() {
-    select{}
+    w := sync.WaitGroup{}
+    ch := make(chan bool, 1)
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w, ch)
+    }
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<p>我们已经知道，除非有case执行，否则select语句就会一直阻塞着。在上述代码，select语句没有任何case，因此它会一直阻塞，导致死锁。</p>
+<h3 id="mutex还是channel">Mutex还是Channel？</h3>
+
+<p>Mutex和Channel都可以用来解决竞态条件问题。那么如何选择？</p>
+
+<p>总体来说，当Go协程需要与其它协程通信时，可以使用信道。而当只允许一个协程访问临界区时，可以使用Mutex。就上述代码而言，使用Mutex更直观一些。</p>
 
 <p><em>reference:</em></p>
 
 <blockquote>
-<p><a href="https://studygolang.com/articles/12522">https://studygolang.com/articles/12522</a></p>
+<p><a href="https://studygolang.com/articles/12598">https://studygolang.com/articles/12598</a></p>
 </blockquote>
 
           </div>
@@ -402,10 +438,7 @@ func main() {
       <li><a href="https://staught.github.io/tags/goroutine" role="button">goroutine </a></li>
       
     
-      <li><a href="https://staught.github.io/tags/channel" role="button">channel </a></li>
-      
-    
-      <li><a href="https://staught.github.io/tags/select" role="button">select </a></li>
+      <li><a href="https://staught.github.io/tags/mutex" role="button">mutex </a></li>
       
     
   </div>
@@ -421,10 +454,10 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B009-select/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记08-Channel</span>
+                    <span>Go语言拾记09-select</span>
                   </div>
                 </a>
               
@@ -432,10 +465,10 @@ func main() {
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记10-Mutex</span>
+                    <span>Go语言拾记11-组合取代继承</span>
                   </div>
                 </a>
               
@@ -485,8 +518,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%afselect">
-												 什么是select？
+						 					<a class="nav-link" href="#%e4%b8%b4%e7%95%8c%e5%8c%ba">
+												 临界区
 											</a>
 										</li>
 						 
@@ -511,8 +544,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#select%e7%9a%84%e5%ba%94%e7%94%a8">
-												 select的应用
+						 					<a class="nav-link" href="#mutex">
+												 Mutex
 											</a>
 										</li>
 						 
@@ -537,8 +570,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e9%bb%98%e8%ae%a4%e6%83%85%e5%86%b5">
-												 默认情况
+						 					<a class="nav-link" href="#%e5%90%ab%e6%9c%89%e7%ab%9e%e6%80%81%e6%9d%a1%e4%bb%b6%e7%9a%84%e7%a8%8b%e5%ba%8f">
+												 含有竞态条件的程序
 											</a>
 										</li>
 						 
@@ -563,8 +596,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e6%ad%bb%e9%94%81%e4%b8%8e%e9%bb%98%e8%ae%a4%e6%83%85%e5%86%b5">
-												 死锁与默认情况
+						 					<a class="nav-link" href="#%e4%bd%bf%e7%94%a8mutex">
+												 使用Mutex
 											</a>
 										</li>
 						 
@@ -589,8 +622,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e9%9a%8f%e6%9c%ba%e9%80%89%e5%8f%96">
-												 随机选取
+						 					<a class="nav-link" href="#%e4%bd%bf%e7%94%a8%e4%bf%a1%e9%81%93%e5%a4%84%e7%90%86%e7%ab%9e%e6%80%81%e6%9d%a1%e4%bb%b6">
+												 使用信道处理竞态条件
 											</a>
 										</li>
 						 
@@ -615,8 +648,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e7%a9%baselect">
-												 空select
+						 					<a class="nav-link" href="#mutex%e8%bf%98%e6%98%afchannel">
+												 Mutex还是Channel？
 											</a>
 										</li>
 						 

@@ -6,10 +6,19 @@
     <description>Recent content in Goroutine on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Mon, 26 Nov 2018 20:49:27 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 27 Nov 2018 21:37:32 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/tags/goroutine/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go语言拾记10-Mutex</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/</link>
+      <pubDate>Tue, 27 Nov 2018 21:37:32 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/</guid>
+      <description>临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程</description>
+    </item>
     
     <item>
       <title>Go语言拾记09-select</title>
