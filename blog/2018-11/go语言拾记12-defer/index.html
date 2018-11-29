@@ -7,22 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="[Just a Golang fans. Love the wonderful world. Do the right things and be a better man.]">
+  <meta name="description" content="用途：含有defer语句的函数，会在该函数将要返回之前，调用另一个函数。 defer不仅限于函数的调用，调用方法也是合法的。 并非在调用延迟函数的时候才确定实参，而是当执行defer语句的时候，就会对延迟函数的实参进行求值： func printA(a int) { fmt.Println(a) } func main() { a := 5 defer printA(a) a = 10 fmt.Println(a) // output: /* 10 5 */ } 当一个函数内多次调用defer时，Go会把defer调用放入到一个栈中，随后按照后进先出的顺序执行。 当一个函数应该在与当前代码流无">
   
-  <meta property="og:title" content="Mac" />
-<meta property="og:description" content="[Just a Golang fans. Love the wonderful world. Do the right things and be a better man.]" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://staught.github.io/categories/mac/" />
-<meta property="og:updated_time" content="2018-11-14T14:02:49&#43;08:00"/>
+  <meta property="og:title" content="Go语言拾记12-defer" />
+<meta property="og:description" content="用途：含有defer语句的函数，会在该函数将要返回之前，调用另一个函数。 defer不仅限于函数的调用，调用方法也是合法的。 并非在调用延迟函数的时候才确定实参，而是当执行defer语句的时候，就会对延迟函数的实参进行求值： func printA(a int) { fmt.Println(a) } func main() { a := 5 defer printA(a) a = 10 fmt.Println(a) // output: /* 10 5 */ } 当一个函数内多次调用defer时，Go会把defer调用放入到一个栈中，随后按照后进先出的顺序执行。 当一个函数应该在与当前代码流无" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/" /><meta property="article:published_time" content="2018-11-29T10:17:10&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-29T00:00:00&#43;00:00"/>
+
 
 
   <title>
   
-       Mac | staught 
+       Go语言拾记12-defer | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/categories/mac/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/">
 
   
   
@@ -245,183 +246,156 @@
     
 
     
-<main class="post-main-wrapper px-5">
   
-  <div class="row">
+  <main class="post-main-wrapper">
     
-    <div class="col-md-3">
-      
-      
-      
-
-  
-
-
-
-
-
-  <hr>
-  
-    <div class="post-meta">
-      <div class="mb-2">
-        <a href="https://staught.github.io/categories/">
-          <span class="font-weight-bold text-uppercase post-meta">
-            <i class="fas fa-folder-open pr-1" aria-hidden="true"></i> 
-            Categories
-          </span>
-        </a>
-      </div>
-
-      <div class="li-x post-meta" style="margin-left: -8px;">
-        
-          
-          
-            
-            <li class="py-1">
-              <a href="https://staught.github.io/categories/golang">
-                <span>Golang (12)</span>
-              </a>
-            </li>           
-          
-            
-              <li class="middot"></li>
-            
-            <li class="py-1">
-              <a href="https://staught.github.io/categories/mac">
-                <span>Mac (1)</span>
-              </a>
-            </li>           
-          
-        
-      </div>
-    </div>
-
     
-  
-
-
-      
-      
-
-  
-
-
-
-
-
-  <hr>
-  
-    <div class="post-meta">
-      <div class="mb-2">
-        <a href="https://staught.github.io/tags/">
-          <span class="font-weight-bold text-uppercase post-meta">
-            <i class="fas fa-tags pr-1" aria-hidden="true"></i> 
-            Featured Tags
-          </span>
-        </a>
-      </div>
-
-      <div class="li-x post-meta tags-md" style="margin-left: -8px;">
-        
-        
-        
-            <li><a href="https://staught.github.io/tags/mac" role="button"><span>mac (1)</span></a></li>
-          
-        
-      </div>
-    </div>
-
-    
-  
-
+    <div class="row">
 
       
-  
 
+      
+      <div class="col-md-10">
+      
 
-
-
-
-
-
-  <hr>
-  
-    <div class="post-meta">
-      <div class="mb-2">
-        <a href="https://staught.github.io/series/">
-          <span class="font-weight-bold text-uppercase post-meta">
-            <i class="fas fa-bookmark pr-1" aria-hidden="true"></i> 
-            Recommend Series
-          </span>
-        </a>
-      </div>
-     
-      <div class="post-meta" >
         
-          
-          
-            <li class="py-1"><a href="https://staught.github.io/series/mac%E6%8A%80%E5%B7%A7"><span>Mac技巧 (1)</span></a></li>
-          
-        
-      </div>
+        <div class="z-depth-1  post-wrapper white-bg single-post">
+
+          <div class="post-header text-center" >
+  <ul class="post-meta li-x">
     
       
-    </div>
-  
+        <li><a href="https://staught.github.io/categories/golang"><i class="fas fa-folder-open pr-1" aria-hidden="true"></i> Golang </a></li>
+      
+    
+    
+      
+        <li><a href="https://staught.github.io/series/go%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF"><i class="fas fa-bookmark pr-1" aria-hidden="true"></i>Go学习之路</a></li>
+      
+    
+  </ul>
 
-  
+  <div class="px-4 post-heading">Go语言拾记12-defer</div>
 
-    </div>
+  <ul class="post-meta li-x mt-1">
+    
+      <li>Nov 29, 2018</li>
     
 
     
+      <li class="middot"></li>
+      <li>One minute read</li>
     
-    <div class="col-md-9 mt-3">
-      <ul>
-        <div class="div-x">
-            <div class='post-heading'>
+  </ul>
   
-      Mac
-  
+
 </div>
 
-            
-            
-              <div class="px-2 middot"></div>
-              <div>
-                One post
-              </div>
-            
-          </div>
-      
-          
-      </ul>
-      <ul>
-        
-            
-        
-        
-            
-                <li class="post-item no-bullet">
-                    <span class="date">2018.11</span>
-                </li>
-                
-                    <li class="post-item">
-    
-    <span class="meta"><time datetime='2018-11-14T14:02:49&#43;08:00'>Nov 14, 2018</time></span>
-    
-    <a href="https://staught.github.io/blog/2018-11/macos%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/"><span>MacOS使用技巧</span></a>
-</li>
 
-                
+          <div class="post-content markdown">
+            <ul>
+<li>用途：含有<code>defer</code>语句的函数，会在该函数将要返回之前，调用另一个函数。</li>
+<li><code>defer</code>不仅限于函数的调用，调用方法也是合法的。</li>
+<li>并非在调用延迟函数的时候才确定实参，而是当执行<code>defer</code>语句的时候，就会对延迟函数的实参进行求值：</li>
+</ul>
+
+<pre><code class="language-go">func printA(a int) {
+    fmt.Println(a)
+}
+
+func main() {
+    a := 5
+    defer printA(a)
+    a = 10
+    fmt.Println(a)
+    // output:
+    /*
+    10
+    5
+    */
+}
+</code></pre>
+
+<ul>
+<li>当一个函数内多次调用<code>defer</code>时，Go会把<code>defer</code>调用放入到一个栈中，随后按照<strong>后进先出</strong>的顺序执行。</li>
+<li>当一个函数应该在与当前代码流无关的环境下调用时，可以使用<code>defer</code>。</li>
+</ul>
+
+<p><em>reference:</em></p>
+
+<blockquote>
+<p><a href="https://studygolang.com/articles/12719">https://studygolang.com/articles/12719</a></p>
+</blockquote>
+
+          </div>
+
+          
+          <div class="row">
+            <div class="col-md-8">
             
-        
-      </ul>
-    </div>
+              <div class="mb-5">
+                
+<div class="li-x div-x post-meta">
+  <li class="pr-0"><a href="https://staught.github.io/tags/"><i class="fas fa-tags"></i></a></li>
+  <div class="tags-sm">
     
+      <li><a href="https://staught.github.io/tags/golang" role="button">golang </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/defer" role="button">defer </a></li>
+      
     
   </div>
-</main> 
+</div>
+              </div>
+            
+            </div>
+            
+          </div>
+          
+
+          
+          <div class="row pt-3">
+            <div class="col-md-6">
+              
+                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/ class="post-meta">Previous
+                  <div class="pt-2 pb-5 d-flex">
+                    <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
+                    <span>Go语言拾记11-组合取代继承</span>
+                  </div>
+                </a>
+              
+            </div>
+            
+            <div class="col-md-6 text-right" >
+              
+            </div>
+          </div>
+
+          
+
+        </div>
+        
+
+      </div>
+      
+
+      
+	
+	
+	
+	
+
+    </div>
+    
+
+
+  </main>
+  
+
 
     
     

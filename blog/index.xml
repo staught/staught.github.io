@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Go语言拾记12-defer</title>
+      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/</link>
+      <pubDate>Thu, 29 Nov 2018 10:17:10 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/</guid>
+      <description>用途：含有defer语句的函数，会在该函数将要返回之前，调用另一个函数。 defer不仅限于函数的调用，调用方法也是合法的。 并非在调用延迟函数的时候才确定实参，而是当执行defer语句的时候，就会对延迟函数的实参进行求值： func printA(a int) { fmt.Println(a) } func main() { a := 5 defer printA(a) a = 10 fmt.Println(a) // output: /* 10 5 */ } 当一个函数内多次调用defer时，Go会把defer调用放入到一个栈中，随后按照后进先出的顺序执行。 当一个函数应该在与当前代码流无</description>
+    </item>
+    
+    <item>
       <title>Go语言拾记11-组合取代继承</title>
       <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/</link>
       <pubDate>Wed, 28 Nov 2018 09:58:30 +0800</pubDate>
