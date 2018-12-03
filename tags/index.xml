@@ -32,7 +32,7 @@
     <item>
       <title>Error</title>
       <link>https://staught.github.io/tags/error/</link>
-      <pubDate>Fri, 30 Nov 2018 10:53:05 +0800</pubDate>
+      <pubDate>Mon, 03 Dec 2018 09:42:46 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/error/</guid>
       <description></description>
@@ -41,7 +41,7 @@
     <item>
       <title>Golang</title>
       <link>https://staught.github.io/tags/golang/</link>
-      <pubDate>Fri, 30 Nov 2018 10:53:05 +0800</pubDate>
+      <pubDate>Mon, 03 Dec 2018 09:42:46 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/golang/</guid>
       <description></description>
@@ -84,6 +84,15 @@
     </item>
     
     <item>
+      <title>Panic</title>
+      <link>https://staught.github.io/tags/panic/</link>
+      <pubDate>Mon, 03 Dec 2018 09:42:46 +0800</pubDate>
+      
+      <guid>https://staught.github.io/tags/panic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Select</title>
       <link>https://staught.github.io/tags/select/</link>
       <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
@@ -95,7 +104,7 @@
     <item>
       <title>Syntax</title>
       <link>https://staught.github.io/tags/syntax/</link>
-      <pubDate>Fri, 30 Nov 2018 10:53:05 +0800</pubDate>
+      <pubDate>Mon, 03 Dec 2018 09:42:46 +0800</pubDate>
       
       <guid>https://staught.github.io/tags/syntax/</guid>
       <description></description>
