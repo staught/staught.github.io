@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="通过嵌套结构体进行组合 在Go中，通过在结构体内嵌套结构体，可以实现组合。 举个典型例子，博客帖子。每一个博客的帖子都有标题、内容、作者信息。组合可以很好的表示它们。 package main import &quot;fmt&quot; type author struct { firstName string lastName string bio string } func (a author) fullName() string { return fmt.Sprintf(&quot;%s %s&quot;, a.firstName, a.lastName) } type post struct { title string content string author // 嵌套的匿名字段 } func (p post) details() { fmt.Println(&quot;Title:&quot;, p.title) fmt.Println(&quot;Content:&quot;, p.content) fmt.Println(&quot;Author:&quot;, p.fullName()) fmt.Println(&quot;Bio:&quot;, p.bio) } func main() { // 创建一个博客帖子 author1 := author{ &quot;Naveen&quot;, &quot;Ramanathan&quot;, &quot;Golang Enthusiast&quot;, } post1 := post{ &quot;Inheritance in Go&quot;, &quot;Go supports composition instead of inheritance&quot;, author1, } post1.details() } 结构体切片的嵌套 进一步处理，使用博客帖子的切片来">
+  <meta name="description" content="用途：含有defer语句的函数，会在该函数将要返回之前，调用另一个函数。 defer不仅限于函数的调用，调用方法也是合法的。 并非在调用延迟函数的时候才确定实参，而是当执行defer语句的时候，就会对延迟函数的实参进行求值： func printA(a int) { fmt.Println(a) } func main() { a := 5 defer printA(a) a = 10 fmt.Println(a) // output: /* 10 5 */ } 当一个函数内多次调用defer时，Go会把defer调用放入到一个栈中，随后按照后进先出的顺序执行。 当一个函数应该在与当前代码流无">
   
-  <meta property="og:title" content="Go语言拾记11-组合取代继承" />
-<meta property="og:description" content="通过嵌套结构体进行组合 在Go中，通过在结构体内嵌套结构体，可以实现组合。 举个典型例子，博客帖子。每一个博客的帖子都有标题、内容、作者信息。组合可以很好的表示它们。 package main import &quot;fmt&quot; type author struct { firstName string lastName string bio string } func (a author) fullName() string { return fmt.Sprintf(&quot;%s %s&quot;, a.firstName, a.lastName) } type post struct { title string content string author // 嵌套的匿名字段 } func (p post) details() { fmt.Println(&quot;Title:&quot;, p.title) fmt.Println(&quot;Content:&quot;, p.content) fmt.Println(&quot;Author:&quot;, p.fullName()) fmt.Println(&quot;Bio:&quot;, p.bio) } func main() { // 创建一个博客帖子 author1 := author{ &quot;Naveen&quot;, &quot;Ramanathan&quot;, &quot;Golang Enthusiast&quot;, } post1 := post{ &quot;Inheritance in Go&quot;, &quot;Go supports composition instead of inheritance&quot;, author1, } post1.details() } 结构体切片的嵌套 进一步处理，使用博客帖子的切片来" />
+  <meta property="og:title" content="Go学习笔记12-defer" />
+<meta property="og:description" content="用途：含有defer语句的函数，会在该函数将要返回之前，调用另一个函数。 defer不仅限于函数的调用，调用方法也是合法的。 并非在调用延迟函数的时候才确定实参，而是当执行defer语句的时候，就会对延迟函数的实参进行求值： func printA(a int) { fmt.Println(a) } func main() { a := 5 defer printA(a) a = 10 fmt.Println(a) // output: /* 10 5 */ } 当一个函数内多次调用defer时，Go会把defer调用放入到一个栈中，随后按照后进先出的顺序执行。 当一个函数应该在与当前代码流无" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/" /><meta property="article:published_time" content="2018-11-28T09:58:30&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-28T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-defer/" /><meta property="article:published_time" content="2018-11-29T10:17:10&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-29T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记11-组合取代继承 | staught 
+       Go学习笔记12-defer | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-defer/">
 
   
   
@@ -236,7 +236,7 @@
       
 
       
-      <div class="col-md-10">
+      <div class="container pr-5">
       
 
         
@@ -256,11 +256,11 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记11-组合取代继承</div>
+  <div class="px-4 post-heading">Go学习笔记12-defer</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Nov 28, 2018</li>
+      <li>Nov 29, 2018</li>
     
 
     
@@ -274,151 +274,38 @@
 
 
           <div class="post-content markdown">
-            
+            <ul>
+<li>用途：含有<code>defer</code>语句的函数，会在该函数将要返回之前，调用另一个函数。</li>
+<li><code>defer</code>不仅限于函数的调用，调用方法也是合法的。</li>
+<li>并非在调用延迟函数的时候才确定实参，而是当执行<code>defer</code>语句的时候，就会对延迟函数的实参进行求值：</li>
+</ul>
 
-<h3 id="通过嵌套结构体进行组合">通过嵌套结构体进行组合</h3>
-
-<p>在Go中，通过在结构体内嵌套结构体，可以实现组合。</p>
-
-<p>举个典型例子，博客帖子。每一个博客的帖子都有标题、内容、作者信息。组合可以很好的表示它们。</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-type author struct {
-    firstName string
-    lastName  string
-    bio       string
-}
-
-func (a author) fullName() string {
-    return fmt.Sprintf(&quot;%s %s&quot;, a.firstName, a.lastName)
-}
-
-type post struct {
-    title   string
-    content string
-    author // 嵌套的匿名字段
-}
-
-func (p post) details() {
-    fmt.Println(&quot;Title:&quot;, p.title)
-    fmt.Println(&quot;Content:&quot;, p.content)
-    fmt.Println(&quot;Author:&quot;, p.fullName())
-    fmt.Println(&quot;Bio:&quot;, p.bio)
+<pre><code class="language-go">func printA(a int) {
+    fmt.Println(a)
 }
 
 func main() {
-    // 创建一个博客帖子
-    author1 := author{
-        &quot;Naveen&quot;,
-        &quot;Ramanathan&quot;,
-        &quot;Golang Enthusiast&quot;,
-    }
-    post1 := post{
-        &quot;Inheritance in Go&quot;,
-        &quot;Go supports composition instead of inheritance&quot;,
-        author1,
-    }
-    post1.details()
-}
-</code></pre>
-
-<h3 id="结构体切片的嵌套">结构体切片的嵌套</h3>
-
-<p>进一步处理，使用博客帖子的切片来创建一个网站。</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-type author struct {
-    firstName string
-    lastName  string
-    bio       string
-}
-
-func (a author) fullName() string {
-    return fmt.Sprintf(&quot;%s %s&quot;, a.firstName, a.lastName)
-}
-
-type post struct {
-    title   string
-    content string
-    author  // 嵌套的匿名字段
-}
-
-func (p post) details() {
-    fmt.Println(&quot;Title:&quot;, p.title)
-    fmt.Println(&quot;Content:&quot;, p.content)
-    fmt.Println(&quot;Author:&quot;, p.fullName())
-    fmt.Println(&quot;Bio:&quot;, p.bio)
-}
-
-type website struct {
-    posts []post
-}
-
-func (w website) contents() {
-    fmt.Println(&quot;Contents of Website\n&quot;)
-    for _, v := range w.posts {
-        v.details()
-        fmt.Println()
-    }
-}
-
-func main() {
-    author1 := author{
-        &quot;Naveen&quot;,
-        &quot;Ramanathan&quot;,
-        &quot;Golang Enthusiast&quot;,
-    }
-    post1 := post{
-        &quot;Inheritance in Go&quot;,
-        &quot;Go supports composition instead of inheritance&quot;,
-        author1,
-    }
-    post2 := post{
-        &quot;Struct instead of Classes in Go&quot;,
-        &quot;Go does not support classes but methods can be added to structs&quot;,
-        author1,
-    }
-    post3 := post{
-        &quot;Concurrency&quot;,
-        &quot;Go is a concurrent language and not a parallel one&quot;,
-        author1,
-    }
-    w := website{
-        posts: []post{post1, post2, post3},
-    }
-    w.contents()
+    a := 5
+    defer printA(a)
+    a = 10
+    fmt.Println(a)
     // output:
     /*
-    Contents of Website
-
-    Title: Inheritance in Go
-    Content: Go supports composition instead of inheritance
-    Author: Naveen Ramanathan
-    Bio: Golang Enthusiast
-
-    Title: Struct instead of Classes in Go
-    Content: Go does not support classes but methods can be added to structs
-    Author: Naveen Ramanathan
-    Bio: Golang Enthusiast
-
-    Title: Concurrency
-    Content: Go is a concurrent language and not a parallel one
-    Author: Naveen Ramanathan
-    Bio: Golang Enthusiast
+    10
+    5
     */
 }
 </code></pre>
 
+<ul>
+<li>当一个函数内多次调用<code>defer</code>时，Go会把<code>defer</code>调用放入到一个栈中，随后按照<strong>后进先出</strong>的顺序执行。</li>
+<li>当一个函数应该在与当前代码流无关的环境下调用时，可以使用<code>defer</code>。</li>
+</ul>
+
 <p><em>reference:</em></p>
 
 <blockquote>
-<p><a href="https://studygolang.com/articles/12680">https://studygolang.com/articles/12680</a></p>
+<p><a href="https://studygolang.com/articles/12719">https://studygolang.com/articles/12719</a></p>
 </blockquote>
 
           </div>
@@ -439,6 +326,9 @@ func main() {
       <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
       
     
+      <li><a href="https://staught.github.io/tags/defer" role="button">defer </a></li>
+      
+    
   </div>
 </div>
               </div>
@@ -452,10 +342,10 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记10-Mutex</span>
+                    <span>Go学习笔记11-组合取代继承</span>
                   </div>
                 </a>
               
@@ -463,10 +353,10 @@ func main() {
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记12-defer</span>
+                    <span>Go学习笔记13-错误处理</span>
                   </div>
                 </a>
               
@@ -482,88 +372,6 @@ func main() {
       
 
       
-	
-	
-	
-	
-		
-		
-		
-	
-
-		
-		<div class="col-md-2 pl-0">
-
-			
-			<div id="page-scrollspy" class="toc-nav">
-				
-				<ul class="nav nav-pills ml-0">
-					
-					<li class="nav-item pb-3 text-center">
-						<span class="font-weight-bold mb-2">- CATALOG - </span>
-					</li>
-
-					
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e9%80%9a%e8%bf%87%e5%b5%8c%e5%a5%97%e7%bb%93%e6%9e%84%e4%bd%93%e8%bf%9b%e8%a1%8c%e7%bb%84%e5%90%88">
-												 通过嵌套结构体进行组合
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e7%bb%93%e6%9e%84%e4%bd%93%e5%88%87%e7%89%87%e7%9a%84%e5%b5%8c%e5%a5%97">
-												 结构体切片的嵌套
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-
-				</ul>
-			</div>
-			
-
-		</div>
-		
-	
 
     </div>
     

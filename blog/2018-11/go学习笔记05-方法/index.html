@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="什么是panic？ 在Go中，对于程序中出现的大部分异常情况，错误就已经够用了。但在有些情况下，当程序发生异常时无法继续运行，那么可使用panic来终止程序。 当函数发生panic时，它会终止运行，在执行完所有延迟函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前协程的所有函数都返回退出，然后程序会打印出panic信息，接着打印出堆栈跟踪，最后程序终止。 何时应该使用panic？ 通">
+  <meta name="description" content="什么是方法 方法其实就是一个函数，在func这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。 创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。 func (t Type) methodName(parameter list) { } 为什么已经有函数了还需要方法？ Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。">
   
-  <meta property="og:title" content="Go语言拾记14-panic和recover" />
-<meta property="og:description" content="什么是panic？ 在Go中，对于程序中出现的大部分异常情况，错误就已经够用了。但在有些情况下，当程序发生异常时无法继续运行，那么可使用panic来终止程序。 当函数发生panic时，它会终止运行，在执行完所有延迟函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前协程的所有函数都返回退出，然后程序会打印出panic信息，接着打印出堆栈跟踪，最后程序终止。 何时应该使用panic？ 通" />
+  <meta property="og:title" content="Go学习笔记05-方法" />
+<meta property="og:description" content="什么是方法 方法其实就是一个函数，在func这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。 创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。 func (t Type) methodName(parameter list) { } 为什么已经有函数了还需要方法？ Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B014-panic%E5%92%8Crecover/" /><meta property="article:published_time" content="2018-12-03T09:42:46&#43;08:00"/>
-<meta property="article:modified_time" content="2018-12-03T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E6%96%B9%E6%B3%95/" /><meta property="article:published_time" content="2018-11-21T12:35:35&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-21T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记14-panic和recover | staught 
+       Go学习笔记05-方法 | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B014-panic%E5%92%8Crecover/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E6%96%B9%E6%B3%95/">
 
   
   
@@ -256,11 +256,11 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记14-panic和recover</div>
+  <div class="px-4 post-heading">Go学习笔记05-方法</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Dec 3, 2018</li>
+      <li>Nov 21, 2018</li>
     
 
     
@@ -276,231 +276,177 @@
           <div class="post-content markdown">
             
 
-<h3 id="什么是panic">什么是panic？</h3>
+<h3 id="什么是方法">什么是方法</h3>
 
-<p>在Go中，对于程序中出现的大部分异常情况，错误就已经够用了。但在有些情况下，当程序发生异常时无法继续运行，那么可使用<code>panic</code>来终止程序。</p>
+<p>方法其实就是一个函数，在<code>func</code>这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。</p>
 
-<p>当函数发生panic时，它会终止运行，在执行完所有延迟函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前协程的所有函数都返回退出，然后程序会打印出panic信息，接着打印出堆栈跟踪，最后程序终止。</p>
+<p>创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。</p>
 
-<h3 id="何时应该使用panic">何时应该使用panic？</h3>
+<pre><code class="language-go">func (t Type) methodName(parameter list) {
+}
+</code></pre>
 
-<p><strong>通常，我们应该尽可能地使用错误，而不是使用panic和recover。只有当程序不能继续运行的时候，才使用panic和recover机制。</strong></p>
-
-<p>panic有两个合理的用例：</p>
+<h3 id="为什么已经有函数了还需要方法">为什么已经有函数了还需要方法？</h3>
 
 <ul>
-<li><strong>发生了一个不能恢复的错误，此时程序不能继续运行。</strong>一个例子就是web服务器无法绑定所要求的端口。在这种情况下，就应该使用panic，因为如果不能绑定端口，接下来什么也做不了。</li>
-<li><strong>发生了一个编程上的错误。</strong>假如我们有一个接收指针参数的方法，而其他人使用nil作为参数调用了它。在这种情况下，我们可以使用panic，因为这是一个编程错误：用nil参数调用了一个只能接收合法指针的方法。</li>
+<li>Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。</li>
+<li>相同的名字的方法可以定义在不同的类型上，而相同名字的函数是不被允许的。</li>
 </ul>
 
-<h3 id="示例">示例</h3>
+<h3 id="指针接收器与值接收器">指针接收器与值接收器</h3>
 
-<p>内建函数<code>panic</code>的签名：<code>func panic(v interface{})</code>，当程序终止时，会打印传入<code>panic</code>的参数。</p>
+<p>值接收器和指针接收器之间的区别在于，在指针接收器的方法内部的改变对于调用者是可见的。</p>
 
-<pre><code class="language-go">package main
+<h3 id="什么时候使用指针接收器-什么时候使用值接收器">什么时候使用指针接收器，什么时候使用值接收器？</h3>
 
-import &quot;fmt&quot;
+<ul>
+<li>一般来说，指针接收器可以用在：对方法内部的接收器所做的改变应该对调用者可见时。</li>
+<li>指针接收器也可以被使用在如下场景：当拷贝一个结构体的代价过于昂贵时。考虑下一个结构体有很多字段，在方法内使用这个结构体作为值接收器需要拷贝整个结构体，这是很昂贵的。在这种情况下使用指针接收器。结构体不会被拷贝，只会传递一个指针到方法内部使用。</li>
+<li>在其它的所有情况，值接收器都可以被使用。</li>
+</ul>
 
-func fullName(firstName *string, lastName *string) {
-    if firstName == nil {
-        panic(&quot;runtime error: first name cannot be nil&quot;)
-    }
-    if lastName == nil {
-        panic(&quot;runtime error: last name cannot be nil&quot;)
-    }
-    fmt.Printf(&quot;%s %s\n&quot;, *firstName, *lastName)
-    fmt.Println(&quot;returned normally from fullName&quot;)
-}
+<h3 id="匿名字段的方法">匿名字段的方法</h3>
 
-func main() {
-    firstName := &quot;Elon&quot;
-    fullName(&amp;firstName, nil)
-    fmt.Println(&quot;returned normally from main&quot;)
-}
-</code></pre>
-
-<p>上述代码，首先会打印出传入panic函数的信息：<code>panic: runtime error: last name cannot be nil</code>，接着打印出堆栈跟踪。</p>
-
-<h3 id="发生panic时的defer">发生panic时的defer</h3>
-
-<p>当函数发生panic时，它会终止运行，在执行完所有的延迟函数后，程序控制返回到该函数的调用方。这样的过程会一直持续下去，直到当前协程的所有函数都返回退出，然后程序会打印出panic信息，接着打印出堆栈跟踪，最后程序终止。也就是说，如果有延迟函数，会先调用它，然后程序控制返回到函数调用方。</p>
-
-<p>使用一个例子来说明：</p>
+<p>属于结构体的匿名字段的方法可以被直接使用，就好像这些方法是属于定义了匿名字段的结构体一样。</p>
 
 <pre><code class="language-go">package main
 
 import &quot;fmt&quot;
 
-func fullName(firstName *string, lastName *string) {
-    defer fmt.Println(&quot;deferred call in fullName&quot;)
-    if firstName == nil {
-        panic(&quot;runtime error: first name cannot be nil&quot;)
-    }
-    if lastName == nil {
-        panic(&quot;runtime error: last name cannot be nil&quot;)
-    }
-    fmt.Printf(&quot;%s %s\n&quot;, *firstName, *lastName)
-    fmt.Println(&quot;returned normally from fullName&quot;)
+type address struct {
+    city  string
+    state string
+}
+
+func (a address) fullAddress() {
+    fmt.Printf(&quot;Full address: %s, %s\n&quot;, a.city, a.state)
+}
+
+type person struct {
+    firstName string
+    lastName  string
+    address
 }
 
 func main() {
-    defer fmt.Println(&quot;deferred call in main&quot;)
-    firstName := &quot;Elon&quot;
-    fullName(&amp;firstName, nil)
-    fmt.Println(&quot;returned normally from main&quot;)
+    p := person{
+        firstName: &quot;Elon&quot;,
+        lastName:  &quot;Musk&quot;,
+        address: address{
+            city:  &quot;Los Angeles&quot;,
+            state: &quot;California&quot;,
+        },
+    }
+    p.fullAddress( ) // 访问 address 结构体的 fullAddress 方法
 }
-/*
-deferred call in fullName
-deferred call in main
-panic: runtime error: last name cannot be nil
-*/
 </code></pre>
 
-<h3 id="recover">recover</h3>
+<h3 id="在方法中使用值接收器与在函数中使用值参数">在方法中使用值接收器与在函数中使用值参数</h3>
 
-<p><code>recover</code>是一个内建函数<code>func recover() interface{}</code>，用于重新获得panic协程的控制。只有在延迟函数内部调用<code>recover</code>才有用。在延迟函数内调用<code>recover</code>，可以取到<code>panic</code>的错误信息，并且停止panic续发事件，程序恢复正常。</p>
+<ul>
+<li>当一个函数有一个值参数，它只能接受一个值参数。</li>
+<li>当一个方法有一个值接收器，它可以接受值接收器和指针接收器。</li>
+</ul>
 
 <pre><code class="language-go">package main
 
 import &quot;fmt&quot;
 
-func recoverName() {
-    if r := recover(); r != nil {
-        fmt.Println(&quot;recovered from &quot;, r)
-    }
+type rectangle struct {
+    length int
+    width  int
 }
 
-func fullName(firstName *string, lastName *string) {
-    defer recoverName()
-    if firstName == nil {
-        panic(&quot;runtime error: first name cannot be nil&quot;)
-    }
-    if lastName == nil {
-        panic(&quot;runtime error: last name cannot be nil&quot;)
-    }
-    fmt.Printf(&quot;%s %s\n&quot;, *firstName, *lastName)
-    fmt.Println(&quot;returned normally from fullName&quot;)
+func area(r rectangle) {
+    fmt.Printf(&quot;Area Function result: %d\n&quot;, r.length*r.width)
+}
+
+func (r rectangle) area() {
+    fmt.Printf(&quot;Area Method result: %d\n&quot;, r.length*r.width)
 }
 
 func main() {
-    defer fmt.Println(&quot;deferred call in main&quot;)
-    firstName := &quot;Elon&quot;
-    fullName(&amp;firstName, nil)
-    fmt.Println(&quot;returned normally from main&quot;)
-}
-/*
-recovered from  runtime error: last name cannot be nil
-returned normally from main
-deferred call in main
-*/
-</code></pre>
-
-<h3 id="panic-recover-goroutine">panic、recover、goroutine</h3>
-
-<p>只有在相同的Go协程中调用recover才管用。recover不能恢复一个不同协程的panic，看例子：</p>
-
-<pre><code class="language-go">package main
-
-import (
-    &quot;fmt&quot;
-    &quot;time&quot;
-)
-
-func recovery() {
-    if r := recover(); r != nil {
-        fmt.Println(&quot;recovered:&quot;, r)
+    r := rectangle{
+        length: 10,
+        width:  5,
     }
-}
+    area(r)
+    r.area()
 
-func a() {
-    defer recovery() // panic并不会恢复，因为是在b协程中发生panic
-    fmt.Println(&quot;Inside A&quot;)
-    go b()
-    time.Sleep(time.Second)
+    p := &amp;r
+    // 使用指针接收器 p 调用了只接受一个值接收器的方法 area，这是完全有效的。原因是
+    // 当 area 有一个值接收器时，Go语言会自动把 p.area() 解释为 (*p).area()
+    p.area()
 }
-
-func b() {
-    fmt.Println(&quot;Inside B&quot;)
-    panic(&quot;oh! B panicked&quot;)
-}
-
-func main() {
-    a()
-    fmt.Println(&quot;normally returned from main&quot;)
-}
-/*
-Inside A
-Inside B
-panic: oh! B panicked
-*/
 </code></pre>
 
-<h3 id="运行时panic">运行时panic</h3>
+<h3 id="在方法中使用指针接收器与在函数中使用指针参数">在方法中使用指针接收器与在函数中使用指针参数</h3>
 
-<p>运行时错误（如数组越界）也会导致panic。这等价于调用了内置函数panic。</p>
+<ul>
+<li>当一个函数有一个指针参数，它只能接受一个指针参数。</li>
+<li>当一个方法有一个指针接收器，它可以接受值接收器和指针接收器。</li>
+</ul>
 
 <pre><code class="language-go">package main
 
 import &quot;fmt&quot;
 
-func recovery() {
-    if r := recover(); r != nil {
-        fmt.Println(&quot;recovered:&quot;, r)
-    }
+type rectangle struct {
+    length int
+    width  int
 }
 
-func a() {
-    defer recovery()
-    n := []int{3, 4, 5}
-    fmt.Println(n[3])
-    fmt.Println(&quot;normally returned from a&quot;)
+func perimeter(r *rectangle) {
+    fmt.Println(&quot;perimeter function output:&quot;, 2*(r.length+r.width))
+}
+
+func (r *rectangle) perimeter() {
+    fmt.Println(&quot;perimeter method output:&quot;, 2*(r.length+r.width))
 }
 
 func main() {
-    a()
-    fmt.Println(&quot;normally returned from main&quot;)
+    r := rectangle{
+        length: 10,
+        width:  5,
+    }
+    p := &amp;r
+    perimeter(p)
+    p.perimeter()
+
+    // 通过值接收器 r 来调用有指针接收器的方法 perimeter，这是被允许的。
+    // Go会自动把 r.perimeter() 解释为 (&amp;r).perimeter。
+    r.perimeter()
 }
-/*
-recovered: runtime error: index out of range
-normally returned from main
-*/
 </code></pre>
 
-<h3 id="恢复后获得堆栈跟踪">恢复后获得堆栈跟踪</h3>
+<h3 id="在非结构体上的方法">在非结构体上的方法</h3>
 
-<p>当恢复panic时，就释放了它的堆栈跟踪。使用<code>Debug</code>包中的<code>PrintStack</code>函数可以打印出堆栈跟踪。</p>
+<p>Go同样支持在非结构体类型上定义方法，但需要注意一个前提：<strong>为了在一个类型上定义一个方法，方法的接收器类型定义和方法的定义应该在同一个包中</strong>。</p>
+
+<p>举个例子，如果尝试把一个<code>add</code>方法添加到内置的类型<code>int</code>，这是不允许的，因为<code>add</code>方法的定义和<code>int</code>类型的定义不在同一个包中。一个变通的方法是：为内置类型int创建一个类型别名，然后创建一个以该类型别名为接收器的方法。</p>
 
 <pre><code class="language-go">package main
 
-import (
-    &quot;fmt&quot;
-    &quot;runtime/debug&quot;
-)
+import &quot;fmt&quot;
 
-func recovery() {
-    if r := recover(); r != nil {
-        fmt.Println(&quot;recovered:&quot;, r)
-        debug.PrintStack()
-    }
-}
+type myInt int
 
-func a() {
-    defer recovery()
-    n := []int{3, 4, 5}
-    fmt.Println(n[3])
-    fmt.Println(&quot;normally returned from a&quot;)
+func (a myInt) add(b myInt) myInt {
+    return a+b
 }
 
 func main() {
-    a()
-    fmt.Println(&quot;normally returned from main&quot;)
+    num1 := myInt(5)
+    num2 := myInt(10)
+    sum := num1.add(num2)
+    fmt.Println(&quot;Sum is&quot;, sum) // Sum is 15
 }
 </code></pre>
 
 <p><em>reference:</em></p>
 
 <blockquote>
-<p><a href="https://studygolang.com/articles/12785">https://studygolang.com/articles/12785</a></p>
+<p><a href="https://studygolang.com/articles/12264">https://studygolang.com/articles/12264</a></p>
 </blockquote>
 
           </div>
@@ -521,12 +467,6 @@ func main() {
       <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
       
     
-      <li><a href="https://staught.github.io/tags/error" role="button">error </a></li>
-      
-    
-      <li><a href="https://staught.github.io/tags/panic" role="button">panic </a></li>
-      
-    
   </div>
 </div>
               </div>
@@ -540,16 +480,23 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B004-%E7%BB%93%E6%9E%84%E4%BD%93/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记13-错误处理</span>
+                    <span>Go学习笔记04-结构体</span>
                   </div>
                 </a>
               
             </div>
             
             <div class="col-md-6 text-right" >
+              
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B006-%E6%8E%A5%E5%8F%A3/ class="post-meta">Next
+                  <div class="pt-2 pb-5 flex-reverse">
+                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
+                    <span>Go学习笔记06-接口</span>
+                  </div>
+                </a>
               
             </div>
           </div>
@@ -597,8 +544,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%afpanic">
-												 什么是panic？
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%96%b9%e6%b3%95">
+												 什么是方法
 											</a>
 										</li>
 						 
@@ -623,8 +570,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bd%95%e6%97%b6%e5%ba%94%e8%af%a5%e4%bd%bf%e7%94%a8panic">
-												 何时应该使用panic？
+						 					<a class="nav-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e5%b7%b2%e7%bb%8f%e6%9c%89%e5%87%bd%e6%95%b0%e4%ba%86%e8%bf%98%e9%9c%80%e8%a6%81%e6%96%b9%e6%b3%95">
+												 为什么已经有函数了还需要方法？
 											</a>
 										</li>
 						 
@@ -649,8 +596,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e7%a4%ba%e4%be%8b">
-												 示例
+						 					<a class="nav-link" href="#%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8">
+												 指针接收器与值接收器
 											</a>
 										</li>
 						 
@@ -675,8 +622,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%8f%91%e7%94%9fpanic%e6%97%b6%e7%9a%84defer">
-												 发生panic时的defer
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%97%b6%e5%80%99%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8-%e4%bb%80%e4%b9%88%e6%97%b6%e5%80%99%e4%bd%bf%e7%94%a8%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8">
+												 什么时候使用指针接收器，什么时候使用值接收器？
 											</a>
 										</li>
 						 
@@ -701,8 +648,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#recover">
-												 recover
+						 					<a class="nav-link" href="#%e5%8c%bf%e5%90%8d%e5%ad%97%e6%ae%b5%e7%9a%84%e6%96%b9%e6%b3%95">
+												 匿名字段的方法
 											</a>
 										</li>
 						 
@@ -727,8 +674,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#panic-recover-goroutine">
-												 panic、recover、goroutine
+						 					<a class="nav-link" href="#%e5%9c%a8%e6%96%b9%e6%b3%95%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%9c%a8%e5%87%bd%e6%95%b0%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%80%bc%e5%8f%82%e6%95%b0">
+												 在方法中使用值接收器与在函数中使用值参数
 											</a>
 										</li>
 						 
@@ -753,8 +700,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e8%bf%90%e8%a1%8c%e6%97%b6panic">
-												 运行时panic
+						 					<a class="nav-link" href="#%e5%9c%a8%e6%96%b9%e6%b3%95%e4%b8%ad%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%9c%a8%e5%87%bd%e6%95%b0%e4%b8%ad%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e5%8f%82%e6%95%b0">
+												 在方法中使用指针接收器与在函数中使用指针参数
 											</a>
 										</li>
 						 
@@ -779,8 +726,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e6%81%a2%e5%a4%8d%e5%90%8e%e8%8e%b7%e5%be%97%e5%a0%86%e6%a0%88%e8%b7%9f%e8%b8%aa">
-												 恢复后获得堆栈跟踪
+						 					<a class="nav-link" href="#%e5%9c%a8%e9%9d%9e%e7%bb%93%e6%9e%84%e4%bd%93%e4%b8%8a%e7%9a%84%e6%96%b9%e6%b3%95">
+												 在非结构体上的方法
 											</a>
 										</li>
 						 

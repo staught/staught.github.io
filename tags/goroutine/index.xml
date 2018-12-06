@@ -12,38 +12,38 @@
     
     
     <item>
-      <title>Go语言拾记10-Mutex</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/</link>
+      <title>Go学习笔记10-Mutex</title>
+      <link>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-mutex/</link>
       <pubDate>Tue, 27 Nov 2018 21:37:32 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B010-mutex/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-mutex/</guid>
       <description>临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程</description>
     </item>
     
     <item>
-      <title>Go语言拾记09-select</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B009-select/</link>
+      <title>Go学习笔记09-select</title>
+      <link>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B009-select/</link>
       <pubDate>Mon, 26 Nov 2018 20:49:27 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B009-select/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B009-select/</guid>
       <description>什么是select？ select语句用于在多个发送/接收信道操作中进行选择。select语句会一直阻塞，直到发送/接收操作准备就绪。如果有多个信道操作准备完毕，select会随机地选取其中之一执行。该语法与switch类似，不同的是，这里的每个case语句都是信道操作。 select的应用 假设我们有一个关键性应用，需要尽快地把输出返回给用户。这个应用的数据复制并且存储在世界各地的服务器上。假设函数s</description>
     </item>
     
     <item>
-      <title>Go语言拾记08-Channel</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/</link>
+      <title>Go学习笔记08-Channel</title>
+      <link>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B008-channel/</link>
       <pubDate>Sun, 25 Nov 2018 22:26:31 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B008-channel/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B008-channel/</guid>
       <description>什么是信道？ 信道是Go协程之间通信的管道，通过使用信道，数据可以从一端发送，在另一端接收。 信道的声明 所有信道都关联了一个类型，信道只能运输关联类型的数据。 chan T表示T类型的信道。 信道的零值为nil，信道的零值没有什么用，如map和slice，用make来定义信道。 定义信道的简洁有效的方法：ch := make(chan int)。 通过信道进行发送和接收 通过信道进行发送和接收数据的语法（通过信道旁的箭头方向来判断是读还是写）</description>
     </item>
     
     <item>
-      <title>Go语言拾记07-并发</title>
-      <link>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/</link>
+      <title>Go学习笔记07-并发</title>
+      <link>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B007-%E5%B9%B6%E5%8F%91/</link>
       <pubDate>Fri, 23 Nov 2018 11:03:17 +0800</pubDate>
       
-      <guid>https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/</guid>
+      <guid>https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B007-%E5%B9%B6%E5%8F%91/</guid>
       <description>并发 Go是并发式语言，而不是并行式语言。 并发是什么？ 并发是指立即处理多个任务的能力。举个例子：假如一个人在跑步，他的鞋带突然松了。于是他停下来，系一下鞋带，接下来继续跑。这就可理解为并发，这个人能够一下搞定跑步和系鞋带两件事，即立即处理多个任务。 并行是什么？ 并行是指同时处理多个任务。举个例子：假如一个人在跑步时，还在用iPod听着音乐。在这里，他是在跑步的同时听音乐，也就是同时处理多个任务，这称之</description>
     </item>
     

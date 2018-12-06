@@ -9,21 +9,21 @@
   <meta name="author" content="Staught">
   <meta name="description" content="什么是错误 在Go中，错误一直是很常见的，错误用内建的error类型来表示。如果一个函数或方法需要返回错误，按照惯例，会作为最后一个值返回。在处理错误时，通常都是将返回的错误与nil比较。nil值表示没有错误发生，而非nil值表示出现了错误。 错误类型的表示 error是一个接口类型，定义如下。所有实现该接口的类型都可以当作一个错误类型。Error()方法给出了错误的描述。 type error interface { Error() string } 获取错误详细信息">
   
-  <meta property="og:title" content="Go语言拾记13-错误处理" />
+  <meta property="og:title" content="Go学习笔记13-错误处理" />
 <meta property="og:description" content="什么是错误 在Go中，错误一直是很常见的，错误用内建的error类型来表示。如果一个函数或方法需要返回错误，按照惯例，会作为最后一个值返回。在处理错误时，通常都是将返回的错误与nil比较。nil值表示没有错误发生，而非nil值表示出现了错误。 错误类型的表示 error是一个接口类型，定义如下。所有实现该接口的类型都可以当作一个错误类型。Error()方法给出了错误的描述。 type error interface { Error() string } 获取错误详细信息" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" /><meta property="article:published_time" content="2018-11-30T10:53:05&#43;08:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" /><meta property="article:published_time" content="2018-11-30T10:53:05&#43;08:00"/>
 <meta property="article:modified_time" content="2018-11-30T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记13-错误处理 | staught 
+       Go学习笔记13-错误处理 | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
 
   
   
@@ -256,7 +256,7 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记13-错误处理</div>
+  <div class="px-4 post-heading">Go学习笔记13-错误处理</div>
 
   <ul class="post-meta li-x mt-1">
     
@@ -526,10 +526,10 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B012-defer/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-defer/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记12-defer</span>
+                    <span>Go学习笔记12-defer</span>
                   </div>
                 </a>
               
@@ -537,10 +537,10 @@ func main() {
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B014-panic%E5%92%8Crecover/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B014-panic%E5%92%8Crecover/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记14-panic和recover</span>
+                    <span>Go学习笔记14-panic和recover</span>
                   </div>
                 </a>
               

@@ -9,21 +9,21 @@
   <meta name="author" content="Staught">
   <meta name="description" content="什么是接口 在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。 接口的声明与实现 如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。 package main import &quot;fmt&quot; type VowelsFinder interface { FindVowels() []rune } type MyString string func (ms MyString) FindVowels() []rune { var vowels []rune for _, c := range ms { if c == &#39;a&#39; || c == &#39;e&#39; || c == &#39;i&#39; || c == &#39;o&#39; || c == &#39;u&#39; { vowels = append(vowels, c) } } return vowels } func main()">
   
-  <meta property="og:title" content="Go语言拾记06-接口" />
+  <meta property="og:title" content="Go学习笔记06-接口" />
 <meta property="og:description" content="什么是接口 在Go语言中，接口就是方法签名的集合。当一个类型定义了接口中的所有方法，我们称它实现了该接口。接口指定了一个类型应该具有的方法，并由该类型决定如何实现这些方法。 接口的声明与实现 如下所示，在Go中，如果一个类型包含了接口中声明的所有方法，那么它就隐式地实现了Go接口。 package main import &quot;fmt&quot; type VowelsFinder interface { FindVowels() []rune } type MyString string func (ms MyString) FindVowels() []rune { var vowels []rune for _, c := range ms { if c == &#39;a&#39; || c == &#39;e&#39; || c == &#39;i&#39; || c == &#39;o&#39; || c == &#39;u&#39; { vowels = append(vowels, c) } } return vowels } func main()" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/" /><meta property="article:published_time" content="2018-11-22T21:55:23&#43;08:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B006-%E6%8E%A5%E5%8F%A3/" /><meta property="article:published_time" content="2018-11-22T21:55:23&#43;08:00"/>
 <meta property="article:modified_time" content="2018-11-28T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记06-接口 | staught 
+       Go学习笔记06-接口 | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B006-%E6%8E%A5%E5%8F%A3/">
 
   
   
@@ -256,7 +256,7 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记06-接口</div>
+  <div class="px-4 post-heading">Go学习笔记06-接口</div>
 
   <ul class="post-meta li-x mt-1">
     
@@ -662,10 +662,10 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B005-%E6%96%B9%E6%B3%95/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记05-方法</span>
+                    <span>Go学习笔记05-方法</span>
                   </div>
                 </a>
               
@@ -673,10 +673,10 @@ func main() {
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B007-%E5%B9%B6%E5%8F%91/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B007-%E5%B9%B6%E5%8F%91/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记07-并发</span>
+                    <span>Go学习笔记07-并发</span>
                   </div>
                 </a>
               

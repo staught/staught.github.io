@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="什么是方法 方法其实就是一个函数，在func这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。 创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。 func (t Type) methodName(parameter list) { } 为什么已经有函数了还需要方法？ Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。">
+  <meta name="description" content="临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程">
   
-  <meta property="og:title" content="Go语言拾记05-方法" />
-<meta property="og:description" content="什么是方法 方法其实就是一个函数，在func这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。 创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。 func (t Type) methodName(parameter list) { } 为什么已经有函数了还需要方法？ Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。" />
+  <meta property="og:title" content="Go学习笔记10-Mutex" />
+<meta property="og:description" content="临界区 当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。 Mutex Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：Lock和Unlock。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/" /><meta property="article:published_time" content="2018-11-21T12:35:35&#43;08:00"/>
-<meta property="article:modified_time" content="2018-11-21T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-mutex/" /><meta property="article:published_time" content="2018-11-27T21:37:32&#43;08:00"/>
+<meta property="article:modified_time" content="2018-11-27T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go语言拾记05-方法 | staught 
+       Go学习笔记10-Mutex | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B005-%E6%96%B9%E6%B3%95/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B010-mutex/">
 
   
   
@@ -256,16 +256,16 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go语言拾记05-方法</div>
+  <div class="px-4 post-heading">Go学习笔记10-Mutex</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Nov 21, 2018</li>
+      <li>Nov 27, 2018</li>
     
 
     
       <li class="middot"></li>
-      <li>3 minutes read</li>
+      <li>2 minutes read</li>
     
   </ul>
   
@@ -276,177 +276,126 @@
           <div class="post-content markdown">
             
 
-<h3 id="什么是方法">什么是方法</h3>
+<h3 id="临界区">临界区</h3>
 
-<p>方法其实就是一个函数，在<code>func</code>这个关键字和方法名中间加入了一个特殊的接收器类型。接收器可以是结构体类型或者是非结构体类型。接收器是可以在方法的内部访问的。</p>
+<p>当程序并发地运行时，多个goroutine不应该同时访问那些修改共享资源的代码。这些修改共享资源的代码称为临界区。</p>
 
-<p>创建一个方法的基本语法如下所示，创建了一个接收器类型为Type的方法methodName。</p>
+<h3 id="mutex">Mutex</h3>
 
-<pre><code class="language-go">func (t Type) methodName(parameter list) {
+<p>Mutex用于提供一种加锁机制，可确保在某一时刻只有一个协程在临界区运行，以防止出现竞态条件。Mutex可以在sync包内找到。Mutex定义了两个方法：<code>Lock</code>和<code>Unlock</code>。所有在Lock和Unlock之间的代码，都只能由一个Go协程执行，避免了竞态条件。如果有一个Go协程已经持有了锁，当其它协程试图获得该锁时，这些协程会被阻塞，直到Mutex解除锁定为止。</p>
+
+<pre><code class="language-go">mutex.Lock()
+{
+    // 放置会出现竞态条件代码
+    x = x + 1
 }
+mutex.Unlock()
 </code></pre>
 
-<h3 id="为什么已经有函数了还需要方法">为什么已经有函数了还需要方法？</h3>
-
-<ul>
-<li>Go不是纯粹的面向对象编程语言，而且Go不支持类。因此，基于类型的方法是一种实现和类相似行为的途径。</li>
-<li>相同的名字的方法可以定义在不同的类型上，而相同名字的函数是不被允许的。</li>
-</ul>
-
-<h3 id="指针接收器与值接收器">指针接收器与值接收器</h3>
-
-<p>值接收器和指针接收器之间的区别在于，在指针接收器的方法内部的改变对于调用者是可见的。</p>
-
-<h3 id="什么时候使用指针接收器-什么时候使用值接收器">什么时候使用指针接收器，什么时候使用值接收器？</h3>
-
-<ul>
-<li>一般来说，指针接收器可以用在：对方法内部的接收器所做的改变应该对调用者可见时。</li>
-<li>指针接收器也可以被使用在如下场景：当拷贝一个结构体的代价过于昂贵时。考虑下一个结构体有很多字段，在方法内使用这个结构体作为值接收器需要拷贝整个结构体，这是很昂贵的。在这种情况下使用指针接收器。结构体不会被拷贝，只会传递一个指针到方法内部使用。</li>
-<li>在其它的所有情况，值接收器都可以被使用。</li>
-</ul>
-
-<h3 id="匿名字段的方法">匿名字段的方法</h3>
-
-<p>属于结构体的匿名字段的方法可以被直接使用，就好像这些方法是属于定义了匿名字段的结构体一样。</p>
+<h3 id="含有竞态条件的程序">含有竞态条件的程序</h3>
 
 <pre><code class="language-go">package main
 
-import &quot;fmt&quot;
+import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
 
-type address struct {
-    city  string
-    state string
-}
+var x = 0
 
-func (a address) fullAddress() {
-    fmt.Printf(&quot;Full address: %s, %s\n&quot;, a.city, a.state)
-}
-
-type person struct {
-    firstName string
-    lastName  string
-    address
+func increment(wg *sync.WaitGroup) {
+    x = x + 1 // 当多个并发的协程试图访问x的值，就会发生竞态条件
+    wg.Done()
 }
 
 func main() {
-    p := person{
-        firstName: &quot;Elon&quot;,
-        lastName:  &quot;Musk&quot;,
-        address: address{
-            city:  &quot;Los Angeles&quot;,
-            state: &quot;California&quot;,
-        },
+    w := sync.WaitGroup{}
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w)
     }
-    p.fullAddress( ) // 访问 address 结构体的 fullAddress 方法
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<h3 id="在方法中使用值接收器与在函数中使用值参数">在方法中使用值接收器与在函数中使用值参数</h3>
+<h3 id="使用mutex">使用Mutex</h3>
 
-<ul>
-<li>当一个函数有一个值参数，它只能接受一个值参数。</li>
-<li>当一个方法有一个值接收器，它可以接受值接收器和指针接收器。</li>
-</ul>
+<p>这里使用Mutex修复上述竞态条件问题：</p>
 
 <pre><code class="language-go">package main
 
-import &quot;fmt&quot;
+import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
 
-type rectangle struct {
-    length int
-    width  int
-}
+var x = 0
 
-func area(r rectangle) {
-    fmt.Printf(&quot;Area Function result: %d\n&quot;, r.length*r.width)
-}
-
-func (r rectangle) area() {
-    fmt.Printf(&quot;Area Method result: %d\n&quot;, r.length*r.width)
+// 注意这里必须传递Mutex的地址
+func increment(wg *sync.WaitGroup, m *sync.Mutex) {
+    m.Lock()
+    x = x + 1 // 任何时刻都只允许一个协程执行这段代码
+    m.Unlock()
+    wg.Done()
 }
 
 func main() {
-    r := rectangle{
-        length: 10,
-        width:  5,
+    w := sync.WaitGroup{}
+    m := sync.Mutex{}
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w, &amp;m)
     }
-    area(r)
-    r.area()
-
-    p := &amp;r
-    // 使用指针接收器 p 调用了只接受一个值接收器的方法 area，这是完全有效的。原因是
-    // 当 area 有一个值接收器时，Go语言会自动把 p.area() 解释为 (*p).area()
-    p.area()
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<h3 id="在方法中使用指针接收器与在函数中使用指针参数">在方法中使用指针接收器与在函数中使用指针参数</h3>
+<h3 id="使用信道处理竞态条件">使用信道处理竞态条件</h3>
 
-<ul>
-<li>当一个函数有一个指针参数，它只能接受一个指针参数。</li>
-<li>当一个方法有一个指针接收器，它可以接受值接收器和指针接收器。</li>
-</ul>
+<p>这里使用Channel修复上述竞态条件问题：</p>
 
 <pre><code class="language-go">package main
 
-import &quot;fmt&quot;
+import (
+    &quot;fmt&quot;
+    &quot;sync&quot;
+)
 
-type rectangle struct {
-    length int
-    width  int
-}
+var x = 0
 
-func perimeter(r *rectangle) {
-    fmt.Println(&quot;perimeter function output:&quot;, 2*(r.length+r.width))
-}
-
-func (r *rectangle) perimeter() {
-    fmt.Println(&quot;perimeter method output:&quot;, 2*(r.length+r.width))
+func increment(wg *sync.WaitGroup, ch chan bool) {
+    ch &lt;- true
+    // 由于缓冲信道的容量为1，所以任何其它协程试图写入该信道时，
+    // 都会发生阻塞，直到x增加后，信道的值才会被读取，完成解锁。
+    x = x + 1
+    &lt;-ch
+    wg.Done()
 }
 
 func main() {
-    r := rectangle{
-        length: 10,
-        width:  5,
+    w := sync.WaitGroup{}
+    ch := make(chan bool, 1)
+    for i := 0; i &lt; 1000; i++ {
+        w.Add(1)
+        go increment(&amp;w, ch)
     }
-    p := &amp;r
-    perimeter(p)
-    p.perimeter()
-
-    // 通过值接收器 r 来调用有指针接收器的方法 perimeter，这是被允许的。
-    // Go会自动把 r.perimeter() 解释为 (&amp;r).perimeter。
-    r.perimeter()
+    w.Wait()
+    fmt.Println(&quot;final value of x:&quot;, x)
 }
 </code></pre>
 
-<h3 id="在非结构体上的方法">在非结构体上的方法</h3>
+<h3 id="mutex还是channel">Mutex还是Channel？</h3>
 
-<p>Go同样支持在非结构体类型上定义方法，但需要注意一个前提：<strong>为了在一个类型上定义一个方法，方法的接收器类型定义和方法的定义应该在同一个包中</strong>。</p>
+<p>Mutex和Channel都可以用来解决竞态条件问题。那么如何选择？</p>
 
-<p>举个例子，如果尝试把一个<code>add</code>方法添加到内置的类型<code>int</code>，这是不允许的，因为<code>add</code>方法的定义和<code>int</code>类型的定义不在同一个包中。一个变通的方法是：为内置类型int创建一个类型别名，然后创建一个以该类型别名为接收器的方法。</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-type myInt int
-
-func (a myInt) add(b myInt) myInt {
-    return a+b
-}
-
-func main() {
-    num1 := myInt(5)
-    num2 := myInt(10)
-    sum := num1.add(num2)
-    fmt.Println(&quot;Sum is&quot;, sum) // Sum is 15
-}
-</code></pre>
+<p>总体来说，当Go协程需要与其它协程通信时，可以使用信道。而当只允许一个协程访问临界区时，可以使用Mutex。就上述代码而言，使用Mutex更直观一些。</p>
 
 <p><em>reference:</em></p>
 
 <blockquote>
-<p><a href="https://studygolang.com/articles/12264">https://studygolang.com/articles/12264</a></p>
+<p><a href="https://studygolang.com/articles/12598">https://studygolang.com/articles/12598</a></p>
 </blockquote>
 
           </div>
@@ -467,6 +416,12 @@ func main() {
       <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
       
     
+      <li><a href="https://staught.github.io/tags/goroutine" role="button">goroutine </a></li>
+      
+    
+      <li><a href="https://staught.github.io/tags/mutex" role="button">mutex </a></li>
+      
+    
   </div>
 </div>
               </div>
@@ -480,10 +435,10 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B004-%E7%BB%93%E6%9E%84%E4%BD%93/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B009-select/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go语言拾记04-结构体</span>
+                    <span>Go学习笔记09-select</span>
                   </div>
                 </a>
               
@@ -491,10 +446,10 @@ func main() {
             
             <div class="col-md-6 text-right" >
               
-                <a href=https://staught.github.io/blog/2018-11/go%E8%AF%AD%E8%A8%80%E6%8B%BE%E8%AE%B006-%E6%8E%A5%E5%8F%A3/ class="post-meta">Next
+                <a href=https://staught.github.io/blog/2018-11/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B011-%E7%BB%84%E5%90%88%E5%8F%96%E4%BB%A3%E7%BB%A7%E6%89%BF/ class="post-meta">Next
                   <div class="pt-2 pb-5 flex-reverse">
                     <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言拾记06-接口</span>
+                    <span>Go学习笔记11-组合取代继承</span>
                   </div>
                 </a>
               
@@ -544,8 +499,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%96%b9%e6%b3%95">
-												 什么是方法
+						 					<a class="nav-link" href="#%e4%b8%b4%e7%95%8c%e5%8c%ba">
+												 临界区
 											</a>
 										</li>
 						 
@@ -570,8 +525,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e5%b7%b2%e7%bb%8f%e6%9c%89%e5%87%bd%e6%95%b0%e4%ba%86%e8%bf%98%e9%9c%80%e8%a6%81%e6%96%b9%e6%b3%95">
-												 为什么已经有函数了还需要方法？
+						 					<a class="nav-link" href="#mutex">
+												 Mutex
 											</a>
 										</li>
 						 
@@ -596,8 +551,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8">
-												 指针接收器与值接收器
+						 					<a class="nav-link" href="#%e5%90%ab%e6%9c%89%e7%ab%9e%e6%80%81%e6%9d%a1%e4%bb%b6%e7%9a%84%e7%a8%8b%e5%ba%8f">
+												 含有竞态条件的程序
 											</a>
 										</li>
 						 
@@ -622,8 +577,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%97%b6%e5%80%99%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8-%e4%bb%80%e4%b9%88%e6%97%b6%e5%80%99%e4%bd%bf%e7%94%a8%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8">
-												 什么时候使用指针接收器，什么时候使用值接收器？
+						 					<a class="nav-link" href="#%e4%bd%bf%e7%94%a8mutex">
+												 使用Mutex
 											</a>
 										</li>
 						 
@@ -648,8 +603,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%8c%bf%e5%90%8d%e5%ad%97%e6%ae%b5%e7%9a%84%e6%96%b9%e6%b3%95">
-												 匿名字段的方法
+						 					<a class="nav-link" href="#%e4%bd%bf%e7%94%a8%e4%bf%a1%e9%81%93%e5%a4%84%e7%90%86%e7%ab%9e%e6%80%81%e6%9d%a1%e4%bb%b6">
+												 使用信道处理竞态条件
 											</a>
 										</li>
 						 
@@ -674,60 +629,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%9c%a8%e6%96%b9%e6%b3%95%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%80%bc%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%9c%a8%e5%87%bd%e6%95%b0%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%80%bc%e5%8f%82%e6%95%b0">
-												 在方法中使用值接收器与在函数中使用值参数
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%9c%a8%e6%96%b9%e6%b3%95%e4%b8%ad%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8%e4%b8%8e%e5%9c%a8%e5%87%bd%e6%95%b0%e4%b8%ad%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88%e5%8f%82%e6%95%b0">
-												 在方法中使用指针接收器与在函数中使用指针参数
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%9c%a8%e9%9d%9e%e7%bb%93%e6%9e%84%e4%bd%93%e4%b8%8a%e7%9a%84%e6%96%b9%e6%b3%95">
-												 在非结构体上的方法
+						 					<a class="nav-link" href="#mutex%e8%bf%98%e6%98%afchannel">
+												 Mutex还是Channel？
 											</a>
 										</li>
 						 
