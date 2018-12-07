@@ -7,23 +7,23 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1" />
   <meta name="author" content="Staught">
-  <meta name="description" content="什么是头等函数？ 支持头等函数的编程语言，可以把函数赋值给变量，也可以把函数作为其它函数的参数或者返回值。Go语言支持头等函数的机制。 匿名函数 package main import &quot;fmt&quot; func main() { // 把函数赋值给一个变量 // 赋值给a的函数没有名称，这类函数称为匿名函数 a := func() { fmt.Println(&quot;hello world first class function&quot;) } a() // hello world first class function fmt.Printf(&quot;%T&quot;, a) // func() // 要调用一个匿名函数，可以不用赋值给变量 func() { fmt.Println(&quot;hello world first class function&quot;) }() // hello world first class function // 与其它函数一样，可以向匿名函数传递参数 func(n string) { fmt.Println(&quot;Welcome&quot;, n) }(&quot;Gopher&quot;) // Welcome Gopher } 用户自定">
+  <meta name="description" content="什么是反射？ 反射就是程序能够在运行时检查变量和值，求出它们的类型。 为何需要检查变量，确定变量的类型？ 举个例子来说明需要在运行时求得变量类型的情况：我们需要编写一个简单的函数，它接收结构体作为参数，并用它来创建一个SQL插入查询。 type order struct { ordId int customerId int } type employee struct { name string id int address string salary int country string } func createQuery(q interface{}) string { } func main() { o := order{1234, 567} // insert into order values(1234, 567) fmt.Println(createQuery(o)) e := employee{&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;} // insert into employee values(&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;) fmt.Println(createQuery(e)) } 如上代码，我们的目标就是完成create">
   
-  <meta property="og:title" content="Go学习笔记15-头等函数" />
-<meta property="og:description" content="什么是头等函数？ 支持头等函数的编程语言，可以把函数赋值给变量，也可以把函数作为其它函数的参数或者返回值。Go语言支持头等函数的机制。 匿名函数 package main import &quot;fmt&quot; func main() { // 把函数赋值给一个变量 // 赋值给a的函数没有名称，这类函数称为匿名函数 a := func() { fmt.Println(&quot;hello world first class function&quot;) } a() // hello world first class function fmt.Printf(&quot;%T&quot;, a) // func() // 要调用一个匿名函数，可以不用赋值给变量 func() { fmt.Println(&quot;hello world first class function&quot;) }() // hello world first class function // 与其它函数一样，可以向匿名函数传递参数 func(n string) { fmt.Println(&quot;Welcome&quot;, n) }(&quot;Gopher&quot;) // Welcome Gopher } 用户自定" />
+  <meta property="og:title" content="Go语言笔记16-Reflection" />
+<meta property="og:description" content="什么是反射？ 反射就是程序能够在运行时检查变量和值，求出它们的类型。 为何需要检查变量，确定变量的类型？ 举个例子来说明需要在运行时求得变量类型的情况：我们需要编写一个简单的函数，它接收结构体作为参数，并用它来创建一个SQL插入查询。 type order struct { ordId int customerId int } type employee struct { name string id int address string salary int country string } func createQuery(q interface{}) string { } func main() { o := order{1234, 567} // insert into order values(1234, 567) fmt.Println(createQuery(o)) e := employee{&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;} // insert into employee values(&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;) fmt.Println(createQuery(e)) } 如上代码，我们的目标就是完成create" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://staught.github.io/blog/2018-12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015-%E5%A4%B4%E7%AD%89%E5%87%BD%E6%95%B0/" /><meta property="article:published_time" content="2018-12-06T08:43:10&#43;08:00"/>
-<meta property="article:modified_time" content="2018-12-06T00:00:00&#43;00:00"/>
+<meta property="og:url" content="https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B016-reflection/" /><meta property="article:published_time" content="2018-12-07T08:53:40&#43;08:00"/>
+<meta property="article:modified_time" content="2018-12-07T00:00:00&#43;00:00"/>
 
 
 
   <title>
   
-       Go学习笔记15-头等函数 | staught 
+       Go语言笔记16-Reflection | staught 
   
   </title>
 
-  <link rel="canonical" href="https://staught.github.io/blog/2018-12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015-%E5%A4%B4%E7%AD%89%E5%87%BD%E6%95%B0/">
+  <link rel="canonical" href="https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B016-reflection/">
 
   
   
@@ -256,16 +256,16 @@
     
   </ul>
 
-  <div class="px-4 post-heading">Go学习笔记15-头等函数</div>
+  <div class="px-4 post-heading">Go语言笔记16-Reflection</div>
 
   <ul class="post-meta li-x mt-1">
     
-      <li>Dec 6, 2018</li>
+      <li>Dec 7, 2018</li>
     
 
     
       <li class="middot"></li>
-      <li>2 minutes read</li>
+      <li>3 minutes read</li>
     
   </ul>
   
@@ -276,225 +276,197 @@
           <div class="post-content markdown">
             
 
-<h3 id="什么是头等函数">什么是头等函数？</h3>
+<h3 id="什么是反射">什么是反射？</h3>
 
-<p>支持头等函数的编程语言，可以把<strong>函数赋值给变量</strong>，也可以把<strong>函数作为</strong>其它函数的<strong>参数</strong>或者<strong>返回值</strong>。Go语言支持头等函数的机制。</p>
+<p>反射就是程序能够在运行时检查变量和值，求出它们的类型。</p>
 
-<h3 id="匿名函数">匿名函数</h3>
+<h3 id="为何需要检查变量-确定变量的类型">为何需要检查变量，确定变量的类型？</h3>
 
-<pre><code class="language-go">package main
+<p>举个例子来说明需要在运行时求得变量类型的情况：我们需要编写一个简单的函数，它接收结构体作为参数，并用它来创建一个SQL插入查询。</p>
 
-import &quot;fmt&quot;
+<pre><code class="language-go">type order struct {
+    ordId      int
+    customerId int
+}
+
+type employee struct {
+    name    string
+    id      int
+    address string
+    salary  int
+    country string
+}
+
+func createQuery(q interface{}) string {
+}
 
 func main() {
-    // 把函数赋值给一个变量
-    // 赋值给a的函数没有名称，这类函数称为匿名函数
-    a := func() {
-        fmt.Println(&quot;hello world first class function&quot;)
-    }
-    a() // hello world first class function
-    fmt.Printf(&quot;%T&quot;, a) // func()
+    o := order{1234, 567}
+    // insert into order values(1234, 567)
+    fmt.Println(createQuery(o))
 
-    // 要调用一个匿名函数，可以不用赋值给变量
-    func() {
-        fmt.Println(&quot;hello world first class function&quot;)
-    }() // hello world first class function
-
-    // 与其它函数一样，可以向匿名函数传递参数
-    func(n string) {
-        fmt.Println(&quot;Welcome&quot;, n)
-    }(&quot;Gopher&quot;) // Welcome Gopher
+    e := employee{&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;}
+    // insert into employee values(&quot;Naveen&quot;, 565, &quot;Science Park Road&quot;, 90000, &quot;Singapore&quot;)
+    fmt.Println(createQuery(e))
 }
 </code></pre>
 
-<h3 id="用户自定义的函数类型">用户自定义的函数类型</h3>
+<p>如上代码，我们的目标就是完成<code>createQuery</code>函数，我们想让它变得通用，可以接收任何结构体作为参数，根据结构体的字段创建插入查询。如<code>main</code>函数所示，不同的结构体输出对应的SQL语句。</p>
 
-<p>正如我们定义自己的结构体类型一样，也可以定义自己的函数类型。</p>
+<p><code>createQuery</code>函数应该适用于所有的结构体。因此，要编写这个函数，就必须在运行时检查传递过来的结构体参数的类型，找到结构体字段，接着创建查询。这时就需要用到反射了。</p>
 
-<pre><code class="language-go">package main
+<h3 id="reflect包">reflect包</h3>
 
-import &quot;fmt&quot;
+<p><code>reflect</code>实现了运行时反射。<code>reflect</code>包会帮助识别<code>interface{}</code>变量的底层具体类型和具体值。</p>
 
-type add func(a int, b int) int // 定义新的函数类型add
-
-func main() {
-    var a add = func(a int, b int) int {
-        return a + b
-    }
-    s := a(5, 6)
-    fmt.Println(&quot;Sum&quot;, s) // Sum 11
-}
-</code></pre>
-
-<h3 id="高阶函数">高阶函数</h3>
-
-<p>满足下列条件之一的函数称为高阶函数：</p>
+<p><code>reflect</code>包中的几种类型和方法：</p>
 
 <ul>
-<li>接收一个或多个函数作为参数</li>
-<li>返回值是一个函数</li>
+<li><code>reflect.Type</code>表示<code>interface{}</code>的具体类型，而<code>reflect.Value</code>表示它的具体值。</li>
+<li><code>reflect.TypeOf()</code>和<code>reflect.ValueOf()</code>两个函数可以分别返回<code>reflect.Type</code>和<code>reflect.Value</code>。</li>
 </ul>
 
-<p><strong>1. 把函数作为参数，传递给其它函数</strong></p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-// simple接收一个函数参数
-func simple(a func(a, b int) int) {
-    fmt.Println(a(60, 7))
+<pre><code class="language-go">type order struct {
+    ordId      int
+    customerId int
 }
 
 func main() {
-    // 创建一个匿名函数f，其签名符合simple函数的参数
-    f := func(a, b int) int {
-        return a + b
-    }
-    simple(f) // 67
+    o := order{1234, 567}
+    fmt.Println(reflect.TypeOf(o))  // main.order
+    fmt.Println(reflect.ValueOf(o)) // {1234 567}
 }
 </code></pre>
 
-<p><strong>2. 在其它函数中返回函数</strong></p>
+<ul>
+<li>如下所示，<code>reflect.Type</code>表示<code>interface{}</code>的实际类型（这里是<code>main.order</code>），而<code>reflect.Kind</code>表示该类型的特定类别（这里是<code>struct</code>）。</li>
+</ul>
 
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-func simple() func(a, b int) int {
-    f := func(a, b int) int {
-        return a + b
-    }
-    return f
+<pre><code class="language-go">type order struct {
+    ordId      int
+    customerId int
 }
 
 func main() {
-    s := simple()
-    fmt.Println(s(60, 7)) // 67
+    o := order{1234, 567}
+    fmt.Println(reflect.TypeOf(o))         // main.order
+    fmt.Println(reflect.TypeOf(o).Kind())  // struct
+    fmt.Println(reflect.ValueOf(o))        // {1234 567}
+    fmt.Println(reflect.ValueOf(o).Kind()) // struct
 }
 </code></pre>
 
-<h3 id="闭包">闭包</h3>
+<ul>
+<li><code>NumField()</code>方法返回结构体中字段的数量，而<code>Field(i int)</code>方法返回字段<code>i</code>的<code>reflect.Value</code>。</li>
+</ul>
 
-<p>闭包（Closure）是匿名函数的一个特例。<strong>当一个匿名函数所访问的变量定义在函数体的外部时，就称这样的匿名函数为闭包</strong>。</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-func main() {
-    a := 5
-    // 函数内访问了变量a，而a存在于函数体外部，因此这个匿名函数就是闭包
-    func() {
-        fmt.Println(&quot;a =&quot;, a)
-    }() // a = 5
-}
-</code></pre>
-
-<p>每一个闭包都会绑定一个它自己的外围变量，通过下面的例子体会：</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-func appendStr() func(string) string {
-    t := &quot;Hello&quot;
-    c := func(b string) string {
-        t = t + &quot; &quot; + b
-        return t
-    }
-    return c
+<pre><code class="language-go">type order struct {
+    ordId      int
+    customerId int
 }
 
 func main() {
-    // 变量a和b都是闭包，它们绑定了各自的t值
-    a := appendStr()
-    b := appendStr()
-    fmt.Println(a(&quot;World&quot;))    // &quot;Hello World&quot;
-    fmt.Println(b(&quot;Everyone&quot;)) // &quot;Hello Everyone&quot;
-
-    fmt.Println(a(&quot;Gopher&quot;)) // &quot;Hello World Gopher&quot;
-    fmt.Println(b(&quot;!&quot;))      // &quot;Hello Everyone !&quot;
-}
-</code></pre>
-
-<h3 id="头等函数的实际用途">头等函数的实际用途</h3>
-
-<p>例子1：基于一些条件，来过滤一个students切片。</p>
-
-<pre><code class="language-go">package main
-
-import &quot;fmt&quot;
-
-type student struct {
-    firstName string
-    lastName  string
-    grade     string
-    country   string
-}
-
-func filter(s []student, f func(student) bool) []student {
-    var r []student
-    for _, v := range s {
-        if f(v) == true {
-            r = append(r, v)
+    o := order{1234, 567}
+    // NumField方法只能在结构体上使用，所以先检查o的类别是struct
+    if reflect.ValueOf(o).Kind() == reflect.Struct {
+        v := reflect.ValueOf(o)
+        fmt.Println(&quot;Number of fields:&quot;, v.NumField())
+        for i := 0; i &lt; v.NumField(); i++ {
+            fmt.Println(&quot;Field:&quot;, i,
+                &quot;Type:&quot;, reflect.TypeOf(o).Field(i).Name,
+                &quot;Value:&quot;, v.Field(i))
         }
     }
-    return r
-}
-
-func main() {
-    s1 := student{
-        firstName: &quot;Naveen&quot;,
-        lastName:  &quot;Ramanathan&quot;,
-        grade:     &quot;A&quot;,
-        country:   &quot;India&quot;,
-    }
-    s2 := student{
-        firstName: &quot;Samuel&quot;,
-        lastName:  &quot;Johnson&quot;,
-        grade:     &quot;B&quot;,
-        country:   &quot;USA&quot;,
-    }
-    s := []student{s1, s2}
-    // 假如我们想要查找所有来自印度的学生，通过修改传递给filter的函数参数，就很容易实现了
-    f := filter(s, func(s student) bool {
-        if s.grade == &quot;B&quot; {
-            return true
-        }
-        return false
-    })
-    fmt.Println(f) // [{Samuel Johnson B USA}]
+    /*
+    Number of fields: 2
+    Field: 0 Type: ordId Value: 1234
+    Field: 1 Type: customerId Value: 567
+    */
 }
 </code></pre>
 
-<p>例子2：下面的程序会对切片的每个元素执行相同的操作，并返回结果。</p>
+<ul>
+<li><code>Int()</code>和<code>String()</code>可以帮助我们分别取出<code>reflect.Value</code>作为<code>int64</code>和<code>string</code>。</li>
+</ul>
+
+<h3 id="完整的程序">完整的程序</h3>
 
 <pre><code class="language-go">package main
 
-import &quot;fmt&quot;
+import (
+    &quot;fmt&quot;
+    &quot;reflect&quot;
+)
 
-func iMap(s []int, f func(int) int) []int {
-    var r []int
-    for _, v := range s {
-        r = append(r, f(v))
+type order struct {
+    ordId      int
+    customerId int
+}
+
+type employee struct {
+    name    string
+    id      int
+    address string
+    salary  int
+    country string
+}
+
+func createQuery(q interface{}) {
+    if reflect.ValueOf(q).Kind() == reflect.Struct {
+        t := reflect.TypeOf(q).Name() // order
+        query := fmt.Sprintf(&quot;insert into %s values(&quot;, t) // &quot;insert into order values(&quot;
+        v := reflect.ValueOf(q) // {1234 567}
+        for i := 0; i &lt; v.NumField(); i++ {
+            switch v.Field(i).Kind() {
+            case reflect.Int:
+                if i == 0 {
+                    query = fmt.Sprintf(&quot;%s%d&quot;, query, v.Field(i).Int())
+                } else {
+                    query = fmt.Sprintf(&quot;%s, %d&quot;, query, v.Field(i).Int())
+                }
+            case reflect.String:
+                if i == 0 {
+                    query = fmt.Sprintf(&quot;%s\&quot;%s\&quot;&quot;, query, v.Field(i).String())
+                } else {
+                    query = fmt.Sprintf(&quot;%s, \&quot;%s\&quot;&quot;, query, v.Field(i).String())
+                }
+            default:
+                fmt.Println(&quot;unsupported type&quot;)
+                return
+            }
+        }
+        query = fmt.Sprintf(&quot;%s)&quot;, query)
+        fmt.Println(query)
+        return
     }
-    return r
+    fmt.Println(&quot;unsupported type&quot;)
 }
 
 func main() {
-    a := []int{5, 6, 7, 8, 9}
-    r := iMap(a, func(n int) int {
-        return n * 5
-    })
-    fmt.Println(r) // [25 30 35 40 45]
+    o := order{456, 56}
+    createQuery(o)
+
+    e := employee{&quot;Naveen&quot;, 565, &quot;Coimbatore&quot;, 90000, &quot;India&quot;}
+    createQuery(e)
+
+    i := 90
+    createQuery(i)
+    /*
+    insert into order values(456, 56)
+    insert into employee values(&quot;Naveen&quot;, 565, &quot;Coimbatore&quot;, 90000, &quot;India&quot;)
+    unsupported type
+    */
 }
 </code></pre>
+
+<h3 id="应该使用反射吗">应该使用反射吗？</h3>
+
+<p>反射是Go语言中非常强大和高级的概念，我们应该小心谨慎地使用它。使用反射编写清晰和可维护的代码是十分困难的。我们应该尽可能避免使用它，只在必须用到它时，才使用反射。</p>
 
 <p><em>reference:</em></p>
 
 <blockquote>
-<p><a href="https://studygolang.com/articles/12789">https://studygolang.com/articles/12789</a></p>
+<p><a href="https://studygolang.com/articles/13178">https://studygolang.com/articles/13178</a></p>
 </blockquote>
 
           </div>
@@ -515,6 +487,9 @@ func main() {
       <li><a href="https://staught.github.io/tags/syntax" role="button">syntax </a></li>
       
     
+      <li><a href="https://staught.github.io/tags/reflect" role="button">reflect </a></li>
+      
+    
   </div>
 </div>
               </div>
@@ -528,23 +503,16 @@ func main() {
           <div class="row pt-3">
             <div class="col-md-6">
               
-                <a href=https://staught.github.io/blog/2018-12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B014-panic%E5%92%8Crecover/ class="post-meta">Previous
+                <a href=https://staught.github.io/blog/2018-12/go%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B015-%E5%A4%B4%E7%AD%89%E5%87%BD%E6%95%B0/ class="post-meta">Previous
                   <div class="pt-2 pb-5 d-flex">
                     <i class="fas fa-angle-left text-grey font-weight-bold mr-2 active-color"></i>
-                    <span>Go学习笔记14-panic和recover</span>
+                    <span>Go学习笔记15-头等函数</span>
                   </div>
                 </a>
               
             </div>
             
             <div class="col-md-6 text-right" >
-              
-                <a href=https://staught.github.io/blog/2018-12/go%E8%AF%AD%E8%A8%80%E7%AC%94%E8%AE%B016-reflection/ class="post-meta">Next
-                  <div class="pt-2 pb-5 flex-reverse">
-                    <i class="fas fa-angle-right text-grey font-weight-bold ml-2 active-color"></i>
-                    <span>Go语言笔记16-Reflection</span>
-                  </div>
-                </a>
               
             </div>
           </div>
@@ -592,8 +560,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%b4%e7%ad%89%e5%87%bd%e6%95%b0">
-												 什么是头等函数？
+						 					<a class="nav-link" href="#%e4%bb%80%e4%b9%88%e6%98%af%e5%8f%8d%e5%b0%84">
+												 什么是反射？
 											</a>
 										</li>
 						 
@@ -618,8 +586,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%8c%bf%e5%90%8d%e5%87%bd%e6%95%b0">
-												 匿名函数
+						 					<a class="nav-link" href="#%e4%b8%ba%e4%bd%95%e9%9c%80%e8%a6%81%e6%a3%80%e6%9f%a5%e5%8f%98%e9%87%8f-%e7%a1%ae%e5%ae%9a%e5%8f%98%e9%87%8f%e7%9a%84%e7%b1%bb%e5%9e%8b">
+												 为何需要检查变量，确定变量的类型？
 											</a>
 										</li>
 						 
@@ -644,8 +612,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e7%94%a8%e6%88%b7%e8%87%aa%e5%ae%9a%e4%b9%89%e7%9a%84%e5%87%bd%e6%95%b0%e7%b1%bb%e5%9e%8b">
-												 用户自定义的函数类型
+						 					<a class="nav-link" href="#reflect%e5%8c%85">
+												 reflect包
 											</a>
 										</li>
 						 
@@ -670,8 +638,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e9%ab%98%e9%98%b6%e5%87%bd%e6%95%b0">
-												 高阶函数
+						 					<a class="nav-link" href="#%e5%ae%8c%e6%95%b4%e7%9a%84%e7%a8%8b%e5%ba%8f">
+												 完整的程序
 											</a>
 										</li>
 						 
@@ -696,34 +664,8 @@ func main() {
 								
 
 										<li class="nav-item">
-						 					<a class="nav-link" href="#%e9%97%ad%e5%8c%85">
-												 闭包
-											</a>
-										</li>
-						 
-								
-								
-									</ul>
-								
-									</ul>
-								
-							
-						
-				 
-						
-						
-							
-								
-								
-									<ul class="nav">
-								
-									<ul class="nav">
-								
-								
-
-										<li class="nav-item">
-						 					<a class="nav-link" href="#%e5%a4%b4%e7%ad%89%e5%87%bd%e6%95%b0%e7%9a%84%e5%ae%9e%e9%99%85%e7%94%a8%e9%80%94">
-												 头等函数的实际用途
+						 					<a class="nav-link" href="#%e5%ba%94%e8%af%a5%e4%bd%bf%e7%94%a8%e5%8f%8d%e5%b0%84%e5%90%97">
+												 应该使用反射吗？
 											</a>
 										</li>
 						 
