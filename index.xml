@@ -6,10 +6,19 @@
     <description>Recent content on staught</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zn-Hans</language>
-    <lastBuildDate>Fri, 07 Dec 2018 08:53:40 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Dec 2018 09:18:24 +0800</lastBuildDate>
     
 	<atom:link href="https://staught.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go文件操作</title>
+      <link>https://staught.github.io/blog/2018-12/go%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Mon, 10 Dec 2018 09:18:24 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-12/go%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</guid>
+      <description>[1] 将整个文件读取到内存 package main import ( &amp;quot;fmt&amp;quot; &amp;quot;io/ioutil&amp;quot; ) func main() { data, err := ioutil.ReadFile(&amp;quot;./test.txt&amp;quot;) if err != nil { fmt.Println(&amp;quot;File reading error&amp;quot;, err) return } fmt.Println(&amp;quot;Contents of file:&amp;quot;, string(data)) } [2] 分块读取文件 package main import ( &amp;quot;bufio&amp;quot; &amp;quot;fmt&amp;quot; &amp;quot;log&amp;quot; &amp;quot;os&amp;quot; ) func main() { file, err := os.Open(&amp;quot;./test.txt&amp;quot;) if err != nil { log.Fatal(err) } defer func() { if err = file.Close(); err != nil { log.Fatal(err) } }() // // 以3个字节的块为单位读取文件 // reader := bufio.NewReader(file) // 新建一个缓冲读取器 buff := make([]byte, 3) for { // Read方法会读取len(buff)个字节，并返回所读取的字节数 // 当到达文件最后时，它会返回一个EOF错误 n, err := reader.Read(buff) if err != nil { fmt.Println(&amp;quot;Error reading file:&amp;quot;, err) break } fmt.Println(string(buff[:n])) } } [3] 逐行读取文件</description>
+    </item>
     
     <item>
       <title>Go语言笔记16-Reflection</title>
