@@ -337,6 +337,7 @@
 <h1 id="常量">常量</h1>
 
 <ul>
+<li>Go语言的<strong>字面常量</strong>更接近我们自然语言中的常量概念，它是无类型的。只要这个常量在相应类型的值域范围内，就可以作为该类型的常量，比如常量<code>-12</code>，它可以赋值给<code>int, uint, int32, int64, float32, float64, complex64, complex128</code>等类型的变量。</li>
 <li>只需记住：常量可以赋值给“合适的”类型，而不需要类型转换，举个例子：</li>
 </ul>
 
@@ -364,7 +365,7 @@
 <ul>
 <li>函数的声明中如果有连续若干个参数，它们的类型一致，那么可以只在最后一个参数后添加该类型，例如：<code>func calc(price int, num int)</code>可以简写为<code>func calc(price, num int)</code>。</li>
 <li>Go语言支持一个函数可以有多个返回值，如果一个函数有多个返回值，那么在声明中这些返回值必须用<code>(</code>和<code>)</code>括起来，例如：<code>func rect(length, width float64) (float64, float64)</code>。</li>
-<li>Go语言支持命名返回值，一旦命令了返回值，可以认为这些值在函数的开始就被声明为变量并初始化为相应类型的零值了，可以在函数体内当局部变量来使用，例如：</li>
+<li>Go语言支持命名返回值，一旦命令了返回值，可以认为这些值在函数的开始就被声明为变量并初始化为相应类型的零值了（返回值命名不是强制的，但是它们可以使得代码更加健壮和清晰），可以在函数体内当局部变量来使用，例如：</li>
 </ul>
 
 <pre><code class="language-go">  func rect(length, width float64) (area, perimeter float64) {
