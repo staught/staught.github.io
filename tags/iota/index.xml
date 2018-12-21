@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Iota on staught</title>
+    <link>https://staught.github.io/tags/iota/</link>
+    <description>Recent content in Iota on staught</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Fri, 21 Dec 2018 11:28:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://staught.github.io/tags/iota/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go中使用iota</title>
+      <link>https://staught.github.io/blog/2018-12/go%E4%B8%AD%E4%BD%BF%E7%94%A8iota/</link>
+      <pubDate>Fri, 21 Dec 2018 11:28:10 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-12/go%E4%B8%AD%E4%BD%BF%E7%94%A8iota/</guid>
+      <description>iota是Go语言的一个关键字，它被用作常量计数器。使用iota能简化定义，在定义枚举时很有用。以下列举了iota的一些关键用法： iota只能在常量表达式中使用。 fmt.Println(iota) // 编译错误：undefined: iota iota默认值为0，并逐步增1。 const ( cpp = iota // 0 java // 1 java=iota python // 2 python=iota golang // 3 golang=iota ) 每次const出现时，iota将被重置为0。 const a = iota // a=0 const ( b = iota // b=iota b=0 c // c=iota c=1 ) 跳过某些值。 const ( cpp = iota // 0 _ // python // 2 golang // 3 javascript // 4</description>
+    </item>
+    
+  </channel>
+</rss>
