@@ -265,7 +265,7 @@
 
     
       <li class="middot"></li>
-      <li>3 minutes read</li>
+      <li>4 minutes read</li>
     
   </ul>
   
@@ -297,10 +297,10 @@
 </ul></li>
 </ul>
 
-<pre><code class="language-go">  salary := map[string]int{
-      &quot;steve&quot;: 12000,
-      &quot;john&quot;: 15000,
-  }
+<pre><code class="language-go">salary := map[string]int{
+    &quot;steve&quot;: 12000,
+    &quot;john&quot;: 15000,
+}
 </code></pre>
 
 <ul>
@@ -324,13 +324,34 @@
 <li>Go提供了一种更简单的方法来遍历字符串中的字符，e.g.</li>
 </ul>
 
-<pre><code class="language-go">  func main() {
-      s := &quot;你好世界！Hello&quot;
-      for i, r := range s {
-          fmt.Printf(&quot;[%d-%c]&quot;, i, r)
-      }
-      // Output: [0-你][3-好][6-世][9-界][12-！][15-H][16-e][17-l][18-l][19-o]
-  }
+<pre><code class="language-go">func main() {
+    s := &quot;你好世界！Hello&quot;
+    for i, r := range s {
+        fmt.Printf(&quot;[%d-%c]&quot;, i, r)
+    }
+    // Output: [0-你][3-好][6-世][9-界][12-！][15-H][16-e][17-l][18-l][19-o]
+}
+</code></pre>
+
+<ul>
+<li>注意以下两种遍历方法之间的区别：虽然<code>ch</code>的输出相同，但它们输出的索引值是不同的，<code>[]rune(s)</code>底层重新分配了数组，作为rune类型的slice，它的索引值是连续加1的。看实际需求选择正确的方法。</li>
+</ul>
+
+<pre><code class="language-go">func main() {
+    s := &quot;Hello你好世界!&quot;
+
+    for i, ch := range s {
+        fmt.Printf(&quot;[%d %c] &quot;, i, ch)
+    }
+    fmt.Println()
+    // [0 H] [1 e] [2 l] [3 l] [4 o] [5 你] [8 好] [11 世] [14 界] [17 !]
+
+    for i, ch := range []rune(s) {
+        fmt.Printf(&quot;[%d %c] &quot;, i, ch)
+    }
+    fmt.Println()
+    // [0 H] [1 e] [2 l] [3 l] [4 o] [5 你] [6 好] [7 世] [8 界] [9 !]
+}
 </code></pre>
 
 <ul>
