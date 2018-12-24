@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Test on staught</title>
+    <link>https://staught.github.io/tags/test/</link>
+    <description>Recent content in Test on staught</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zn-Hans</language>
+    <lastBuildDate>Mon, 24 Dec 2018 09:17:44 +0800</lastBuildDate>
+    
+	<atom:link href="https://staught.github.io/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go单元测试</title>
+      <link>https://staught.github.io/blog/2018-12/go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 24 Dec 2018 09:17:44 +0800</pubDate>
+      
+      <guid>https://staught.github.io/blog/2018-12/go%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</guid>
+      <description>单元测试是用来测试包或者程序的一部分代码或者一组代码的函数。测试的目的是确认目标代码在给定的场景下，有没有按照期望工作。 基础单元测试 以下是一个测试http包的Get函数的单元测试例子： // main_test.go package main import ( &amp;quot;net/http&amp;quot; &amp;quot;testing&amp;quot; ) const checkMark = &amp;quot;\u2713&amp;quot; const ballotX = &amp;quot;\u2717&amp;quot; func TestDownload(t *testing.T) { url := &amp;quot;http://www.puasu.com/&amp;quot; statusCode := 200 t.Log(&amp;quot;Given the need to test downloading content.&amp;quot;) { t.Logf(&amp;quot;\tWhen checking \&amp;quot;%s\&amp;quot; for status code \&amp;quot;%d\&amp;quot;&amp;quot;, url, statusCode) { resp, err := http.Get(url) if err != nil { t.Fatal(&amp;quot;\t\tShould be able to make the Get call.&amp;quot;, ballotX, err) } t.Log(&amp;quot;\t\tShould be able to make the Get call.&amp;quot;, checkMark) defer resp.Body.Close() if resp.StatusCode == statusCode { t.Logf(&amp;quot;\t\tShould receive a \&amp;quot;%d\&amp;quot; status. %v&amp;quot;, statusCode, checkMark) } else { t.Errorf(&amp;quot;\t\tShould receive a \&amp;quot;%d\&amp;quot; status. %v %v&amp;quot;, statusCode, ballotX, resp.StatusCode) } } } } 通过</description>
+    </item>
+    
+  </channel>
+</rss>
